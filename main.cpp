@@ -3,18 +3,15 @@
 
 #ifdef _WIN32
     #define OS Windows
+#elif __unix__ // all unices not caught above, might not be set
+    #define OS Unix
+#elif __linux__
+    #define OS Linux
 #elif __APPLE__
     #include "TargetConditionals.h"
-    #if TARGET_OS_MAC
+    #if TARGET_OS_MAC //We only want to detect macs, not ios
         #define OS Mac
     #endif
-
-#elif __linux
-    #define OS Linux
-#elif __unix // all unices not caught above
-    #define OS Unix
-#elif __posix
-    #define OS POSIX
 #endif
 
 
