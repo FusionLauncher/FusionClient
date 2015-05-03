@@ -1,11 +1,6 @@
 #ifndef FDB_H
 #define FDB_H
 
-
-class FDB
-{
-public:
-    FDB();
-};
+void init() {}
 
 #endif // FDB_H
