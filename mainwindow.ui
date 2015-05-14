@@ -29,6 +29,9 @@
       </item>
       <item>
        <widget class="QLabel" name="gamePathLabel">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <property name="text">
          <string>No game directory set</string>
         </property>

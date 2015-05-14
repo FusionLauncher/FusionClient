@@ -10,6 +10,20 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     db.init();
+    QString stylesheet = db.getTextPref("stylesheet");
+    if(!stylesheet.isNull())
+    {
+        qDebug("Stylesheet set. Trying to load... ("+stylesheet.toLatin1()+")");
+        QFile stylesheetFile(stylesheet);
+        stylesheetFile.open(QFile::ReadOnly);
+        QString stylesheetContents = QLatin1String(stylesheetFile.readAll());
+        if(!stylesheetContents.isNull())
+        {
+            qDebug("Stylesheet loaded.");
+            qApp->setStyleSheet(stylesheetContents);
+        }
+    }
+
     game = new FGame();
     ui->gameIdBox->setMaximum(db.getGameCount());
 }
