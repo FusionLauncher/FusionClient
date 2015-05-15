@@ -51,6 +51,12 @@ void MainWindow::refreshUi()
     ui->gameIdBox->setMaximum(db.getGameCount());
 }
 
+void MainWindow::generateGameList() {
+    //TODO
+    QItemSelectionModel *sm = ui->tableView->selectionModel();
+    connect(sm, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(on_tableView_doubleClicked(QModelIndex)));
+}
+
 void MainWindow::on_setNameButton_clicked()
 {
     game->setName(ui->nameEdit->text());
@@ -103,4 +109,10 @@ void MainWindow::on_actionRefresh_UI_triggered()
 void MainWindow::on_actionRemove_database_2_triggered()
 {
     resetDatabase();
+}
+
+void MainWindow::on_tableView_doubleClicked(const QModelIndex &index)
+{
+    //TODO, get game index, run game
+    //GUI todo: make each item large and leave space for logo / nice game name
 }

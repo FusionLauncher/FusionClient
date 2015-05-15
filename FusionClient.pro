@@ -27,3 +27,10 @@ else:unix: LIBS += -L$$PWD/../LibFusion/ -lLibFusion
 
 INCLUDEPATH += $$PWD/../LibFusion
 DEPENDPATH += $$PWD/../LibFusion
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-LibFusion-Desktop_Qt_5_4_1_GCC_64bit-Debug/release/ -lLibFusion
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-LibFusion-Desktop_Qt_5_4_1_GCC_64bit-Debug/debug/ -lLibFusion
+else:unix: LIBS += -L$$PWD/../build-LibFusion-Desktop_Qt_5_4_1_GCC_64bit-Debug/ -lLibFusion
+
+INCLUDEPATH += $$PWD/../build-LibFusion-Desktop_Qt_5_4_1_GCC_64bit-Debug
+DEPENDPATH += $$PWD/../build-LibFusion-Desktop_Qt_5_4_1_GCC_64bit-Debug
