@@ -34,9 +34,13 @@ private slots:
 
     void resetDatabase();
 
+    void generateGameList();
+
     void on_actionRefresh_UI_triggered();
 
     void on_actionRemove_database_2_triggered();
+
+    void on_tableView_doubleClicked(const QModelIndex &index);
 
 private:
     Ui::MainWindow *ui;

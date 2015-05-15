@@ -54,8 +54,7 @@ void MainWindow::refreshUi()
 void MainWindow::generateGameList() {
     //TODO
     QItemSelectionModel *sm = ui->tableView->selectionModel();
-    connect(sm, SIGNAL(doubleClicked(QModelIndex)),
-            this, SLOT(on_tableView_doubleClicked(QModelIndex));
+    connect(sm, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(on_tableView_doubleClicked(QModelIndex)));
 }
 
 void MainWindow::on_setNameButton_clicked()
