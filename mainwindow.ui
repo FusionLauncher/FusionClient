@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="chooseGameButton">
+        <property name="text">
+         <string>Choose directory</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="gamePathLabel">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>No game directory set</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QPushButton" name="chooseExecutableButton">
+        <property name="text">
+         <string>Choose executable</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="gameExeLabel">
+        <property name="text">
+         <string>No executable set</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QLineEdit" name="nameEdit"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="setNameButton">
+        <property name="text">
+         <string>Set name</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="gameNameLabel">
+        <property name="text">
+         <string>No name set</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QPushButton" name="launchGameButton">
+      <property name="text">
+       <string>Launch game</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QPushButton" name="saveButton">
+        <property name="text">
+         <string>Save game to database</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="loadButton">
+        <property name="text">
+         <string>Load game from database</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="gameIdLabel">
+        <property name="text">
+         <string>Game ID:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="gameIdBox">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>400</width>
+     <height>15</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFusion">
+    <property name="title">
+     <string>Fusion</string>
+    </property>
+    <addaction name="actionRemove_database_2"/>
+    <addaction name="actionRefresh_UI"/>
+   </widget>
+   <addaction name="menuFusion"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionRemove_database_2">
+   <property name="text">
+    <string>Reset database</string>
+   </property>
+  </action>
+  <action name="actionRefresh_UI">
+   <property name="text">
+    <string>Refresh UI</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
