@@ -34,14 +34,20 @@ private slots:
 
     void resetDatabase();
 
+<<<<<<< HEAD
     void generateGameList();
 
+=======
+>>>>>>> 1921b714252e2d6aed862440e85d561a4fecb6d5
     void on_actionRefresh_UI_triggered();
 
     void on_actionRemove_database_2_triggered();
 
+<<<<<<< HEAD
     void on_tableView_doubleClicked(const QModelIndex &index);
 
+=======
+>>>>>>> 1921b714252e2d6aed862440e85d561a4fecb6d5
 private:
     Ui::MainWindow *ui;
     FGame *game;
