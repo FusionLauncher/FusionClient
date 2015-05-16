@@ -26,8 +26,6 @@ private slots:
 
     void on_launchGameButton_clicked();
 
-    void on_chooseExecutableButton_clicked();
-
     void on_saveButton_clicked();
 
     void on_loadButton_clicked();
@@ -38,10 +36,18 @@ private slots:
 
     void on_actionRemove_database_2_triggered();
 
+    void on_addGameButton_clicked();
+
+    void addGame(FGame game);
+
+    void on_removeGameButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     FGame *game;
     FDB db;
+    QList<FGame> gameList;
+    void refreshList();
 };
 
 #endif // MAINWINDOW_H
