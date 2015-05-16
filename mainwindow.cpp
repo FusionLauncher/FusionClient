@@ -62,7 +62,7 @@ void MainWindow::resetDatabase()
 void MainWindow::on_addGameButton_clicked()
 {
     AddGameDialog* dialog = new AddGameDialog(this);
-    connect(dialog, &AddGameDialog::gameSet, this, &MainWindow::addGame);
+    connect(dialog, SIGNAL(gameSet(FGame)), this, SLOT(addGame(FGame)));
     dialog->exec();
 }
 
