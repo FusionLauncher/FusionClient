@@ -21,7 +21,7 @@ public:
 
 private slots:
     void on_chooseGameDirButton_clicked();
-    void on_chooseExecutableButton_clicked();
+    void on_chooseGameExecutableButton_clicked();
     void on_buttonBox_accepted();
 
 private:

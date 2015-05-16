@@ -38,66 +38,17 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_chooseGameButton_clicked()
-{
-    QDir gameDir = QFileDialog::getExistingDirectory(this, "Choose the game directory", QDir::homePath());
-    game->setPath(gameDir.absolutePath());
-    refreshUi();
-}
-
-void MainWindow::refreshUi()
-{
-    QString path = game->getPath().isEmpty()?"No path":QDir::toNativeSeparators(game->getPath());
-    QString name = game->getName().isEmpty()?"No name set":game->getName();
-    QString exe = game->getExe().isEmpty()?"No game executable set.":game->getExe();
-    //ui->gamePathLabel->setText(path);
-    //ui->gameNameLabel->setText(name);
-    //ui->gameExeLabel->setText(exe);
-    //ui->gameIdBox->setMaximum(db.getGameCount());
-}
-
-void MainWindow::on_setNameButton_clicked()
-{
-    //game->setName(ui->nameEdit->text());
-    refreshUi();
-}
-
 void MainWindow::on_launchGameButton_clicked()
 {
     qDebug("Launching game!");
-    game = new FGame(gameList.at(ui->listWidget->currentRow()));
+    game = new FGame(gameList.at(ui->gameListWidget->currentRow()));
     game->execute();
-}
-
-void MainWindow::on_saveButton_clicked()
-{
-    db.addGame(*game);
-    refreshUi();
-}
-void MainWindow::on_loadButton_clicked()
-{
-    //game = db.getGame(ui->gameIdBox->value());
-    if(!game)
-    {
-        game = new FGame();
-    }
-    refreshUi();
 }
 
 void MainWindow::resetDatabase()
 {
     db.resetDatabase();
-    refreshUi();
-}
-
-void MainWindow::on_actionRefresh_UI_triggered()
-{
-    refreshUi();
-}
-
-void MainWindow::on_actionRemove_database_2_triggered()
-{
-    resetDatabase();
+    refreshList();
 }
 
 void MainWindow::on_addGameButton_clicked()
@@ -116,24 +67,34 @@ void MainWindow::addGame(FGame game)
 
 void MainWindow::refreshList()
 {
-    ui->listWidget->clear();
+    ui->gameListWidget->clear();
     gameList = db.getGameList();
     //FGame game = list.first();
     if(gameList.isEmpty())
     {
-        ui->listWidget->addItem("NOTHING TO SEE HERE. Use the \"Add game\" button to add a new game.");
+        ui->gameListWidget->addItem("NOTHING TO SEE HERE. Use the \"Add game\" button to add a new game.");
     }
     else
     {
         for(int i = 0; i < gameList.size(); i++)
         {
-            ui->listWidget->addItem(gameList[i].getName());
+            ui->gameListWidget->addItem(gameList[i].getName());
         }
     }
 }
 
 void MainWindow::on_removeGameButton_clicked()
 {
-    db.removeGameById(gameList.at(ui->listWidget->currentRow()).dbId);
+    db.removeGameById(gameList.at(ui->gameListWidget->currentRow()).dbId);
+    refreshList();
+}
+
+void MainWindow::on_removeDatabaseAction_triggered()
+{
+    resetDatabase();
+}
+
+void MainWindow::on_refreshUIAction_triggered()
+{
     refreshList();
 }

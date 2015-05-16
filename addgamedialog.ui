@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_8">
+    <layout class="QHBoxLayout" name="gameDirBox">
      <item>
       <widget class="QPushButton" name="chooseGameDirButton">
        <property name="text">
@@ -24,7 +24,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="gamePathLabel_2">
+      <widget class="QLabel" name="gameDirLabel">
        <property name="styleSheet">
         <string notr="true"/>
        </property>
@@ -34,7 +34,7 @@
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer_6">
+      <spacer name="gameDirSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -49,23 +49,23 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_7">
+    <layout class="QHBoxLayout" name="gameExecutableBox">
      <item>
-      <widget class="QPushButton" name="chooseExecutableButton">
+      <widget class="QPushButton" name="chooseGameExecutableButton">
        <property name="text">
         <string>Choose executable</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="gameExeLabel_2">
+      <widget class="QLabel" name="gameExecutableLabel">
        <property name="text">
         <string>No executable set</string>
        </property>
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer_5">
+      <spacer name="gameExecutableSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -80,16 +80,16 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_5">
+    <layout class="QHBoxLayout" name="gameNameBox">
      <item>
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="gameNameLabel">
        <property name="text">
         <string>Game name:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="nameEdit_2"/>
+      <widget class="QLineEdit" name="gameNameEdit"/>
      </item>
     </layout>
    </item>

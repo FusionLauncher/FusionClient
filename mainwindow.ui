@@ -19,18 +19,7 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QListWidget" name="listWidget">
-      <item>
-       <property name="text">
-        <string>test</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>test2</string>
-       </property>
-      </item>
-     </widget>
+     <widget class="QListWidget" name="gameListWidget"/>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
@@ -72,8 +61,8 @@
     <property name="title">
      <string>Fusion</string>
     </property>
-    <addaction name="actionRemove_database_2"/>
-    <addaction name="actionRefresh_UI"/>
+    <addaction name="removeDatabaseAction"/>
+    <addaction name="refreshUIAction"/>
    </widget>
    <addaction name="menuFusion"/>
   </widget>
@@ -86,12 +75,12 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionRemove_database_2">
+  <action name="removeDatabaseAction">
    <property name="text">
     <string>Reset database</string>
    </property>
   </action>
-  <action name="actionRefresh_UI">
+  <action name="refreshUIAction">
    <property name="text">
     <string>Refresh UI</string>
    </property>

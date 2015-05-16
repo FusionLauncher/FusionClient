@@ -18,29 +18,19 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_chooseGameButton_clicked();
-
-    void refreshUi();
-
-    void on_setNameButton_clicked();
-
     void on_launchGameButton_clicked();
 
-    void on_saveButton_clicked();
-
-    void on_loadButton_clicked();
-
     void resetDatabase();
-
-    void on_actionRefresh_UI_triggered();
-
-    void on_actionRemove_database_2_triggered();
 
     void on_addGameButton_clicked();
 
     void addGame(FGame game);
 
     void on_removeGameButton_clicked();
+
+    void on_removeDatabaseAction_triggered();
+
+    void on_refreshUIAction_triggered();
 
 private:
     Ui::MainWindow *ui;
