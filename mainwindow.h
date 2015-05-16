@@ -32,12 +32,15 @@ private slots:
 
     void on_refreshUIAction_triggered();
 
+    void on_setStylesheetAction_triggered();
+
 private:
     Ui::MainWindow *ui;
     FGame *game;
     FDB db;
     QList<FGame> gameList;
     void refreshList();
+    void reloadStylesheet();
 };
 
 #endif // MAINWINDOW_H

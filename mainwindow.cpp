@@ -14,6 +14,14 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         return;
     }
+    reloadStylesheet();
+    game = new FGame();
+    refreshList();
+    //ui->gameIdBox->setMaximum(db.getGameCount());
+}
+
+void MainWindow::reloadStylesheet()
+{
     QString stylesheet = db.getTextPref("stylesheet");
     if(!stylesheet.isNull())
     {
@@ -27,10 +35,6 @@ MainWindow::MainWindow(QWidget *parent) :
             qApp->setStyleSheet(stylesheetContents);
         }
     }
-
-    game = new FGame();
-    refreshList();
-    //ui->gameIdBox->setMaximum(db.getGameCount());
 }
 
 MainWindow::~MainWindow()
@@ -40,6 +44,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_launchGameButton_clicked()
 {
+    if(gameList.isEmpty() || ui->gameListWidget->currentRow() == -1 || !ui->gameListWidget->currentItem()->isSelected())
+    {
+        return;
+    }
     qDebug("Launching game!");
     game = new FGame(gameList.at(ui->gameListWidget->currentRow()));
     game->execute();
@@ -85,6 +93,10 @@ void MainWindow::refreshList()
 
 void MainWindow::on_removeGameButton_clicked()
 {
+    if(gameList.isEmpty() || ui->gameListWidget->currentRow() == -1 || !ui->gameListWidget->currentItem()->isSelected())
+    {
+        return;
+    }
     db.removeGameById(gameList.at(ui->gameListWidget->currentRow()).dbId);
     refreshList();
 }
@@ -97,4 +109,21 @@ void MainWindow::on_removeDatabaseAction_triggered()
 void MainWindow::on_refreshUIAction_triggered()
 {
     refreshList();
+}
+
+void MainWindow::on_setStylesheetAction_triggered()
+{
+    QString stylesheetFile = QFileDialog::getOpenFileName(this, "Choose stylesheet", QDir::homePath(), "*.qss");
+    if(QDir(stylesheetFile).exists())
+    {
+        if(db.getTextPref("stylesheet").isNull())
+        {
+            db.addTextPref("stylesheet", stylesheetFile);
+        }
+        else
+        {
+            db.updateTextPref("stylesheet", stylesheetFile);
+        }
+        reloadStylesheet();
+    }
 }
