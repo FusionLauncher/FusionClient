@@ -28,6 +28,13 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
+       <widget class="QPushButton" name="addLibraryButton">
+        <property name="text">
+         <string>Add Library</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="addGameButton">
         <property name="text">
          <string>Add new game</string>
@@ -58,7 +65,7 @@
      <x>0</x>
      <y>0</y>
      <width>400</width>
-     <height>15</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFusion">

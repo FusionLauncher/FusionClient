@@ -13,14 +13,17 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \ 
-    addgamedialog.cpp
+        mainwindow.cpp \
+    addgamedialog.cpp \
+    watchedfoldersdialog.cpp
 
 HEADERS  += mainwindow.h \
-    addgamedialog.h
+    addgamedialog.h \
+    watchedfoldersdialog.h
 
 FORMS    += mainwindow.ui \
-    addgamedialog.ui
+    addgamedialog.ui \
+    watchedfoldersdialog.ui
 
 unix|win32: LIBS += -lLibFusion
 

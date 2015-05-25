@@ -4,6 +4,7 @@
 #include <fgame.h>
 #include <fdb.h>
 #include "addgamedialog.h"
+#include "watchedfoldersdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -71,6 +72,19 @@ void MainWindow::addGame(FGame game)
     //qDebug("Game added, YAY!");
     db.addGame(game);
     refreshList();
+}
+
+void MainWindow::on_addLibraryButton_clicked()
+{
+    WatchedFoldersDialog* dialog =  new WatchedFoldersDialog(this);
+    connect(dialog, SIGNAL(folderSet(QList<QDir>)), this, SLOT(setWatchedFolders(QList<QDir>)));
+    dialog->exec();
+}
+
+
+void MainWindow::setWatchedFolders(QList<QDir> folders)
+{
+    db.updateWatchedFolders(folders);
 }
 
 void MainWindow::refreshList()
