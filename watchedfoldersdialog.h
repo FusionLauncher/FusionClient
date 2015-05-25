@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QDir>
+#include <fdb.h>
 
 namespace Ui {
     class WatchedFoldersDialog;
@@ -21,6 +22,7 @@ public:
 private:
     Ui::WatchedFoldersDialog *ui;
     QList<QDir> folder;
+    FDB db;
 private slots:
     void on_pb_AddFolder_clicked();
     void on_pb_RemoveFolder_clicked();

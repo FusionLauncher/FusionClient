@@ -8,6 +8,11 @@ WatchedFoldersDialog::WatchedFoldersDialog(QWidget *parent) :
     ui(new Ui::WatchedFoldersDialog)
 {
     ui->setupUi(this);
+    QList<QDir> folders = db.getWatchedFoldersList();
+    for(int i=0;i<folders.length();++i) {
+        ui->listWidget->addItem(folders[i].absolutePath());
+        folder.append(folders[i]);
+    }
 }
 
 WatchedFoldersDialog::~WatchedFoldersDialog()
@@ -24,6 +29,12 @@ void WatchedFoldersDialog::on_pb_AddFolder_clicked()
 
 void WatchedFoldersDialog::on_pb_RemoveFolder_clicked()
 {
+    int row = ui->listWidget->currentRow();
+    folder.removeAt(row);
+    ui->listWidget->clear();
+    for(int i=0;i<folder.length();++i) {
+        ui->listWidget->addItem(folder[i].absolutePath());
+    }
 
 }
 
