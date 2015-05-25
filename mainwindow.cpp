@@ -17,6 +17,10 @@ MainWindow::MainWindow(QWidget *parent) :
     }
     reloadStylesheet();
     game = new FGame();
+
+    //Scan for New Games First
+    crawler.scanAllFolders();
+
     refreshList();
     //ui->gameIdBox->setMaximum(db.getGameCount());
 }
