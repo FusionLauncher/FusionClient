@@ -14,7 +14,7 @@ class WatchedFoldersDialog : public QDialog
     Q_OBJECT
 
 signals:
-    folderSet(QList<QDir> folders);
+    void folderSet(QList<QDir> folders);
 public:
     explicit WatchedFoldersDialog(QWidget *parent = 0);
     ~WatchedFoldersDialog();
