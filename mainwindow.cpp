@@ -4,6 +4,7 @@
 #include <fgame.h>
 #include <fdb.h>
 #include "addgamedialog.h"
+#include "origingamesdialog.h"
 #include "watchedfoldersdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -23,6 +24,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     refreshList();
     //ui->gameIdBox->setMaximum(db.getGameCount());
+
+    if(gameList[0]==gameList[1])
+        qDebug() << "equal";
 }
 
 void MainWindow::reloadStylesheet()
@@ -144,4 +148,20 @@ void MainWindow::on_setStylesheetAction_triggered()
         }
         reloadStylesheet();
     }
+}
+
+void MainWindow::on_libAddGameAction_triggered()
+{
+    on_addGameButton_clicked();
+}
+
+void MainWindow::on_libAddLibAction_triggered()
+{
+    on_addLibraryButton_clicked();
+}
+
+void MainWindow::on_libManageOriginAction_triggered()
+{
+    OriginGamesDialog *dialog = new OriginGamesDialog(this, gameList);
+    dialog->exec();
 }

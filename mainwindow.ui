@@ -76,7 +76,16 @@
     <addaction name="refreshUIAction"/>
     <addaction name="setStylesheetAction"/>
    </widget>
+   <widget class="QMenu" name="menuLibrary">
+    <property name="title">
+     <string>Library</string>
+    </property>
+    <addaction name="libAddGameAction"/>
+    <addaction name="libAddLibAction"/>
+    <addaction name="libManageOriginAction"/>
+   </widget>
    <addaction name="menuFusion"/>
+   <addaction name="menuLibrary"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -100,6 +109,21 @@
   <action name="setStylesheetAction">
    <property name="text">
     <string>Set stylesheet</string>
+   </property>
+  </action>
+  <action name="libAddGameAction">
+   <property name="text">
+    <string>Add Game</string>
+   </property>
+  </action>
+  <action name="libAddLibAction">
+   <property name="text">
+    <string>Add Library</string>
+   </property>
+  </action>
+  <action name="libManageOriginAction">
+   <property name="text">
+    <string>Add Origin-Game</string>
    </property>
   </action>
  </widget>
