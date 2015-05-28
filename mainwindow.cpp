@@ -4,7 +4,6 @@
 #include <fgame.h>
 #include <fdb.h>
 #include "addgamedialog.h"
-#include "origingamesdialog.h"
 #include "watchedfoldersdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -24,9 +23,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     refreshList();
     //ui->gameIdBox->setMaximum(db.getGameCount());
-
-    if(gameList[0]==gameList[1])
-        qDebug() << "equal";
 }
 
 void MainWindow::reloadStylesheet()
