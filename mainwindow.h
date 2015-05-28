@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <fgame.h>
 #include <fdb.h>
+#include <fcrawler.h>
 
 namespace Ui {
 class MainWindow;
@@ -24,6 +25,8 @@ private slots:
 
     void on_addGameButton_clicked();
 
+    void on_addLibraryButton_clicked();
+
     void addGame(FGame game);
 
     void on_removeGameButton_clicked();
@@ -34,9 +37,16 @@ private slots:
 
     void on_setStylesheetAction_triggered();
 
+    void on_libAddGameAction_triggered();
+    void on_libAddLibAction_triggered();
+
+    void setWatchedFolders(QList<QDir> folders);
+
+
 private:
     Ui::MainWindow *ui;
     FGame *game;
+    FCrawler crawler;
     FDB db;
     QList<FGame> gameList;
     void refreshList();

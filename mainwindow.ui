@@ -28,6 +28,13 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
+       <widget class="QPushButton" name="addLibraryButton">
+        <property name="text">
+         <string>Add Library</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="addGameButton">
         <property name="text">
          <string>Add new game</string>
@@ -58,7 +65,7 @@
      <x>0</x>
      <y>0</y>
      <width>400</width>
-     <height>15</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFusion">
@@ -69,7 +76,15 @@
     <addaction name="refreshUIAction"/>
     <addaction name="setStylesheetAction"/>
    </widget>
+   <widget class="QMenu" name="menuLibrary">
+    <property name="title">
+     <string>Library</string>
+    </property>
+    <addaction name="libAddGameAction"/>
+    <addaction name="libAddLibAction"/>
+   </widget>
    <addaction name="menuFusion"/>
+   <addaction name="menuLibrary"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -93,6 +108,21 @@
   <action name="setStylesheetAction">
    <property name="text">
     <string>Set stylesheet</string>
+   </property>
+  </action>
+  <action name="libAddGameAction">
+   <property name="text">
+    <string>Add Game</string>
+   </property>
+  </action>
+  <action name="libAddLibAction">
+   <property name="text">
+    <string>Add Library</string>
+   </property>
+  </action>
+  <action name="libManageOriginAction">
+   <property name="text">
+    <string>Add Origin-Game</string>
    </property>
   </action>
  </widget>

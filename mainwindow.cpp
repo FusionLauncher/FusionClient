@@ -4,6 +4,7 @@
 #include <fgame.h>
 #include <fdb.h>
 #include "addgamedialog.h"
+#include "watchedfoldersdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -16,6 +17,10 @@ MainWindow::MainWindow(QWidget *parent) :
     }
     reloadStylesheet();
     game = new FGame();
+
+    //Scan for New Games First
+    crawler.scanAllFolders();
+
     refreshList();
     //ui->gameIdBox->setMaximum(db.getGameCount());
 }
@@ -73,6 +78,19 @@ void MainWindow::addGame(FGame game)
     refreshList();
 }
 
+void MainWindow::on_addLibraryButton_clicked()
+{
+    WatchedFoldersDialog* dialog =  new WatchedFoldersDialog(this);
+    connect(dialog, SIGNAL(folderSet(QList<QDir>)), this, SLOT(setWatchedFolders(QList<QDir>)));
+    dialog->exec();
+}
+
+
+void MainWindow::setWatchedFolders(QList<QDir> folders)
+{
+    db.updateWatchedFolders(folders);
+}
+
 void MainWindow::refreshList()
 {
     ui->gameListWidget->clear();
@@ -127,3 +145,14 @@ void MainWindow::on_setStylesheetAction_triggered()
         reloadStylesheet();
     }
 }
+
+void MainWindow::on_libAddGameAction_triggered()
+{
+    on_addGameButton_clicked();
+}
+
+void MainWindow::on_libAddLibAction_triggered()
+{
+    on_addLibraryButton_clicked();
+}
+
