@@ -156,8 +156,3 @@ void MainWindow::on_libAddLibAction_triggered()
     on_addLibraryButton_clicked();
 }
 
-void MainWindow::on_libManageOriginAction_triggered()
-{
-    OriginGamesDialog *dialog = new OriginGamesDialog(this, gameList);
-    dialog->exec();
-}

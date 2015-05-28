@@ -39,7 +39,6 @@ private slots:
 
     void on_libAddGameAction_triggered();
     void on_libAddLibAction_triggered();
-    void on_libManageOriginAction_triggered();
 
     void setWatchedFolders(QList<QDir> folders);
 

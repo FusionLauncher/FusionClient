@@ -82,7 +82,6 @@
     </property>
     <addaction name="libAddGameAction"/>
     <addaction name="libAddLibAction"/>
-    <addaction name="libManageOriginAction"/>
    </widget>
    <addaction name="menuFusion"/>
    <addaction name="menuLibrary"/>
