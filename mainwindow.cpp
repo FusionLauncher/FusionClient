@@ -4,6 +4,8 @@
 #include <fgame.h>
 #include <fdb.h>
 #include "addgamedialog.h"
+#include "fgamewidget.h"
+#include "gameinfodialog.h"
 #include "watchedfoldersdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -15,14 +17,23 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         return;
     }
+
     reloadStylesheet();
     game = new FGame();
 
     //Scan for New Games First
     crawler.scanAllFolders();
 
+    gameScrollLayout = new QVBoxLayout;
+
+    ui->gameScrollArea->widget()->setLayout(gameScrollLayout);
+    ui->gameScrollArea->setStyleSheet("background: transparent");
+
+
     refreshList();
     //ui->gameIdBox->setMaximum(db.getGameCount());
+
+  //  QString homeLocation = QStandardPaths::locate(QStandardPaths::AppDataLocation, QString(), QStandardPaths::LocateDirectory);
 }
 
 void MainWindow::reloadStylesheet()
@@ -33,11 +44,11 @@ void MainWindow::reloadStylesheet()
         qDebug("Stylesheet set. Trying to load... ("+stylesheet.toLatin1()+")");
         QFile stylesheetFile(stylesheet);
         stylesheetFile.open(QFile::ReadOnly);
-        QString stylesheetContents = QLatin1String(stylesheetFile.readAll());
-        if(!stylesheetContents.isNull())
+        currentStyle = QLatin1String(stylesheetFile.readAll());
+        if(!currentStyle.isNull())
         {
             qDebug("Stylesheet loaded.");
-            qApp->setStyleSheet(stylesheetContents);
+            qApp->setStyleSheet(currentStyle);
         }
     }
 }
@@ -102,10 +113,42 @@ void MainWindow::refreshList()
     }
     else
     {
-        for(int i = 0; i < gameList.size(); i++)
+        for(int i = 0; i < gameList.length(); i++)
         {
             ui->gameListWidget->addItem(gameList[i].getName());
+
+
+                FGameWidget *gw = new FGameWidget(ui->gameScrollArea);
+                gw->setGame(&gameList[i]);
+                connect(gw, SIGNAL(clicked(FGame*, QObject*)), this, SLOT(onGameClick(FGame*, QObject*)));
+                connect(gw, SIGNAL(doubleClicked(FGame*,QObject*)), this, SLOT(onGameDoubleClicked(FGame*, QObject*)));
+                connect(gw, SIGNAL(rightClicked(FGame*,QObject*)), this, SLOT(onGameRightClicked(FGame*, QObject*)));
+
+                gameScrollLayout->addWidget(gw);
+
         }
+    }
+}
+
+
+
+void MainWindow::onGameRightClicked(FGame *game, QObject *sender)
+{
+    GameInfoDialog *dialog = new GameInfoDialog(*game);
+    dialog->exec();
+}
+
+void MainWindow::onGameDoubleClicked(FGame *game, QObject *sender)
+{
+    game->execute();
+}
+
+void MainWindow::onGameClick(FGame *game, QObject *sender)
+{
+    if(qobject_cast<FGameWidget*>(sender)) {
+       FGameWidget *widget = (FGameWidget*)sender;
+       qDebug() << "is FGameWidget";
+       this->setWindowTitle("FusionLauncher - " + game->getName());
     }
 }
 
@@ -154,5 +197,18 @@ void MainWindow::on_libAddGameAction_triggered()
 void MainWindow::on_libAddLibAction_triggered()
 {
     on_addLibraryButton_clicked();
+}
+
+void MainWindow::on_actionGet_Info_triggered()
+{
+    if(gameList.isEmpty() || ui->gameListWidget->currentRow() == -1 || !ui->gameListWidget->currentItem()->isSelected())
+    {
+        return;
+    }
+    qDebug("Launching game!");
+    game = new FGame(gameList.at(ui->gameListWidget->currentRow()));
+
+    GameInfoDialog *dialog = new GameInfoDialog(*game);
+    dialog->exec();
 }
 

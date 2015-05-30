@@ -1,0 +1,18 @@
+#fgwDialog_BackgroundActive {
+background-color: red;
+
+}
+
+
+*[fgwDialog_BackgroundActive="true"] {
+background-color: lightblue;
+
+}
+
+
+
+
+QScrollArea { background: transparent; }
+QLayout { background: transparent; }
+#gameScrollArea { background: transparent; }
+<RCC/>

@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+
 #include <QMainWindow>
 #include <fgame.h>
 #include <fdb.h>
@@ -40,9 +41,15 @@ private slots:
     void on_libAddGameAction_triggered();
     void on_libAddLibAction_triggered();
 
+
+    void on_actionGet_Info_triggered();
+
     void setWatchedFolders(QList<QDir> folders);
 
 
+    void onGameClick(FGame *game, QObject *sender = NULL);
+    void onGameDoubleClicked(FGame *game, QObject *sender);
+    void onGameRightClicked(FGame *game, QObject *sender);
 private:
     Ui::MainWindow *ui;
     FGame *game;
@@ -51,6 +58,9 @@ private:
     QList<FGame> gameList;
     void refreshList();
     void reloadStylesheet();
+
+    QLayout *gameScrollLayout;
+    QString currentStyle;
 };
 
 #endif // MAINWINDOW_H

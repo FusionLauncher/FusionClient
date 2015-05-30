@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>583</width>
+    <height>733</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,12 +17,41 @@
    <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,10,0">
     <item>
      <widget class="QListWidget" name="gameListWidget">
       <property name="sortingEnabled">
        <bool>true</bool>
       </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QScrollArea" name="gameScrollArea">
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOn</enum>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAsNeeded</enum>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>548</width>
+         <height>552</height>
+        </rect>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+      </widget>
      </widget>
     </item>
     <item>
@@ -64,7 +93,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>583</width>
      <height>21</height>
     </rect>
    </property>
@@ -83,8 +112,15 @@
     <addaction name="libAddGameAction"/>
     <addaction name="libAddLibAction"/>
    </widget>
+   <widget class="QMenu" name="menuGame">
+    <property name="title">
+     <string>Game</string>
+    </property>
+    <addaction name="actionGet_Info"/>
+   </widget>
    <addaction name="menuFusion"/>
    <addaction name="menuLibrary"/>
+   <addaction name="menuGame"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -123,6 +159,11 @@
   <action name="libManageOriginAction">
    <property name="text">
     <string>Add Origin-Game</string>
+   </property>
+  </action>
+  <action name="actionGet_Info">
+   <property name="text">
+    <string>Get Info</string>
    </property>
   </action>
  </widget>

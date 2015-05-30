@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>stylesheet.qss</file>
+        <file>gfx/FGameType_Origin.png</file>
+        <file>gfx/FGameType_Steam.png</file>
+    </qresource>
+</RCC>
