@@ -4,7 +4,6 @@
 #include <fgame.h>
 #include <fdb.h>
 #include "addgamedialog.h"
-#include "fgamewidget.h"
 #include "gameinfodialog.h"
 #include "watchedfoldersdialog.h"
 
@@ -27,7 +26,6 @@ MainWindow::MainWindow(QWidget *parent) :
     gameScrollLayout = new QVBoxLayout;
 
     ui->gameScrollArea->widget()->setLayout(gameScrollLayout);
-    ui->gameScrollArea->setStyleSheet("background: transparent");
 
 
     refreshList();
@@ -55,18 +53,23 @@ void MainWindow::reloadStylesheet()
 
 MainWindow::~MainWindow()
 {
+
+    for(int i=0;i<gameWidgetList.length();++i)
+        delete gameWidgetList[i];
+
+
     delete ui;
 }
 
 void MainWindow::on_launchGameButton_clicked()
 {
-    if(gameList.isEmpty() || ui->gameListWidget->currentRow() == -1 || !ui->gameListWidget->currentItem()->isSelected())
+    /*if(gameList.isEmpty() || ui->gameListWidget->currentRow() == -1 || !ui->gameListWidget->currentItem()->isSelected())
     {
         return;
     }
     qDebug("Launching game!");
     game = new FGame(gameList.at(ui->gameListWidget->currentRow()));
-    game->execute();
+    game->execute();*/
 }
 
 void MainWindow::resetDatabase()
@@ -104,18 +107,18 @@ void MainWindow::setWatchedFolders(QList<QDir> folders)
 
 void MainWindow::refreshList()
 {
-    ui->gameListWidget->clear();
+    //ui->gameListWidget->clear();
     gameList = db.getGameList();
     //FGame game = list.first();
     if(gameList.isEmpty())
     {
-        ui->gameListWidget->addItem("NOTHING TO SEE HERE. Use the \"Add game\" button to add a new game.");
+   //     ui->gameListWidget->addItem("NOTHING TO SEE HERE. Use the \"Add game\" button to add a new game.");
     }
     else
     {
         for(int i = 0; i < gameList.length(); i++)
         {
-            ui->gameListWidget->addItem(gameList[i].getName());
+        //    ui->gameListWidget->addItem(gameList[i].getName());
 
 
                 FGameWidget *gw = new FGameWidget(ui->gameScrollArea);
@@ -123,7 +126,7 @@ void MainWindow::refreshList()
                 connect(gw, SIGNAL(clicked(FGame*, QObject*)), this, SLOT(onGameClick(FGame*, QObject*)));
                 connect(gw, SIGNAL(doubleClicked(FGame*,QObject*)), this, SLOT(onGameDoubleClicked(FGame*, QObject*)));
                 connect(gw, SIGNAL(rightClicked(FGame*,QObject*)), this, SLOT(onGameRightClicked(FGame*, QObject*)));
-
+                gameWidgetList.append(gw);
                 gameScrollLayout->addWidget(gw);
 
         }
@@ -146,7 +149,11 @@ void MainWindow::onGameDoubleClicked(FGame *game, QObject *sender)
 void MainWindow::onGameClick(FGame *game, QObject *sender)
 {
     if(qobject_cast<FGameWidget*>(sender)) {
+       for(int i=0;i<gameWidgetList.length();++i)
+           gameWidgetList[i]->setActive(false);
+
        FGameWidget *widget = (FGameWidget*)sender;
+       widget->setActive(true);
        qDebug() << "is FGameWidget";
        this->setWindowTitle("FusionLauncher - " + game->getName());
     }
@@ -154,12 +161,12 @@ void MainWindow::onGameClick(FGame *game, QObject *sender)
 
 void MainWindow::on_removeGameButton_clicked()
 {
-    if(gameList.isEmpty() || ui->gameListWidget->currentRow() == -1 || !ui->gameListWidget->currentItem()->isSelected())
+    /*if(gameList.isEmpty() || ui->gameListWidget->currentRow() == -1 || !ui->gameListWidget->currentItem()->isSelected())
     {
         return;
     }
     db.removeGameById(gameList.at(ui->gameListWidget->currentRow()).dbId);
-    refreshList();
+    refreshList();*/
 }
 
 void MainWindow::on_removeDatabaseAction_triggered()
@@ -201,7 +208,7 @@ void MainWindow::on_libAddLibAction_triggered()
 
 void MainWindow::on_actionGet_Info_triggered()
 {
-    if(gameList.isEmpty() || ui->gameListWidget->currentRow() == -1 || !ui->gameListWidget->currentItem()->isSelected())
+    /*if(gameList.isEmpty() || ui->gameListWidget->currentRow() == -1 || !ui->gameListWidget->currentItem()->isSelected())
     {
         return;
     }
@@ -209,6 +216,6 @@ void MainWindow::on_actionGet_Info_triggered()
     game = new FGame(gameList.at(ui->gameListWidget->currentRow()));
 
     GameInfoDialog *dialog = new GameInfoDialog(*game);
-    dialog->exec();
+    dialog->exec();*/
 }
 

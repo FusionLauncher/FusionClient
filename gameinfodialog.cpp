@@ -19,7 +19,13 @@ GameInfoDialog::~GameInfoDialog()
 
 void GameInfoDialog::on_downloadArtButton_clicked()
 {
-    FArtManager artmanager;
-    artmanager.getGameData(game.getName(), "PC");
+    FArtManager *artmanager = new FArtManager();
+    connect(artmanager, SIGNAL(gotData(QString)), this, SLOT(gotData(QString)));
+    artmanager->getGameData(&game, "PC");
+
+}
+
+
+void GameInfoDialog::gotData(QString data) {
 
 }

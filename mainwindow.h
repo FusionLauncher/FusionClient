@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 
+#include "fgamewidget.h"
+
 #include <QMainWindow>
 #include <fgame.h>
 #include <fdb.h>
@@ -56,6 +58,7 @@ private:
     FCrawler crawler;
     FDB db;
     QList<FGame> gameList;
+    QList<FGameWidget*> gameWidgetList;
     void refreshList();
     void reloadStylesheet();
 

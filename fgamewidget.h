@@ -19,12 +19,14 @@ public:
     ~FGameWidget();
 
     void setGame(FGame *g);
+    void setActive(bool state);
 private:
     Ui::FGameWidget *ui;
 
     FGame *game;
     QPixmap *pix_Cover;
     QPixmap *pix_Type;
+    void updateProperty(QWidget *obj, const char *prop, const QVariant value);
 protected:
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mouseDoubleClickEvent(QMouseEvent *event) Q_DECL_OVERRIDE;

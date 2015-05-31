@@ -19,16 +19,21 @@ void FGameWidget::setGame(FGame *g) {
     ui->fgwDialog_GameTitle->setText(game->getName());
 
     pix_Cover = new QPixmap("D:\\temp\\187-1.jpg");
-    ui->fgwDialog_Cover->setPixmap( pix_Cover->scaled(90,110,Qt::KeepAspectRatioByExpanding));
+    ui->fgwDialog_Cover->setPixmap( pix_Cover->scaled(90,110,Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
 
     if(g->getType()==Steam) {
         pix_Type = new QPixmap(":/gfx/FGameType_Steam.png");
-        ui->fgwDialog_TypeIcon->setPixmap( pix_Type->scaled(50,50,Qt::KeepAspectRatioByExpanding));
+        ui->fgwDialog_TypeIcon->setPixmap( pix_Type->scaled(50,50,Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
     } else if(g->getType()==Origin) {
         pix_Type = new QPixmap(":/gfx/FGameType_Origin.png");
-        ui->fgwDialog_TypeIcon->setPixmap( pix_Type->scaled(50,50,Qt::KeepAspectRatioByExpanding));
+        ui->fgwDialog_TypeIcon->setPixmap( pix_Type->scaled(50,50,Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
     }
 
+}
+
+void FGameWidget::setActive(bool state)
+{
+    updateProperty(ui->fgwDialog_Background, "gameSelected", state);
 }
 
 
@@ -49,4 +54,14 @@ void FGameWidget::mouseDoubleClickEvent(QMouseEvent *event)
 {
     emit doubleClicked(game, this);
     qDebug() << "doubleClicked";
+}
+
+void FGameWidget::updateProperty(QWidget *obj, const char *prop, const QVariant value) {
+    if(obj->property(prop) == value)
+        return;
+
+    obj->setProperty(prop, value);
+    obj->style()->unpolish(obj);
+    obj->style()->polish(obj);
+    obj->update();
 }

@@ -13,18 +13,20 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true"/>
-  </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,10,0">
-    <item>
-     <widget class="QListWidget" name="gameListWidget">
-      <property name="sortingEnabled">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="10,0">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
     <item>
      <widget class="QScrollArea" name="gameScrollArea">
       <property name="frameShape">
@@ -44,12 +46,9 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>548</width>
-         <height>552</height>
+         <width>566</width>
+         <height>661</height>
         </rect>
-       </property>
-       <property name="autoFillBackground">
-        <bool>false</bool>
        </property>
       </widget>
      </widget>
@@ -121,14 +120,6 @@
    <addaction name="menuFusion"/>
    <addaction name="menuLibrary"/>
    <addaction name="menuGame"/>
-  </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="removeDatabaseAction">

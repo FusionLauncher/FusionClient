@@ -19,7 +19,9 @@ public:
 private:
     Ui::GameInfoDialog *ui;
 
+private slots:
     void on_downloadArtButton_clicked();
+    void gotData(QString data);
 };
 
 #endif // GAMEINFODIALOG_H
