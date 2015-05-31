@@ -85,15 +85,8 @@
     <addaction name="libAddGameAction"/>
     <addaction name="libAddLibAction"/>
    </widget>
-   <widget class="QMenu" name="menuGame">
-    <property name="title">
-     <string>Game</string>
-    </property>
-    <addaction name="actionGet_Info"/>
-   </widget>
    <addaction name="menuFusion"/>
    <addaction name="menuLibrary"/>
-   <addaction name="menuGame"/>
   </widget>
   <action name="removeDatabaseAction">
    <property name="text">

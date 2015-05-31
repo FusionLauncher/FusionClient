@@ -53,10 +53,8 @@ void MainWindow::reloadStylesheet()
 
 MainWindow::~MainWindow()
 {
-
     for(int i=0;i<gameWidgetList.length();++i)
         delete gameWidgetList[i];
-
 
     delete ui;
 }
@@ -71,7 +69,6 @@ void MainWindow::resetDatabase()
 
 void MainWindow::addGame(FGame game)
 {
-    //qDebug("Game added, YAY!");
     db.addGame(game);
     refreshList();
 }
@@ -85,7 +82,11 @@ void MainWindow::refreshList()
 {
     //ui->gameListWidget->clear();
     gameList = db.getGameList();
-    //FGame game = list.first();
+
+    for(int i=0;i<gameWidgetList.length();++i)
+        delete gameWidgetList[i];
+    gameWidgetList.clear();
+
     if(gameList.isEmpty())
     {
    //     ui->gameListWidget->addItem("NOTHING TO SEE HERE. Use the \"Add game\" button to add a new game.");
@@ -94,17 +95,13 @@ void MainWindow::refreshList()
     {
         for(int i = 0; i < gameList.length(); i++)
         {
-        //    ui->gameListWidget->addItem(gameList[i].getName());
-
-
-                FGameWidget *gw = new FGameWidget(ui->gameScrollArea);
-                gw->setGame(&gameList[i]);
-                connect(gw, SIGNAL(clicked(FGame*, QObject*)), this, SLOT(onGameClick(FGame*, QObject*)));
-                connect(gw, SIGNAL(doubleClicked(FGame*,QObject*)), this, SLOT(onGameDoubleClicked(FGame*, QObject*)));
-                connect(gw, SIGNAL(rightClicked(FGame*,QObject*)), this, SLOT(onGameRightClicked(FGame*, QObject*)));
-                gameWidgetList.append(gw);
-                gameScrollLayout->addWidget(gw);
-
+            FGameWidget *gw = new FGameWidget(ui->gameScrollArea);
+            gw->setGame(&gameList[i]);
+            connect(gw, SIGNAL(clicked(FGame*, QObject*)), this, SLOT(onGameClick(FGame*, QObject*)));
+            connect(gw, SIGNAL(doubleClicked(FGame*,QObject*)), this, SLOT(onGameDoubleClicked(FGame*, QObject*)));
+            connect(gw, SIGNAL(rightClicked(FGame*,QObject*)), this, SLOT(onGameRightClicked(FGame*, QObject*)));
+            gameWidgetList.append(gw);
+            gameScrollLayout->addWidget(gw);
         }
     }
 }
