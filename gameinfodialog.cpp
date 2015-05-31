@@ -2,7 +2,7 @@
 #include "ui_gameinfodialog.h"
 
 #include <fartmanager.h>
-
+#include <QMessageBox>
 GameInfoDialog::GameInfoDialog(FGame g, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::GameInfoDialog)
@@ -20,12 +20,21 @@ GameInfoDialog::~GameInfoDialog()
 void GameInfoDialog::on_downloadArtButton_clicked()
 {
     FArtManager *artmanager = new FArtManager();
-    connect(artmanager, SIGNAL(gotData(QString)), this, SLOT(gotData(QString)));
+    connect(artmanager, SIGNAL(startedDownload()), this, SLOT(downloadStarted()));
+    connect(artmanager, SIGNAL(finishedDownload()), this, SLOT(downloadFinished()));
     artmanager->getGameData(&game, "PC");
 
 }
 
+void GameInfoDialog::downloadFinished() {
+    --runningDownloads;
+    ui->label_2->setText("Running Downloads:" + QString::number(runningDownloads));
+    if(runningDownloads<=0)
+        QMessageBox::information(this, "Downloads finished", "Finished " + QString::number(totalDownloads) + " download(s)");
+}
 
-void GameInfoDialog::gotData(QString data) {
-
+void GameInfoDialog::downloadStarted() {
+    ++runningDownloads;
+    ++totalDownloads;
+    ui->label_2->setText("Running Downloads:" + QString::number(runningDownloads));
 }

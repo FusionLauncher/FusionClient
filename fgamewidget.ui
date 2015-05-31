@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>400</width>
+    <width>300</width>
     <height>123</height>
    </size>
   </property>
@@ -60,7 +60,7 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="leftMargin">
-       <number>1</number>
+       <number>5</number>
       </property>
       <property name="topMargin">
        <number>1</number>
@@ -81,13 +81,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>80</width>
           <height>110</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>80</width>
           <height>110</height>
          </size>
         </property>
@@ -138,6 +138,20 @@ salsladasd</string>
              </size>
             </property>
            </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="fgwDialog_launchButton">
+            <property name="text">
+             <string>Launch</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="fgwDialog_removeButton">
+            <property name="text">
+             <string>Remove</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QLabel" name="fgwDialog_TypeIcon">

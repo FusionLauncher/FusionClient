@@ -18,10 +18,12 @@ public:
     FGame game;
 private:
     Ui::GameInfoDialog *ui;
-
+    int runningDownloads = 0;
+    int totalDownloads = 0;
 private slots:
     void on_downloadArtButton_clicked();
-    void gotData(QString data);
+    void downloadFinished();
+    void downloadStarted();
 };
 
 #endif // GAMEINFODIALOG_H

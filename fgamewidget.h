@@ -35,6 +35,11 @@ signals:
     void clicked(FGame*, QObject*);
     void doubleClicked(FGame*, QObject*);
     void rightClicked(FGame*, QObject*);
+
+
+private slots:
+    void on_fgwDialog_launchButton_clicked();
+    void on_fgwDialog_removeButton_clicked();
 };
 
 #endif // FGAMEWIDGET_H

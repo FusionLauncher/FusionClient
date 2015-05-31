@@ -6,6 +6,8 @@ FGameWidget::FGameWidget(QWidget *parent) :
     ui(new Ui::FGameWidget)
 {
     ui->setupUi(this);
+    ui->fgwDialog_launchButton->setVisible(false);
+    ui->fgwDialog_removeButton->setVisible(false);
 }
 
 FGameWidget::~FGameWidget()
@@ -18,8 +20,8 @@ void FGameWidget::setGame(FGame *g) {
     game = g;
     ui->fgwDialog_GameTitle->setText(game->getName());
 
-    pix_Cover = new QPixmap("D:\\temp\\187-1.jpg");
-    ui->fgwDialog_Cover->setPixmap( pix_Cover->scaled(90,110,Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
+    pix_Cover = game->getBoxart();
+    ui->fgwDialog_Cover->setPixmap( pix_Cover->scaled(80,110,Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
 
     if(g->getType()==Steam) {
         pix_Type = new QPixmap(":/gfx/FGameType_Steam.png");
@@ -34,6 +36,8 @@ void FGameWidget::setGame(FGame *g) {
 void FGameWidget::setActive(bool state)
 {
     updateProperty(ui->fgwDialog_Background, "gameSelected", state);
+    ui->fgwDialog_launchButton->setVisible(state);
+    ui->fgwDialog_removeButton->setVisible(state);
 }
 
 
@@ -54,6 +58,16 @@ void FGameWidget::mouseDoubleClickEvent(QMouseEvent *event)
 {
     emit doubleClicked(game, this);
     qDebug() << "doubleClicked";
+}
+
+void FGameWidget::on_fgwDialog_launchButton_clicked()
+{
+    game->execute();
+}
+
+void FGameWidget::on_fgwDialog_removeButton_clicked()
+{
+
 }
 
 void FGameWidget::updateProperty(QWidget *obj, const char *prop, const QVariant value) {
