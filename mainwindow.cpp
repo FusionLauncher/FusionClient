@@ -61,16 +61,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_launchGameButton_clicked()
-{
-    /*if(gameList.isEmpty() || ui->gameListWidget->currentRow() == -1 || !ui->gameListWidget->currentItem()->isSelected())
-    {
-        return;
-    }
-    qDebug("Launching game!");
-    game = new FGame(gameList.at(ui->gameListWidget->currentRow()));
-    game->execute();*/
-}
 
 void MainWindow::resetDatabase()
 {
@@ -78,12 +68,6 @@ void MainWindow::resetDatabase()
     refreshList();
 }
 
-void MainWindow::on_addGameButton_clicked()
-{
-    AddGameDialog* dialog = new AddGameDialog(this);
-    connect(dialog, SIGNAL(gameSet(FGame)), this, SLOT(addGame(FGame)));
-    dialog->exec();
-}
 
 void MainWindow::addGame(FGame game)
 {
@@ -91,14 +75,6 @@ void MainWindow::addGame(FGame game)
     db.addGame(game);
     refreshList();
 }
-
-void MainWindow::on_addLibraryButton_clicked()
-{
-    WatchedFoldersDialog* dialog =  new WatchedFoldersDialog(this);
-    connect(dialog, SIGNAL(folderSet(QList<QDir>)), this, SLOT(setWatchedFolders(QList<QDir>)));
-    dialog->exec();
-}
-
 
 void MainWindow::setWatchedFolders(QList<QDir> folders)
 {
@@ -159,15 +135,6 @@ void MainWindow::onGameClick(FGame *game, QObject *sender)
     }
 }
 
-void MainWindow::on_removeGameButton_clicked()
-{
-    /*if(gameList.isEmpty() || ui->gameListWidget->currentRow() == -1 || !ui->gameListWidget->currentItem()->isSelected())
-    {
-        return;
-    }
-    db.removeGameById(gameList.at(ui->gameListWidget->currentRow()).dbId);
-    refreshList();*/
-}
 
 void MainWindow::on_removeDatabaseAction_triggered()
 {
@@ -198,24 +165,14 @@ void MainWindow::on_setStylesheetAction_triggered()
 
 void MainWindow::on_libAddGameAction_triggered()
 {
-    on_addGameButton_clicked();
+    AddGameDialog* dialog = new AddGameDialog(this);
+    connect(dialog, SIGNAL(gameSet(FGame)), this, SLOT(addGame(FGame)));
+    dialog->exec();
 }
 
 void MainWindow::on_libAddLibAction_triggered()
 {
-    on_addLibraryButton_clicked();
+    WatchedFoldersDialog* dialog =  new WatchedFoldersDialog(this);
+    connect(dialog, SIGNAL(folderSet(QList<QDir>)), this, SLOT(setWatchedFolders(QList<QDir>)));
+    dialog->exec();
 }
-
-void MainWindow::on_actionGet_Info_triggered()
-{
-    /*if(gameList.isEmpty() || ui->gameListWidget->currentRow() == -1 || !ui->gameListWidget->currentItem()->isSelected())
-    {
-        return;
-    }
-    qDebug("Launching game!");
-    game = new FGame(gameList.at(ui->gameListWidget->currentRow()));
-
-    GameInfoDialog *dialog = new GameInfoDialog(*game);
-    dialog->exec();*/
-}
-
