@@ -34,8 +34,6 @@ void GameInfoDialog::on_foundMultipleGames(QList<TheGameDBStorage*> Games) {
 }
 
 void GameInfoDialog::on_gameSelected(TheGameDBStorage* selectedGame) {
-    QMessageBox::information(this, "Downloads finished", selectedGame->gameName);
-
     FArtManager *artmanager = new FArtManager();
     connect(artmanager, SIGNAL(startedDownload()), this, SLOT(downloadStarted()));
     connect(artmanager, SIGNAL(finishedDownload()), this, SLOT(downloadFinished()));
