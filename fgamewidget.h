@@ -28,8 +28,8 @@ private:
     QPixmap *pix_Type;
     void updateProperty(QWidget *obj, const char *prop, const QVariant value);
 protected:
-    void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-    void mouseDoubleClickEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void mousePressEvent(QMouseEvent *event);
+    void mouseDoubleClickEvent(QMouseEvent *event);
 
 signals:
     void clicked(FGame*, QObject*);
