@@ -1,0 +1,30 @@
+
+#MainWindow {
+    background-color:#222;
+}
+
+#gameScrollArea,  #scrollAreaWidgetContents {
+ background: transparent;
+}
+
+
+FGameWidget #fgwDialog_GameTitle{
+    font-size:14pt;
+}
+
+FGameWidget #fgwDialog_Background {
+    background-color: #3BC2D1;
+    border-radius:2px;
+}
+
+
+
+
+FGameWidget #fgwDialog_Background[gameSelected="true"] {
+    background-color: #0E93B2;
+    color: #3BC2D1;
+}
+
+
+
+<RCC/>

@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui sql
+QT       += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -15,15 +16,26 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     addgamedialog.cpp \
-    watchedfoldersdialog.cpp
+    watchedfoldersdialog.cpp \
+    fgamewidget.cpp \
+    gameinfodialog.cpp \
+    general.cpp \
+    gamedbartselectordialog.cpp
 
 HEADERS  += mainwindow.h \
     addgamedialog.h \
-    watchedfoldersdialog.h
+    watchedfoldersdialog.h \
+    fgamewidget.h \
+    gameinfodialog.h \
+    general.h \
+    gamedbartselectordialog.h
 
 FORMS    += mainwindow.ui \
     addgamedialog.ui \
-    watchedfoldersdialog.ui
+    watchedfoldersdialog.ui \
+    fgamewidget.ui \
+    gameinfodialog.ui \
+    gamedbartselectordialog.ui
 
 unix|win32: LIBS += -lLibFusion
 
@@ -33,3 +45,9 @@ else:unix: LIBS += -L$$PWD/../LibFusion/ -lLibFusion
 
 INCLUDEPATH += $$PWD/../LibFusion
 DEPENDPATH += $$PWD/../LibFusion
+
+DISTFILES += \
+    stylesheet.qss
+
+RESOURCES += \
+    res.qrc
