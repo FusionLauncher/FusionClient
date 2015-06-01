@@ -35,6 +35,7 @@ private slots:
     void onGameClick(FGame *game, QObject *sender = NULL);
     void onGameDoubleClicked(FGame *game, QObject *sender);
     void onGameRightClicked(FGame *game, QObject *sender);
+    void on_GameInfoDialogFinished(int r);
 private:
     Ui::MainWindow *ui;
     FGame *game;

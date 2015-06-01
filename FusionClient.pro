@@ -19,20 +19,23 @@ SOURCES += main.cpp\
     watchedfoldersdialog.cpp \
     fgamewidget.cpp \
     gameinfodialog.cpp \
-    general.cpp
+    general.cpp \
+    gamedbartselectordialog.cpp
 
 HEADERS  += mainwindow.h \
     addgamedialog.h \
     watchedfoldersdialog.h \
     fgamewidget.h \
     gameinfodialog.h \
-    general.h
+    general.h \
+    gamedbartselectordialog.h
 
 FORMS    += mainwindow.ui \
     addgamedialog.ui \
     watchedfoldersdialog.ui \
     fgamewidget.ui \
-    gameinfodialog.ui
+    gameinfodialog.ui \
+    gamedbartselectordialog.ui
 
 unix|win32: LIBS += -lLibFusion
 

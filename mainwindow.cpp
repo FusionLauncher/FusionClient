@@ -111,7 +111,13 @@ void MainWindow::refreshList()
 void MainWindow::onGameRightClicked(FGame *game, QObject *sender)
 {
     GameInfoDialog *dialog = new GameInfoDialog(*game);
+    connect(dialog, SIGNAL(finished(int)), this, SLOT(on_GameInfoDialogFinished(int)));
     dialog->exec();
+}
+
+
+void MainWindow::on_GameInfoDialogFinished(int r) {
+    refreshList();
 }
 
 void MainWindow::onGameDoubleClicked(FGame *game, QObject *sender)

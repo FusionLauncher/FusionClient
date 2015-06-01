@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <fgame.h>
+#include <thegamedbstorage.h>
 
 namespace Ui {
 class GameInfoDialog;
@@ -24,6 +25,8 @@ private slots:
     void on_downloadArtButton_clicked();
     void downloadFinished();
     void downloadStarted();
+    void on_foundMultipleGames(QList<TheGameDBStorage *> Games);
+    void on_gameSelected(TheGameDBStorage *selectedGame);
 };
 
 #endif // GAMEINFODIALOG_H
