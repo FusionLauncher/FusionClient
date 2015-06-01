@@ -1,6 +1,6 @@
 #include "gameinfodialog.h"
 #include "ui_gameinfodialog.h"
-#include "GameDBArtSelectorDialog.h"
+#include "gamedbartselectordialog.h"
 #include <fartmanager.h>
 #include <QMessageBox>
 GameInfoDialog::GameInfoDialog(FGame g, QWidget *parent) :

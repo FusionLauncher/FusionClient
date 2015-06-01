@@ -48,6 +48,10 @@ void MainWindow::reloadStylesheet()
             qDebug("Stylesheet loaded.");
             qApp->setStyleSheet(currentStyle);
         }
+    } else {
+        //saveDefault stylesheet
+        db.addTextPref("stylesheet", ":/stylesheet.qss");
+        reloadStylesheet();
     }
 }
 
