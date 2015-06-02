@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
     currentView = db.getIntPref("lastView");
-    changeView();
+    setView();
 
 
     reloadStylesheet();
@@ -63,22 +63,32 @@ void MainWindow::reloadStylesheet()
 void MainWindow::changeView()
 {
     if(currentView==0){ //is now BiGView
-        currentView = 1;
-
-        ui->gameScrollArea->setVisible(true);
-        ui->defaultViewWidget->setVisible(false);
-        db.updateIntPref("defaultviewWidth", this->width());
-        db.updateIntPref("defaultviewHeight", this->height());
-        this->resize(db.getIntPref("minviewWidth"), db.getIntPref("minviewHeight"));
-
-    } else { //is now smallview
-        currentView = 0;
-        ui->gameScrollArea->setVisible(false);
-        ui->defaultViewWidget->setVisible(true);
         db.updateIntPref("minviewWidth", this->width());
         db.updateIntPref("minviewHeight", this->height());
+        currentView = 1;
+
+    } else { //is now smallview
+        db.updateIntPref("defaultviewWidth", this->width());
+        db.updateIntPref("defaultviewHeight", this->height());
+        currentView = 0;
+    }
+
+    setView();
+}
+
+
+void MainWindow::setView() {
+    if(currentView==0){
+        ui->gameScrollArea->setVisible(true);
+        ui->defaultViewWidget->setVisible(false);
+        this->resize(db.getIntPref("minviewWidth"), db.getIntPref("minviewHeight"));
+
+    } else {
+        ui->gameScrollArea->setVisible(false);
+        ui->defaultViewWidget->setVisible(true);
         this->resize(db.getIntPref("defaultviewWidth"), db.getIntPref("defaultviewHeight"));
     }
+    db.updateIntPref("lastView", currentView);
 }
 
 MainWindow::~MainWindow()

@@ -55,6 +55,7 @@ private:
     QString currentStyle;
 
     int currentView;
+    void setView();
 };
 
 #endif // MAINWINDOW_H
