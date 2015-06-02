@@ -3,6 +3,7 @@
 #include <QFileDialog>
 #include <fgame.h>
 #include <fdb.h>
+#include <QMessageBox>
 #include "addgamedialog.h"
 #include "gameinfodialog.h"
 #include "watchedfoldersdialog.h"
@@ -16,6 +17,10 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         return;
     }
+
+    currentView = db.getIntPref("lastView");
+    changeView();
+
 
     reloadStylesheet();
     game = new FGame();
@@ -52,6 +57,27 @@ void MainWindow::reloadStylesheet()
         //saveDefault stylesheet
         db.addTextPref("stylesheet", ":/stylesheet.qss");
         reloadStylesheet();
+    }
+}
+
+void MainWindow::changeView()
+{
+    if(currentView==0){ //is now BiGView
+        currentView = 1;
+
+        ui->gameScrollArea->setVisible(true);
+        ui->defaultViewWidget->setVisible(false);
+        db.updateIntPref("defaultviewWidth", this->width());
+        db.updateIntPref("defaultviewHeight", this->height());
+        this->resize(db.getIntPref("minviewWidth"), db.getIntPref("minviewHeight"));
+
+    } else { //is now smallview
+        currentView = 0;
+        ui->gameScrollArea->setVisible(false);
+        ui->defaultViewWidget->setVisible(true);
+        db.updateIntPref("minviewWidth", this->width());
+        db.updateIntPref("minviewHeight", this->height());
+        this->resize(db.getIntPref("defaultviewWidth"), db.getIntPref("defaultviewHeight"));
     }
 }
 
@@ -99,6 +125,7 @@ void MainWindow::refreshList()
     {
         for(int i = 0; i < gameList.length(); i++)
         {
+            ui->simpleGameList->addItem(gameList[i].getName());
             FGameWidget *gw = new FGameWidget(ui->gameScrollArea);
             gw->setGame(&gameList[i]);
             connect(gw, SIGNAL(clicked(FGame*, QObject*)), this, SLOT(onGameClick(FGame*, QObject*)));
@@ -122,6 +149,24 @@ void MainWindow::onGameRightClicked(FGame *game, QObject *sender)
 
 void MainWindow::on_GameInfoDialogFinished(int r) {
     refreshList();
+}
+
+void MainWindow::on_simpleGameList_itemClicked(QListWidgetItem * item)
+{
+    game = &gameList[ui->simpleGameList->row(item)];
+    ui->tgw_GameTitle->setText(game->getName());
+    ui->tgw_GameCover->setPixmap( game->getBoxart()->scaled(90,125,Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
+
+    if(game->getClearart() != "") {
+     //   qDebug("Set BG: background-image:url("+ game->getClearart().toLatin1() +")");
+        ui->gameDetailsWidget->setStyleSheet("#gameDetailsWidget{background-image:url("+ game->getClearart() +")}");
+    } else  if(game->getFanart() != ""){
+        ui->gameDetailsWidget->setStyleSheet("#gameDetailsWidget{background-image:url("+ game->getFanart() +")}");
+
+    } else {
+        ui->gameDetailsWidget->setStyleSheet("#gameDetailsWidget{background-image:none}");
+
+    }
 }
 
 void MainWindow::onGameDoubleClicked(FGame *game, QObject *sender)
@@ -182,4 +227,9 @@ void MainWindow::on_libAddLibAction_triggered()
     WatchedFoldersDialog* dialog =  new WatchedFoldersDialog(this);
     connect(dialog, SIGNAL(folderSet(QList<QDir>)), this, SLOT(setWatchedFolders(QList<QDir>)));
     dialog->exec();
+}
+
+void MainWindow::on_actionSwitch_View_triggered()
+{
+    changeView();
 }

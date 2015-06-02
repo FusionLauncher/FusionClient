@@ -7,7 +7,6 @@ FGameWidget::FGameWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->fgwDialog_launchButton->setVisible(false);
-    ui->fgwDialog_removeButton->setVisible(false);
 }
 
 FGameWidget::~FGameWidget()
@@ -37,7 +36,6 @@ void FGameWidget::setActive(bool state)
 {
     updateProperty(ui->fgwDialog_Background, "gameSelected", state);
     ui->fgwDialog_launchButton->setVisible(state);
-    ui->fgwDialog_removeButton->setVisible(state);
 }
 
 
@@ -65,10 +63,6 @@ void FGameWidget::on_fgwDialog_launchButton_clicked()
     game->execute();
 }
 
-void FGameWidget::on_fgwDialog_removeButton_clicked()
-{
-
-}
 
 void FGameWidget::updateProperty(QWidget *obj, const char *prop, const QVariant value) {
     if(obj->property(prop) == value)

@@ -8,6 +8,7 @@
 #include <fgame.h>
 #include <fdb.h>
 #include <fcrawler.h>
+#include <QListWidgetItem>
 
 namespace Ui {
 class MainWindow;
@@ -29,6 +30,7 @@ private slots:
     void on_setStylesheetAction_triggered();
     void on_libAddGameAction_triggered();
     void on_libAddLibAction_triggered();
+    void on_actionSwitch_View_triggered();
     void setWatchedFolders(QList<QDir> folders);
 
 
@@ -36,6 +38,8 @@ private slots:
     void onGameDoubleClicked(FGame *game, QObject *sender);
     void onGameRightClicked(FGame *game, QObject *sender);
     void on_GameInfoDialogFinished(int r);
+
+    void on_simpleGameList_itemClicked(QListWidgetItem * item);
 private:
     Ui::MainWindow *ui;
     FGame *game;
@@ -45,9 +49,12 @@ private:
     QList<FGameWidget*> gameWidgetList;
     void refreshList();
     void reloadStylesheet();
+    void changeView();
 
     QLayout *gameScrollLayout;
     QString currentStyle;
+
+    int currentView;
 };
 
 #endif // MAINWINDOW_H
