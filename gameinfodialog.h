@@ -14,15 +14,24 @@ class GameInfoDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit GameInfoDialog(FGame g, QWidget *parent = 0);
+    explicit GameInfoDialog(FGame *g, QWidget *parent = 0);
     ~GameInfoDialog();
-    FGame game;
+    FGame *game;
 private:
     Ui::GameInfoDialog *ui;
-    int runningDownloads = 0;
-    int totalDownloads = 0;
+    int runningDownloads;
+    int totalDownloads;
+    QString lastDir;
+    void openFile(QString destFileName);
 private slots:
     void on_downloadArtButton_clicked();
+    void on_ShowArtworkFolder_clicked();
+
+    void on_importBannerButton_clicked();
+    void on_importClearartButton_clicked();
+    void on_importCoverButton_clicked();
+    void on_importFanartButton_clicked();
+
     void downloadFinished();
     void downloadStarted();
     void on_foundMultipleGames(QList<TheGameDBStorage *> Games);

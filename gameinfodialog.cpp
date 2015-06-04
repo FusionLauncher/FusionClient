@@ -1,15 +1,26 @@
 #include "gameinfodialog.h"
 #include "ui_gameinfodialog.h"
 #include "gamedbartselectordialog.h"
+
 #include <fartmanager.h>
+
 #include <QMessageBox>
-GameInfoDialog::GameInfoDialog(FGame g, QWidget *parent) :
+#include <QFileDialog>
+#include <QDesktopServices>
+#include <QFileInfo>
+
+
+GameInfoDialog::GameInfoDialog(FGame *g, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::GameInfoDialog)
 {
     ui->setupUi(this);
     game = g;
-    ui->lineEdit->setText(game.getName());
+    ui->lineEdit->setText(game->getName());
+
+    runningDownloads = 0;
+    totalDownloads = 0;
+    lastDir =  "/";
 }
 
 GameInfoDialog::~GameInfoDialog()
@@ -23,9 +34,53 @@ void GameInfoDialog::on_downloadArtButton_clicked()
     connect(artmanager, SIGNAL(startedDownload()), this, SLOT(downloadStarted()));
     connect(artmanager, SIGNAL(finishedDownload()), this, SLOT(downloadFinished()));
     connect(artmanager, SIGNAL(foundMultipleGames(QList<TheGameDBStorage*>)),  this, SLOT(on_foundMultipleGames(QList<TheGameDBStorage*>)));
-    artmanager->getGameData(&game, "PC");
+    artmanager->getGameData(game, "PC");
 
 }
+
+void GameInfoDialog::on_ShowArtworkFolder_clicked()
+{
+    QDesktopServices::openUrl(game->getArtworkDir());
+}
+
+void GameInfoDialog::openFile(QString destFileName) {
+
+    QFileInfo fi;
+    QString file = QFileDialog::getOpenFileName(this, "Choose Artwork", lastDir, "Images (*.png *.jpg)");
+    if(file.isEmpty())
+        return;
+    else {
+        fi  = QFileInfo(file);
+        lastDir = fi.absoluteFilePath();
+        if(fi.exists()) {
+            FArtManager fa(game);
+            fa.importArtwork(fi, destFileName);
+        }
+
+    }
+}
+
+void GameInfoDialog::on_importBannerButton_clicked()
+{
+    openFile("banner");
+
+}
+
+void GameInfoDialog::on_importClearartButton_clicked()
+{
+    openFile("clearlogo");
+}
+
+void GameInfoDialog::on_importCoverButton_clicked()
+{
+    openFile("boxart");
+}
+
+void GameInfoDialog::on_importFanartButton_clicked()
+{
+    openFile("fanart");
+}
+
 
 void GameInfoDialog::on_foundMultipleGames(QList<TheGameDBStorage*> Games) {
     GameDBArtSelectorDialog *dialog = new GameDBArtSelectorDialog(Games, this);
@@ -38,7 +93,7 @@ void GameInfoDialog::on_gameSelected(TheGameDBStorage* selectedGame) {
     connect(artmanager, SIGNAL(startedDownload()), this, SLOT(downloadStarted()));
     connect(artmanager, SIGNAL(finishedDownload()), this, SLOT(downloadFinished()));
     connect(artmanager, SIGNAL(foundMultipleGames(QList<TheGameDBStorage*>)),  this, SLOT(on_foundMultipleGames(QList<TheGameDBStorage*>)));
-    artmanager->getGameData(&game, selectedGame);
+    artmanager->getGameData(game, selectedGame);
 }
 
 void GameInfoDialog::downloadFinished() {

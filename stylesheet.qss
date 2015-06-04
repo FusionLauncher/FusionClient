@@ -42,6 +42,12 @@ FGameWidget #fgwDialog_Background {
 
 }
 
+#gameDetailsSidebarWidget QPushButton{
+    border: 1px solid #3BC2D1;
+    color: #3BC2D1;
+    padding: 5px;
+
+}
 
 #simpleGameList::item:selected {
     color:#074761

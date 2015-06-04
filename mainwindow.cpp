@@ -85,9 +85,12 @@ void MainWindow::setView() {
 
     } else {
         ui->gameScrollArea->setVisible(false);
+
         ui->defaultViewWidget->setVisible(true);
+
         ui->tabWidget_Community->setVisible(false);
-        ui->tabWidget_Store->setVisible(false);
+        ui->tabWidget_Store->setVisible(true);
+        ui->tabWidget_Games->setVisible(false);
         this->resize(db.getIntPref("defaultviewWidth"), db.getIntPref("defaultviewHeight"));
     }
     db.updateIntPref("lastView", currentView);
@@ -127,7 +130,9 @@ void MainWindow::refreshList()
 
     for(int i=0;i<gameWidgetList.length();++i)
         delete gameWidgetList[i];
+
     gameWidgetList.clear();
+    ui->simpleGameList->clear();
 
     if(gameList.isEmpty())
     {
@@ -153,7 +158,7 @@ void MainWindow::refreshList()
 
 void MainWindow::onGameRightClicked(FGame *game, QObject *sender)
 {
-    GameInfoDialog *dialog = new GameInfoDialog(*game);
+    GameInfoDialog *dialog = new GameInfoDialog(game);
     connect(dialog, SIGNAL(finished(int)), this, SLOT(on_GameInfoDialogFinished(int)));
     dialog->exec();
 }
@@ -163,21 +168,77 @@ void MainWindow::on_GameInfoDialogFinished(int r) {
     refreshList();
 }
 
+void MainWindow::on_tabButton_Store_clicked()
+{
+    ui->tabWidget_Community->setVisible(false);
+    ui->tabWidget_Store->setVisible(true);
+    ui->tabWidget_Games->setVisible(false);
+}
+
+void MainWindow::on_tabButton_Games_clicked()
+{
+    ui->tabWidget_Community->setVisible(false);
+    ui->tabWidget_Store->setVisible(false);
+    ui->tabWidget_Games->setVisible(true);
+}
+
+void MainWindow::on_tabButton_Community_clicked()
+{
+    ui->tabWidget_Community->setVisible(true);
+    ui->tabWidget_Store->setVisible(false);
+    ui->tabWidget_Games->setVisible(false);
+}
+
+void MainWindow::on_tgw_GameIconButton_clicked()
+{
+    if(game->getType() == Steam) {
+        ui->webView->setUrl("http://store.steampowered.com/app/" + game->getExe() + "/");
+    } else if(game->getType() == Origin) {
+        QString u("http://www.origin.com/en-us/store/browse?q=" + game->getName().replace(" ", "%20").replace("™", ""));
+        ui->webView->setUrl(u);
+    }
+
+
+    ui->tabWidget_Community->setVisible(false);
+    ui->tabWidget_Store->setVisible(true);
+    ui->tabWidget_Games->setVisible(false);
+}
+
+void MainWindow::on_tgw_pb_Artwork_clicked()
+{
+    GameInfoDialog *dialog = new GameInfoDialog(game);
+    connect(dialog, SIGNAL(finished(int)), this, SLOT(on_GameInfoDialogFinished(int)));
+    dialog->exec();
+}
+
 void MainWindow::on_simpleGameList_itemClicked(QListWidgetItem * item)
 {
     game = &gameList[ui->simpleGameList->row(item)];
     ui->tgw_GameTitle->setText(game->getName());
-    ui->tgw_GameCover->setPixmap( game->getBoxart()->scaled(90,125,Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
+
+    if(game->getBoxart() != "") {
+        ui->tgw_GameCover->setStyleSheet("#tgw_GameCover{border-image:url("+ game->getBoxart() +") 0 0 0 0 stretch stretch}");
+    }
+
+    if(game->getType() == Steam) {
+        QPixmap pixmap(":/gfx/FGameType_Steam.png");
+        QIcon ButtonIcon(pixmap);
+        ui->tgw_GameIconButton->setIcon(ButtonIcon);
+    } else if (game->getType() == Origin) {
+        QPixmap pixmap(":/gfx/FGameType_Origin.png");
+        QIcon ButtonIcon(pixmap);
+        ui->tgw_GameIconButton->setIcon(ButtonIcon);
+    } else {
+        ui->tgw_GameIconButton->setIcon(QIcon());
+    }
+
 
     if(game->getClearart() != "") {
-     //   qDebug("Set BG: background-image:url("+ game->getClearart().toLatin1() +")");
         ui->gameDetailsWidget->setStyleSheet("#gameDetailsWidget{background-image:url("+ game->getClearart() +")}");
     } else  if(game->getFanart() != ""){
         ui->gameDetailsWidget->setStyleSheet("#gameDetailsWidget{background-image:url("+ game->getFanart() +")}");
-
     } else {
         ui->gameDetailsWidget->setStyleSheet("#gameDetailsWidget{background-image:none}");
-
     }
 }
 

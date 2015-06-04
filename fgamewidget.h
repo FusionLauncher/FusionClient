@@ -24,7 +24,6 @@ private:
     Ui::FGameWidget *ui;
 
     FGame *game;
-    QPixmap *pix_Cover;
     QPixmap *pix_Type;
     void updateProperty(QWidget *obj, const char *prop, const QVariant value);
 protected:

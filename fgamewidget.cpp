@@ -10,8 +10,7 @@ FGameWidget::FGameWidget(QWidget *parent) :
 }
 
 FGameWidget::~FGameWidget()
-{    
-    delete pix_Cover;
+{
     delete ui;
 }
 
@@ -19,8 +18,14 @@ void FGameWidget::setGame(FGame *g) {
     game = g;
     ui->fgwDialog_GameTitle->setText(game->getName());
 
-    pix_Cover = game->getBoxart();
-    ui->fgwDialog_Cover->setPixmap( pix_Cover->scaled(80,110,Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
+    //pix_Cover = game->getBoxart();
+   // ui->fgwDialog_Cover->setPixmap( pix_Cover->scaled(80,110,Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
+
+
+    if(game->getBoxart() != "") {
+        ui->fgwDialog_Cover->setStyleSheet("#fgwDialog_Cover{border-image:url("+ game->getBoxart() +") 0 0 0 0 stretch stretch}");
+    }
+
 
     if(g->getType()==Steam) {
         pix_Type = new QPixmap(":/gfx/FGameType_Steam.png");

@@ -39,14 +39,23 @@ private slots:
     void onGameRightClicked(FGame *game, QObject *sender);
     void on_GameInfoDialogFinished(int r);
 
+    void on_tabButton_Store_clicked();
+    void on_tabButton_Games_clicked();
+    void on_tabButton_Community_clicked();
+
+    void on_tgw_GameIconButton_clicked();
+    void on_tgw_pb_Artwork_clicked();
+
     void on_simpleGameList_itemClicked(QListWidgetItem * item);
 private:
     Ui::MainWindow *ui;
     FGame *game;
     FCrawler crawler;
     FDB db;
+
     QList<FGame> gameList;
     QList<FGameWidget*> gameWidgetList;
+
     void refreshList();
     void reloadStylesheet();
     void changeView();
