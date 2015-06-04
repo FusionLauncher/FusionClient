@@ -86,6 +86,8 @@ void MainWindow::setView() {
     } else {
         ui->gameScrollArea->setVisible(false);
         ui->defaultViewWidget->setVisible(true);
+        ui->tabWidget_Community->setVisible(false);
+        ui->tabWidget_Store->setVisible(false);
         this->resize(db.getIntPref("defaultviewWidth"), db.getIntPref("defaultviewHeight"));
     }
     db.updateIntPref("lastView", currentView);

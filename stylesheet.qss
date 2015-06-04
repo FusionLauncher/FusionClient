@@ -18,7 +18,7 @@ FGameWidget #fgwDialog_Background {
 }
 
 
-#tabButtons QPushButton {
+#tabButtons QPushButton, #tgw_GameTitle {
     color: #90E0D9;
     font-weight: bold;
     font-size: 15pt;
@@ -42,7 +42,6 @@ FGameWidget #fgwDialog_Background {
 
 }
 
-#
 
 #simpleGameList::item:selected {
     color:#074761
