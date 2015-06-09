@@ -47,6 +47,9 @@ private slots:
     void on_tgw_pb_Artwork_clicked();
 
     void on_simpleGameList_itemClicked(QListWidgetItem * item);
+
+
+    void resizeDone();
 private:
     Ui::MainWindow *ui;
     FGame *game;
@@ -65,6 +68,10 @@ private:
 
     int currentView;
     void setView();
+
+    //Save GUI-Size on resize
+    void resizeEvent(QResizeEvent *event);
+    QTimer resizeTimer;
 };
 
 #endif // MAINWINDOW_H

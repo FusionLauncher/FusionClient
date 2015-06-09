@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
         return;
     }
 
-    currentView = db.getIntPref("lastView");
+    currentView = db.getIntPref("lastView", 1);
     setView();
 
 
@@ -34,14 +34,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     refreshList();
-    //ui->gameIdBox->setMaximum(db.getGameCount());
 
-  //  QString homeLocation = QStandardPaths::locate(QStandardPaths::AppDataLocation, QString(), QStandardPaths::LocateDirectory);
+    //required to store WindowSize on Resize
+    resizeTimer.setSingleShot( true );
+    connect( &resizeTimer, SIGNAL(timeout()), SLOT(resizeDone()) );
 }
 
 void MainWindow::reloadStylesheet()
 {
-    QString stylesheet = db.getTextPref("stylesheet");
+    QString stylesheet = db.getTextPref("stylesheet", ":/stylesheet.qss");
     if(!stylesheet.isNull())
     {
         qDebug("Stylesheet set. Trying to load... ("+stylesheet.toLatin1()+")");
@@ -81,17 +82,25 @@ void MainWindow::setView() {
     if(currentView==0){
         ui->gameScrollArea->setVisible(true);
         ui->defaultViewWidget->setVisible(false);
-        this->resize(db.getIntPref("minviewWidth"), db.getIntPref("minviewHeight"));
+        this->resize(db.getIntPref("minviewWidth",360), db.getIntPref("minviewHeight", 600));
 
     } else {
+        //Hide Small GUI
         ui->gameScrollArea->setVisible(false);
 
+        //Show big Gui
         ui->defaultViewWidget->setVisible(true);
 
-        ui->tabWidget_Community->setVisible(false);
-        ui->tabWidget_Store->setVisible(true);
-        ui->tabWidget_Games->setVisible(false);
-        this->resize(db.getIntPref("defaultviewWidth"), db.getIntPref("defaultviewHeight"));
+        //Show last Tab
+        int lastTab = db.getIntPref("lastTab", 2);
+        if(lastTab==1)
+            on_tabButton_Store_clicked();
+        else if (lastTab==2)
+            on_tabButton_Games_clicked();
+        else
+            on_tabButton_Community_clicked();
+
+        this->resize(db.getIntPref("defaultviewWidth", 700), db.getIntPref("defaultviewHeight", 400));
     }
     db.updateIntPref("lastView", currentView);
 }
@@ -173,6 +182,7 @@ void MainWindow::on_tabButton_Store_clicked()
     ui->tabWidget_Community->setVisible(false);
     ui->tabWidget_Store->setVisible(true);
     ui->tabWidget_Games->setVisible(false);
+    db.updateIntPref("lastTab", 1);
 }
 
 void MainWindow::on_tabButton_Games_clicked()
@@ -180,6 +190,7 @@ void MainWindow::on_tabButton_Games_clicked()
     ui->tabWidget_Community->setVisible(false);
     ui->tabWidget_Store->setVisible(false);
     ui->tabWidget_Games->setVisible(true);
+    db.updateIntPref("lastTab", 2);
 }
 
 void MainWindow::on_tabButton_Community_clicked()
@@ -187,6 +198,7 @@ void MainWindow::on_tabButton_Community_clicked()
     ui->tabWidget_Community->setVisible(true);
     ui->tabWidget_Store->setVisible(false);
     ui->tabWidget_Games->setVisible(false);
+    db.updateIntPref("lastTab", 3);
 }
 
 void MainWindow::on_tgw_GameIconButton_clicked()
@@ -305,4 +317,26 @@ void MainWindow::on_libAddLibAction_triggered()
 void MainWindow::on_actionSwitch_View_triggered()
 {
     changeView();
+}
+
+void MainWindow::resizeEvent(QResizeEvent* event)
+{
+    //This event Fires everytime, the window is resized by a pixel.
+    //using a timer to get some delay  & not flooding the DB.
+    resizeTimer.start( 500 );
+   QMainWindow::resizeEvent(event);
+}
+
+
+
+
+void MainWindow::resizeDone()
+{
+    if(currentView==0){
+        db.updateIntPref("minviewWidth", this->width());
+        db.updateIntPref("minviewHeight", this->height());
+    } else {
+        db.updateIntPref("defaultviewWidth", this->width());
+        db.updateIntPref("defaultviewHeight", this->height());
+    }
 }
