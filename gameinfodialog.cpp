@@ -36,6 +36,9 @@ void GameInfoDialog::on_downloadArtButton_clicked()
     connect(artmanager, SIGNAL(foundMultipleGames(QList<TheGameDBStorage*>)),  this, SLOT(on_foundMultipleGames(QList<TheGameDBStorage*>)));
     artmanager->getGameData(game, "PC");
 
+    ui->label_2->setText("Searching for some Artwork...");
+
+
 }
 
 void GameInfoDialog::on_ShowArtworkFolder_clicked()
