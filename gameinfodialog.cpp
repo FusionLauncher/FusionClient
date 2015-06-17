@@ -24,7 +24,7 @@ GameInfoDialog::GameInfoDialog(FGame *g, QWidget *parent) :
 
 
     ui->aw_la_Cover->setStyleSheet("#aw_la_Cover{border-image:url("+ game->getBoxart() +") 0 0 0 0 stretch stretch}");
-    ui->aw_la_Banner->setStyleSheet("#aw_la_Banner{border-image:url("+ game->getBanner() +") 0 0 0 0 repeat stretch}");
+    //ui->aw_la_Banner->setStyleSheet("#aw_la_Banner{border-image:url("+ game->getBanner() +") 0 0 0 0 repeat stretch}");
     ui->aw_la_Clearart->setStyleSheet("#aw_la_Clearart{border-image:url("+ game->getClearart() +") 0 0 0 0 stretch stretch}");
     ui->aw_la_Fanart->setStyleSheet("#aw_la_Fanart{border-image:url("+ game->getFanart() +") 0 0 0 0 stretch stretch}");
 
