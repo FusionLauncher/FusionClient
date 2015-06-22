@@ -8,6 +8,7 @@
 #include <fgame.h>
 #include <fdb.h>
 #include <fcrawler.h>
+#include <QListWidgetItem>
 
 namespace Ui {
 class MainWindow;
@@ -29,6 +30,7 @@ private slots:
     void on_setStylesheetAction_triggered();
     void on_libAddGameAction_triggered();
     void on_libAddLibAction_triggered();
+    void on_actionSwitch_View_triggered();
     void setWatchedFolders(QList<QDir> folders);
 
 
@@ -36,18 +38,40 @@ private slots:
     void onGameDoubleClicked(FGame *game, QObject *sender);
     void onGameRightClicked(FGame *game, QObject *sender);
     void on_GameInfoDialogFinished(int r);
+
+    void on_tabButton_Store_clicked();
+    void on_tabButton_Games_clicked();
+    void on_tabButton_Community_clicked();
+
+    void on_tgw_GameIconButton_clicked();
+    void on_tgw_pb_Artwork_clicked();
+
+    void on_simpleGameList_itemClicked(QListWidgetItem * item);
+
+
+    void resizeDone();
 private:
     Ui::MainWindow *ui;
     FGame *game;
     FCrawler crawler;
     FDB db;
+
     QList<FGame> gameList;
     QList<FGameWidget*> gameWidgetList;
+
     void refreshList();
     void reloadStylesheet();
+    void changeView();
 
     QLayout *gameScrollLayout;
     QString currentStyle;
+
+    int currentView;
+    void setView();
+
+    //Save GUI-Size on resize
+    void resizeEvent(QResizeEvent *event);
+    QTimer resizeTimer;
 };
 
 #endif // MAINWINDOW_H

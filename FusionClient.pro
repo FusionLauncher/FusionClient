@@ -6,6 +6,13 @@
 
 QT       += core gui sql
 QT       += network
+QT       += webkit
+
+
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    QT       += webkitwidgets
+#endif
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

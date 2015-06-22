@@ -147,13 +147,6 @@ salsladasd</string>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="fgwDialog_removeButton">
-            <property name="text">
-             <string>Remove</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QLabel" name="fgwDialog_TypeIcon">
             <property name="minimumSize">
              <size>

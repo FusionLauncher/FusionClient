@@ -7,12 +7,10 @@ FGameWidget::FGameWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->fgwDialog_launchButton->setVisible(false);
-    ui->fgwDialog_removeButton->setVisible(false);
 }
 
 FGameWidget::~FGameWidget()
-{    
-    delete pix_Cover;
+{
     delete ui;
 }
 
@@ -20,8 +18,14 @@ void FGameWidget::setGame(FGame *g) {
     game = g;
     ui->fgwDialog_GameTitle->setText(game->getName());
 
-    pix_Cover = game->getBoxart();
-    ui->fgwDialog_Cover->setPixmap( pix_Cover->scaled(80,110,Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
+    //pix_Cover = game->getBoxart();
+   // ui->fgwDialog_Cover->setPixmap( pix_Cover->scaled(80,110,Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
+
+
+    if(game->getBoxart() != "") {
+        ui->fgwDialog_Cover->setStyleSheet("#fgwDialog_Cover{border-image:url("+ game->getBoxart() +") 0 0 0 0 stretch stretch}");
+    }
+
 
     if(g->getType()==Steam) {
         pix_Type = new QPixmap(":/gfx/FGameType_Steam.png");
@@ -37,7 +41,6 @@ void FGameWidget::setActive(bool state)
 {
     updateProperty(ui->fgwDialog_Background, "gameSelected", state);
     ui->fgwDialog_launchButton->setVisible(state);
-    ui->fgwDialog_removeButton->setVisible(state);
 }
 
 
@@ -65,10 +68,6 @@ void FGameWidget::on_fgwDialog_launchButton_clicked()
     game->execute();
 }
 
-void FGameWidget::on_fgwDialog_removeButton_clicked()
-{
-
-}
 
 void FGameWidget::updateProperty(QWidget *obj, const char *prop, const QVariant value) {
     if(obj->property(prop) == value)

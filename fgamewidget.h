@@ -24,7 +24,6 @@ private:
     Ui::FGameWidget *ui;
 
     FGame *game;
-    QPixmap *pix_Cover;
     QPixmap *pix_Type;
     void updateProperty(QWidget *obj, const char *prop, const QVariant value);
 protected:
@@ -39,7 +38,6 @@ signals:
 
 private slots:
     void on_fgwDialog_launchButton_clicked();
-    void on_fgwDialog_removeButton_clicked();
 };
 
 #endif // FGAMEWIDGET_H
