@@ -1,0 +1,63 @@
+
+#MainWindow {
+    background-color:#222;
+}
+
+#gameScrollArea,  #scrollAreaWidgetContents {
+ background: transparent;
+}
+
+
+FGameWidget #fgwDialog_GameTitle{
+    font-size:14pt;
+}
+
+FGameWidget #fgwDialog_Background {
+    background-color: #3BC2D1;
+    border-radius:2px;
+}
+
+
+#tabButtons QPushButton, #tgw_GameTitle {
+    color: #90E0D9;
+    font-weight: bold;
+    font-size: 15pt;
+    border:none;
+
+}
+
+#contentWidget QWidget QWidget {
+    background-color:#666;
+
+}
+
+#gameDetailsWidget {
+    background-repeat:no-repeat;
+    background-position:center;
+}
+
+#simpleGameList {
+    background-color:#666;
+    color:#3BC2D1;
+
+}
+
+#gameDetailsSidebarWidget QPushButton{
+    border: 1px solid #3BC2D1;
+    color: #3BC2D1;
+    padding: 5px;
+
+}
+
+#simpleGameList::item:selected {
+    color:#074761
+}
+
+FGameWidget #fgwDialog_Background[gameSelected="true"] {
+    background-color: #0E93B2;
+    color: #3BC2D1;
+}
+
+
+
+<RCC/>
