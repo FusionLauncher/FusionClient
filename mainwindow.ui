@@ -10,14 +10,14 @@
     <height>527</height>
    </rect>
   </property>
+  <property name="windowTitle">
+   <string>FusionLauncher</string>
+  </property>
   <property name="minimumSize">
    <size>
     <width>300</width>
     <height>0</height>
    </size>
-  </property>
-  <property name="windowTitle">
-   <string>FusionLauncher</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout" stretch="20,0">
