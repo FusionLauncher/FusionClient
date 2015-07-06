@@ -8,11 +8,19 @@ FGameWidget::FGameWidget(QWidget *parent) :
     ui(new Ui::FGameWidget)
 {
     ui->setupUi(this);
+    item = NULL;
+    scene = NULL;
     //ui->fgwDialog_launchButton->setVisible(false);
 }
 
 FGameWidget::~FGameWidget()
 {
+    if(item)
+        delete item;
+
+    if(scene)
+        delete scene;
+
     delete ui;
 }
 
@@ -23,12 +31,12 @@ void FGameWidget::setGame(FGame *g) {
     if(game->getBanner() != "") {
         ui->viewOne->setVisible(false);
 
-        QGraphicsScene* scene = new QGraphicsScene();
+        scene = new QGraphicsScene();
         ui->graphicsView->setScene(scene);
         QImage image(game->getBanner());
         QPixmap p = QPixmap::fromImage(image);
         p= p.scaledToWidth(300, Qt::SmoothTransformation);
-        QGraphicsPixmapItem* item = new QGraphicsPixmapItem(p);
+        item = new QGraphicsPixmapItem(p);
         scene->addItem(item);
 
         this->resize(300, p.height());
