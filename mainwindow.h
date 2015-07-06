@@ -28,6 +28,7 @@ private slots:
     void on_removeDatabaseAction_triggered();
     void on_refreshUIAction_triggered();
     void openStylesheetDialog();
+    void resetStylesheet();
     void on_libAddGameAction_triggered();
     void on_libAddLibAction_triggered();
     void on_actionSwitch_View_triggered();
