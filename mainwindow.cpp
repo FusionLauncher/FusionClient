@@ -7,6 +7,8 @@
 #include "addgamedialog.h"
 #include "gameinfodialog.h"
 #include "watchedfoldersdialog.h"
+#include <QFontDatabase>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -16,6 +18,31 @@ MainWindow::MainWindow(QWidget *parent) :
     if(!db.init())
     {
         return;
+    }
+
+   //load Fonts
+   QStringList list;
+   list << "Lato-Light.ttf";
+   int fID;
+   for (QStringList::const_iterator constIterator = list.constBegin(); constIterator != list.constEnd(); ++constIterator)
+   {
+       QFile res(":/fonts/" + *constIterator);
+       if (res.open(QIODevice::ReadOnly) == false)
+       {
+           QMessageBox::warning(0, "Font-Loader", (QString)"Cannot open font: " + *constIterator + ".");
+       }
+       else
+       {
+           fID = QFontDatabase::addApplicationFontFromData(res.readAll());
+           if (fID == -1)
+               QMessageBox::warning(0, "Font-Loader", (QString)"Cannot load Font into System: " + *constIterator + ".");
+       }
+   }
+
+   //set Font
+   if(fID >= 0) {
+       QFontDatabase fodb;
+       qApp->setFont(fodb.font("Lato Light", "Light", 12));
     }
 
     currentView = db.getIntPref("lastView", 1);
