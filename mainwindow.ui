@@ -10,14 +10,14 @@
     <height>527</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>FusionLauncher</string>
-  </property>
   <property name="minimumSize">
    <size>
     <width>300</width>
     <height>0</height>
    </size>
+  </property>
+  <property name="windowTitle">
+   <string>FusionLauncher</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout" stretch="20,0">
@@ -636,8 +636,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>52</width>
-         <height>504</height>
+         <width>54</width>
+         <height>506</height>
         </rect>
        </property>
       </widget>
@@ -651,7 +651,7 @@
      <x>0</x>
      <y>0</y>
      <width>589</width>
-     <height>21</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFusion">
@@ -661,6 +661,7 @@
     <addaction name="removeDatabaseAction"/>
     <addaction name="refreshUIAction"/>
     <addaction name="setStylesheetAction"/>
+    <addaction name="resetStylesheetAction"/>
     <addaction name="actionSwitch_View"/>
    </widget>
    <widget class="QMenu" name="menuLibrary">
@@ -711,6 +712,11 @@
   <action name="actionSwitch_View">
    <property name="text">
     <string>Switch View</string>
+   </property>
+  </action>
+  <action name="resetStylesheetAction">
+   <property name="text">
+    <string>Reset stylesheet</string>
    </property>
   </action>
  </widget>

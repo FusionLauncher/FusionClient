@@ -66,6 +66,7 @@ MainWindow::MainWindow(QWidget *parent) :
     resizeTimer.setSingleShot( true );
     connect( &resizeTimer, SIGNAL(timeout()), SLOT(resizeDone()) );
     connect( ui->setStylesheetAction, SIGNAL(triggered()), this, SLOT(openStylesheetDialog()));
+    connect( ui->resetStylesheetAction, SIGNAL(triggered()), this, SLOT(resetStylesheet()));
 }
 
 void MainWindow::reloadStylesheet()
@@ -309,6 +310,12 @@ void MainWindow::on_removeDatabaseAction_triggered()
 void MainWindow::on_refreshUIAction_triggered()
 {
     refreshList();
+}
+
+void MainWindow::resetStylesheet()
+{
+    db.deletePref("stylesheet");
+    reloadStylesheet();
 }
 
 void MainWindow::openStylesheetDialog()
