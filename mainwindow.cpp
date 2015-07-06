@@ -65,6 +65,8 @@ MainWindow::MainWindow(QWidget *parent) :
     //required to store WindowSize on Resize
     resizeTimer.setSingleShot( true );
     connect( &resizeTimer, SIGNAL(timeout()), SLOT(resizeDone()) );
+    connect( ui->setStylesheetAction, SIGNAL(triggered()), this, SLOT(openStylesheetDialog()));
+    connect( ui->resetStylesheetAction, SIGNAL(triggered()), this, SLOT(resetStylesheet()));
 }
 
 void MainWindow::reloadStylesheet()
@@ -223,11 +225,19 @@ void MainWindow::on_refreshUIAction_triggered()
     refreshList();
 }
 
-void MainWindow::on_setStylesheetAction_triggered()
+void MainWindow::resetStylesheet()
+{
+    db.deletePref("stylesheet");
+    reloadStylesheet();
+}
+
+void MainWindow::openStylesheetDialog()
 {
     QString stylesheetFile = QFileDialog::getOpenFileName(this, "Choose stylesheet", QDir::homePath(), "*.qss");
-    if(QDir(stylesheetFile).exists())
+    qDebug() << "Stylesheet: " << stylesheetFile;
+    if(QFile::exists(stylesheetFile))
     {
+        qDebug() << "New stylesheet added: " << stylesheetFile;
         if(db.getTextPref("stylesheet").isNull())
         {
             db.addTextPref("stylesheet", stylesheetFile);

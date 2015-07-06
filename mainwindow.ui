@@ -522,6 +522,7 @@
     <addaction name="refreshUIAction"/>
     <addaction name="setStylesheetAction"/>
     <addaction name="actionSwitch_View"/>
+    <addaction name="resetStylesheetAction"/>
    </widget>
    <widget class="QMenu" name="menuLibrary">
     <property name="title">
@@ -571,6 +572,11 @@
   <action name="actionSwitch_View">
    <property name="text">
     <string>Switch View</string>
+   </property>
+  </action>
+  <action name="resetStylesheetAction">
+   <property name="text">
+    <string>Reset stylesheet</string>
    </property>
   </action>
  </widget>
