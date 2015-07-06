@@ -115,6 +115,9 @@
         <string>LIBRARY</string>
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <property name="spacing">
+         <number>12</number>
+        </property>
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -149,7 +152,7 @@
             <number>0</number>
            </property>
            <property name="rightMargin">
-            <number>20</number>
+            <number>0</number>
            </property>
            <property name="bottomMargin">
             <number>0</number>
@@ -176,7 +179,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>283</width>
+                <width>303</width>
                 <height>423</height>
                </rect>
               </property>
@@ -465,6 +468,8 @@
          </widget>
         </item>
        </layout>
+       <zorder>gameDetailsWidget</zorder>
+       <zorder>gameListWidget</zorder>
       </widget>
       <widget class="QWidget" name="tab_Community">
        <attribute name="title">

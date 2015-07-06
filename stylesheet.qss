@@ -45,13 +45,6 @@ FGameWidget #fgwDialog_Background[gameSelected="true"] {
  background: transparent;
 }
 
-#tabWidget #tab_Library #gameListWidget {
-    background: transparent;
-    background-image: url(gfx/bgList.png);
-    background-position: bottom right;
-    background-repeat: repeat-xy;
-    border:0px solid #2DAAE1;
-}
 
 QScrollBar::handle:vertical{
     background: #1DAEE1;

@@ -34,13 +34,10 @@ void FGameWidget::setGame(FGame *g) {
         scene = new QGraphicsScene();
         ui->graphicsView->setScene(scene);
         QImage image(game->getBanner());
-        QPixmap p = QPixmap::fromImage(image);
-        p= p.scaledToWidth(300, Qt::SmoothTransformation);
+        QPixmap p = QPixmap::fromImage(image).scaledToWidth(300, Qt::SmoothTransformation);
         item = new QGraphicsPixmapItem(p);
         scene->addItem(item);
 
-        this->resize(300, p.height());
-        qDebug()<< "height:" << p.heightMM();
     } else {
         ui->graphicsView->setVisible(false);
     }

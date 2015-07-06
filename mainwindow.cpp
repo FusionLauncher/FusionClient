@@ -8,6 +8,7 @@
 #include "gameinfodialog.h"
 #include "watchedfoldersdialog.h"
 #include <QFontDatabase>
+#include <QGraphicsDropShadowEffect>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -45,6 +46,21 @@ MainWindow::MainWindow(QWidget *parent) :
        QFont latoFont = fodb.font("Lato Light", "Light", 12);
        qApp->setFont(latoFont);
     }
+
+   //Shadow!
+   QGraphicsDropShadowEffect* effect = new QGraphicsDropShadowEffect();
+   effect->setBlurRadius(15);
+   effect->setOffset(5,5);
+   ui->pb_Settings->setGraphicsEffect(effect);
+
+
+   //Shadow!
+   QGraphicsDropShadowEffect* scrollShadow = new QGraphicsDropShadowEffect();
+   scrollShadow->setBlurRadius(15);
+   scrollShadow->setOffset(5,0);
+   ui->gameListWidget->setGraphicsEffect(scrollShadow);
+
+
 
     currentView = db.getIntPref("lastView", 1);
     ui->tabWidget->setCurrentIndex(currentView);
@@ -209,8 +225,16 @@ void MainWindow::onGameClick(FGame *game, QObject *sender)
 
        FGameWidget *widget = (FGameWidget*)sender;
        widget->setActive(true);
-       qDebug() << "is FGameWidget";
        this->setWindowTitle("FusionLauncher - " + game->getName());
+       this->game = game;
+
+       ui->tgw_GameTitle->setText(game->getName());
+
+       if(game->getBoxart() != "") {
+           ui->tgw_GameCover->setStyleSheet("#tgw_GameCover{border-image:url("+ game->getBoxart() +") 0 0 0 0 stretch stretch}");
+       }
+
+
     }
 }
 
