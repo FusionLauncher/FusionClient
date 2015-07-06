@@ -8,6 +8,7 @@
 #include "gameinfodialog.h"
 #include "watchedfoldersdialog.h"
 #include <QFontDatabase>
+#include <QGraphicsDropShadowEffect>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -42,12 +43,28 @@ MainWindow::MainWindow(QWidget *parent) :
    //set Font
    if(fID >= 0) {
        QFontDatabase fodb;
-       qApp->setFont(fodb.font("Lato Light", "Light", 12));
+       QFont latoFont = fodb.font("Lato Light", "Light", 12);
+       qApp->setFont(latoFont);
     }
 
-    currentView = db.getIntPref("lastView", 1);
-    setView();
+   //Shadow!
+   QGraphicsDropShadowEffect* effect = new QGraphicsDropShadowEffect();
+   effect->setBlurRadius(15);
+   effect->setOffset(5,5);
+   ui->pb_Settings->setGraphicsEffect(effect);
 
+
+   //Shadow!
+   QGraphicsDropShadowEffect* scrollShadow = new QGraphicsDropShadowEffect();
+   scrollShadow->setBlurRadius(15);
+   scrollShadow->setOffset(5,0);
+   ui->gameListWidget->setGraphicsEffect(scrollShadow);
+
+
+
+    currentView = db.getIntPref("lastView", 1);
+    ui->tabWidget->setCurrentIndex(currentView);
+    this->resize(db.getIntPref("defaultviewWidth", 800), db.getIntPref("defaultviewHeight", 600));
 
     reloadStylesheet();
     game = new FGame();
@@ -55,10 +72,9 @@ MainWindow::MainWindow(QWidget *parent) :
     //Scan for New Games First
     crawler.scanAllFolders();
 
+    //Scrolling-List fo games
     gameScrollLayout = new QVBoxLayout;
-
     ui->gameScrollArea->widget()->setLayout(gameScrollLayout);
-
 
     refreshList();
 
@@ -92,46 +108,12 @@ void MainWindow::reloadStylesheet()
 
 void MainWindow::changeView()
 {
-    if(currentView==0){ //is now BiGView
-        db.updateIntPref("minviewWidth", this->width());
-        db.updateIntPref("minviewHeight", this->height());
-        currentView = 1;
 
-    } else { //is now smallview
-        db.updateIntPref("defaultviewWidth", this->width());
-        db.updateIntPref("defaultviewHeight", this->height());
-        currentView = 0;
-    }
-
-    setView();
 }
 
 
 void MainWindow::setView() {
-    if(currentView==0){
-        ui->gameScrollArea->setVisible(true);
-        ui->defaultViewWidget->setVisible(false);
-        this->resize(db.getIntPref("minviewWidth",360), db.getIntPref("minviewHeight", 600));
 
-    } else {
-        //Hide Small GUI
-        ui->gameScrollArea->setVisible(false);
-
-        //Show big Gui
-        ui->defaultViewWidget->setVisible(true);
-
-        //Show last Tab
-        int lastTab = db.getIntPref("lastTab", 2);
-        if(lastTab==1)
-            on_tabButton_Store_clicked();
-        else if (lastTab==2)
-            on_tabButton_Games_clicked();
-        else
-            on_tabButton_Community_clicked();
-
-        this->resize(db.getIntPref("defaultviewWidth", 700), db.getIntPref("defaultviewHeight", 400));
-    }
-    db.updateIntPref("lastView", currentView);
 }
 
 MainWindow::~MainWindow()
@@ -163,14 +145,13 @@ void MainWindow::setWatchedFolders(QList<QDir> folders)
 
 void MainWindow::refreshList()
 {
-    //ui->gameListWidget->clear();
     gameList = db.getGameList();
 
     for(int i=0;i<gameWidgetList.length();++i)
         delete gameWidgetList[i];
 
     gameWidgetList.clear();
-    ui->simpleGameList->clear();
+
 
     if(gameList.isEmpty())
     {
@@ -180,7 +161,7 @@ void MainWindow::refreshList()
     {
         for(int i = 0; i < gameList.length(); i++)
         {
-            ui->simpleGameList->addItem(gameList[i].getName());
+            //MinimalView
             FGameWidget *gw = new FGameWidget(ui->gameScrollArea);
             gw->setGame(&gameList[i]);
             connect(gw, SIGNAL(clicked(FGame*, QObject*)), this, SLOT(onGameClick(FGame*, QObject*)));
@@ -206,29 +187,6 @@ void MainWindow::on_GameInfoDialogFinished(int r) {
     refreshList();
 }
 
-void MainWindow::on_tabButton_Store_clicked()
-{
-    ui->tabWidget_Community->setVisible(false);
-    ui->tabWidget_Store->setVisible(true);
-    ui->tabWidget_Games->setVisible(false);
-    db.updateIntPref("lastTab", 1);
-}
-
-void MainWindow::on_tabButton_Games_clicked()
-{
-    ui->tabWidget_Community->setVisible(false);
-    ui->tabWidget_Store->setVisible(false);
-    ui->tabWidget_Games->setVisible(true);
-    db.updateIntPref("lastTab", 2);
-}
-
-void MainWindow::on_tabButton_Community_clicked()
-{
-    ui->tabWidget_Community->setVisible(true);
-    ui->tabWidget_Store->setVisible(false);
-    ui->tabWidget_Games->setVisible(false);
-    db.updateIntPref("lastTab", 3);
-}
 
 void MainWindow::on_tgw_GameIconButton_clicked()
 {
@@ -238,11 +196,7 @@ void MainWindow::on_tgw_GameIconButton_clicked()
         QString u("http://www.origin.com/en-us/store/browse?q=" + game->getName().replace(" ", "%20").replace("™", ""));
         ui->webView->setUrl(u);
     }
-
-
-    ui->tabWidget_Community->setVisible(false);
-    ui->tabWidget_Store->setVisible(true);
-    ui->tabWidget_Games->setVisible(false);
+    ui->tabWidget->setCurrentIndex(0);
 }
 
 void MainWindow::on_tgw_pb_Artwork_clicked()
@@ -252,36 +206,11 @@ void MainWindow::on_tgw_pb_Artwork_clicked()
     dialog->exec();
 }
 
-void MainWindow::on_simpleGameList_itemClicked(QListWidgetItem * item)
+void MainWindow::on_tabWidget_currentChanged(int index)
 {
-    game = &gameList[ui->simpleGameList->row(item)];
-    ui->tgw_GameTitle->setText(game->getName());
-
-    if(game->getBoxart() != "") {
-        ui->tgw_GameCover->setStyleSheet("#tgw_GameCover{border-image:url("+ game->getBoxart() +") 0 0 0 0 stretch stretch}");
-    }
-
-    if(game->getType() == Steam) {
-        QPixmap pixmap(":/gfx/FGameType_Steam.png");
-        QIcon ButtonIcon(pixmap);
-        ui->tgw_GameIconButton->setIcon(ButtonIcon);
-    } else if (game->getType() == Origin) {
-        QPixmap pixmap(":/gfx/FGameType_Origin.png");
-        QIcon ButtonIcon(pixmap);
-        ui->tgw_GameIconButton->setIcon(ButtonIcon);
-    } else {
-        ui->tgw_GameIconButton->setIcon(QIcon());
-    }
-
-
-    if(game->getClearart() != "") {
-        ui->gameDetailsWidget->setStyleSheet("#gameDetailsWidget{background-image:url("+ game->getClearart() +")}");
-    } else  if(game->getFanart() != ""){
-        ui->gameDetailsWidget->setStyleSheet("#gameDetailsWidget{background-image:url("+ game->getFanart() +")}");
-    } else {
-        ui->gameDetailsWidget->setStyleSheet("#gameDetailsWidget{background-image:none}");
-    }
+    db.updateIntPref("lastView", index);
 }
+
 
 void MainWindow::onGameDoubleClicked(FGame *game, QObject *sender)
 {
@@ -296,8 +225,16 @@ void MainWindow::onGameClick(FGame *game, QObject *sender)
 
        FGameWidget *widget = (FGameWidget*)sender;
        widget->setActive(true);
-       qDebug() << "is FGameWidget";
        this->setWindowTitle("FusionLauncher - " + game->getName());
+       this->game = game;
+
+       ui->tgw_GameTitle->setText(game->getName());
+
+       if(game->getBoxart() != "") {
+           ui->tgw_GameCover->setStyleSheet("#tgw_GameCover{border-image:url("+ game->getBoxart() +") 0 0 0 0 stretch stretch}");
+       }
+
+
     }
 }
 

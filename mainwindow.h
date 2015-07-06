@@ -40,14 +40,11 @@ private slots:
     void onGameRightClicked(FGame *game, QObject *sender);
     void on_GameInfoDialogFinished(int r);
 
-    void on_tabButton_Store_clicked();
-    void on_tabButton_Games_clicked();
-    void on_tabButton_Community_clicked();
 
     void on_tgw_GameIconButton_clicked();
     void on_tgw_pb_Artwork_clicked();
 
-    void on_simpleGameList_itemClicked(QListWidgetItem * item);
+    void on_tabWidget_currentChanged(int index);
 
 
     void resizeDone();
