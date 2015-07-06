@@ -1,6 +1,5 @@
-
 #MainWindow {
-    background-color:#222;
+    background-color:#DADADA;
 }
 
 #gameScrollArea,  #scrollAreaWidgetContents {
@@ -17,17 +16,36 @@ FGameWidget #fgwDialog_Background {
     border-radius:2px;
 }
 
+#tgw_GameTitle {
+    font-size: 24pt;
+    color: #2DAAE1;
+}
 
-#tabButtons QPushButton, #tgw_GameTitle {
-    color: #90E0D9;
-    font-weight: bold;
-    font-size: 15pt;
-    border:none;
 
+#tabButtons QPushButton {
+    color: #dadada;
+    font-size: 24pt;
+    border:0px solid #2DAAE1;
+    padding:7px;
+    width:200px;
+    margin:0px;
+    text-align:left;
+    margin-bottom:10px;
+}
+
+#tabButtons  {
+    background-color: #2DAAE1;
+}
+
+#gameListWidget {
+    background-image: url(gfx/bgList.png);
+    background-position: bottom left;
+    background-repeat: repeat-xy;
+    border:0px solid #2DAAE1;
 }
 
 #contentWidget QWidget QWidget {
-    background-color:#666;
+    background-color:#DADADA ;
 
 }
 
@@ -37,26 +55,36 @@ FGameWidget #fgwDialog_Background {
 }
 
 #simpleGameList {
-    background-color:#666;
-    color:#3BC2D1;
+    background-color:#DADADA;
+    color:#2DAAE1;
 
 }
 
 #gameDetailsSidebarWidget QPushButton{
-    border: 1px solid #3BC2D1;
-    color: #3BC2D1;
+    border: 1px solid #2DAAE1;
+    color: #2DAAE1;
     padding: 5px;
 
 }
 
+#gameDetailsSidebarWidget  #pb_Settings {
+    background-color:#1daae1!important;
+    color: #dadada;
+    height:50px;
+    width:50px;
+    border-radius:30px;
+}
+
 #simpleGameList::item:selected {
-    color:#074761
+    color:#2DAAE1
 }
 
 FGameWidget #fgwDialog_Background[gameSelected="true"] {
     background-color: #0E93B2;
     color: #3BC2D1;
 }
+
+
 
 
 

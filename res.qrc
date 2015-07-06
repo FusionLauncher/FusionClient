@@ -4,5 +4,9 @@
         <file>gfx/FGameType_Origin.png</file>
         <file>gfx/FGameType_Steam.png</file>
         <file>gfx/FusionLogo.png</file>
+        <file>fonts/Lato-Bold.ttf</file>
+        <file>fonts/Lato-Light.ttf</file>
+        <file>fonts/Lato-Regular.ttf</file>
+        <file>gfx/gears.png</file>
     </qresource>
 </RCC>
