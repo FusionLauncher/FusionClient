@@ -1,9 +1,23 @@
-#MainWindow {
-    background-color:#DADADA;
+QTabBar::tab
+{
+    background: #1DAEE1;
+    color: #dadada;
+    font-size: 24pt;
+    width:230px;
+    height:70px;
 }
 
-#gameScrollArea,  #scrollAreaWidgetContents {
- background: transparent;
+#tabWidget QWidget {
+    background: #DADADA;
+}
+
+QTabWidget::pane {
+    border-top: 0px solid #C2C7CB;
+}
+
+
+#MainWindow {
+    background:#1DAEE1;
 }
 
 
@@ -16,75 +30,62 @@ FGameWidget #fgwDialog_Background {
     border-radius:2px;
 }
 
+FGameWidget #fgwDialog_Background[gameSelected="true"] {
+    background-color: #0E93B2;
+    color: #3BC2D1;
+}
+
 #tgw_GameTitle {
     font-size: 24pt;
     color: #2DAAE1;
 }
 
 
-#tabButtons QPushButton {
-    color: #dadada;
-    font-size: 24pt;
-    border:0px solid #2DAAE1;
-    padding:7px;
-    width:200px;
-    margin:0px;
-    text-align:left;
-    margin-bottom:10px;
+#gameScrollArea,  #scrollAreaWidgetContents, #gameListWidget {
+ background: transparent;
 }
 
-#tabButtons  {
-    background-color: #2DAAE1;
-}
-
-#gameListWidget {
+#tabWidget #tab_Library #gameListWidget {
+    background: transparent;
     background-image: url(gfx/bgList.png);
-    background-position: bottom left;
+    background-position: bottom right;
     background-repeat: repeat-xy;
     border:0px solid #2DAAE1;
 }
 
-#contentWidget QWidget QWidget {
-    background-color:#DADADA ;
+QScrollBar::handle:vertical{
+    background: #1DAEE1;
 
 }
+
+QScrollBar::down-arrow:vertical, #gameScrollArea::up-arrow:vertical{
+
+}
+
+
+QScrollBar::down-button:vertical, #gameScrollArea::up-button:vertical{
+
+}
+
 
 #gameDetailsWidget {
     background-repeat:no-repeat;
     background-position:center;
 }
 
-#simpleGameList {
-    background-color:#DADADA;
-    color:#2DAAE1;
-
-}
-
 #gameDetailsSidebarWidget QPushButton{
     border: 1px solid #2DAAE1;
     color: #2DAAE1;
     padding: 5px;
-
 }
 
-#gameDetailsSidebarWidget  #pb_Settings {
-    background-color:#1daae1!important;
+#gameDetailsSidebarWidget #pb_Settings {
+    background-color:#1daae1;
     color: #dadada;
     height:50px;
     width:50px;
     border-radius:30px;
 }
-
-#simpleGameList::item:selected {
-    color:#2DAAE1
-}
-
-FGameWidget #fgwDialog_Background[gameSelected="true"] {
-    background-color: #0E93B2;
-    color: #3BC2D1;
-}
-
-
 
 
 
