@@ -227,19 +227,14 @@ void MainWindow::ShowSettingsContextMenu(const QPoint &pos)
 {
        QPoint globalPos = ui->pb_Settings->mapToGlobal(pos);
 
-       //Todo: On first call, settingsMenu->height()is not initialized.
-        //so it display on the wrong Psoition
-       settingsMenu->show(); //this does not help
+       //this is required, because (i assume) i re-calculates the sizes based on CSS, on show().
+       //at least id soesn't work if the menu was never open.
+       settingsMenu->show();
        settingsMenu->close();
-       if(settingsMenu->height()<400) {
-           globalPos.setY(globalPos.y() - settingsMenu->height());
-           globalPos.setX(globalPos.x() - settingsMenu->width() - 20);
-           qDebug() << settingsMenu->size();
-       }
-       else {
-           globalPos.setY(globalPos.y() - 130);
-           globalPos.setX(globalPos.x() - 170 - 20);
-       }
+
+       globalPos.setY(globalPos.y() - settingsMenu->height());
+       globalPos.setX(globalPos.x() - settingsMenu->width() - 20);
+
 
        settingsMenu->exec(globalPos);
 }
