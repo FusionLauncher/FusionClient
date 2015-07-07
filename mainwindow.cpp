@@ -8,6 +8,7 @@
 #include "gameinfodialog.h"
 #include "watchedfoldersdialog.h"
 #include <QFontDatabase>
+#include <QGraphicsDropShadowEffect>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -24,30 +25,57 @@ MainWindow::MainWindow(QWidget *parent) :
    QStringList list;
    list << "Lato-Light.ttf";
    int fID;
-   for (QStringList::const_iterator constIterator = list.constBegin(); constIterator != list.constEnd(); ++constIterator)
+   for (QStringList::const_iterator cIt = list.constBegin(); cIt != list.constEnd(); ++cIt)
    {
-       QFile res(":/fonts/" + *constIterator);
+       QFile res(":/fonts/" + *cIt);
        if (res.open(QIODevice::ReadOnly) == false)
        {
-           QMessageBox::warning(0, "Font-Loader", (QString)"Cannot open font: " + *constIterator + ".");
+           QMessageBox::warning(0, "Font-Loader", (QString)"Cannot open font: " + *cIt + ".");
        }
        else
        {
            fID = QFontDatabase::addApplicationFontFromData(res.readAll());
            if (fID == -1)
-               QMessageBox::warning(0, "Font-Loader", (QString)"Cannot load Font into System: " + *constIterator + ".");
+               QMessageBox::warning(0, "Font-Loader", (QString)"Cannot load Font into System: " + *cIt + ".");
        }
    }
 
    //set Font
    if(fID >= 0) {
        QFontDatabase fodb;
-       qApp->setFont(fodb.font("Lato Light", "Light", 12));
+       QFont latoFont = fodb.font("Lato Light", "Light", 12);
+       qApp->setFont(latoFont);
     }
 
-    currentView = db.getIntPref("lastView", 1);
-    setView();
+   //Shadow!
+   QGraphicsDropShadowEffect* effect = new QGraphicsDropShadowEffect();
+   effect->setBlurRadius(15);
+   effect->setOffset(5,5);
+   ui->pb_Settings->setGraphicsEffect(effect);
 
+
+   //Shadow!
+   settingsMenu = new QMenu(ui->gameDetailsSidebarWidget);
+   settingsMenu->addAction("Edit Game");
+   settingsMenu->addAction("Add Game");
+   settingsMenu->addAction("Add Launcher");
+   settingsMenu->addAction("Settings");
+   connect(settingsMenu, SIGNAL(triggered(QAction*)), this, SLOT(on_SettingsMenueClicked(QAction*)));
+   QGraphicsDropShadowEffect* menuEffect = new QGraphicsDropShadowEffect();
+   menuEffect->setBlurRadius(15);
+   menuEffect->setOffset(5,5);
+   settingsMenu->setGraphicsEffect(menuEffect);
+
+   //Shadow!
+   QGraphicsDropShadowEffect* scrollShadow = new QGraphicsDropShadowEffect();
+   scrollShadow->setBlurRadius(15);
+   scrollShadow->setOffset(5,0);
+   ui->gameListWidget->setGraphicsEffect(scrollShadow);
+
+
+    currentView = db.getIntPref("lastView", 1);
+    ui->tabWidget->setCurrentIndex(currentView);
+    this->resize(db.getIntPref("defaultviewWidth", 800), db.getIntPref("defaultviewHeight", 600));
 
     reloadStylesheet();
     game = new FGame();
@@ -55,16 +83,17 @@ MainWindow::MainWindow(QWidget *parent) :
     //Scan for New Games First
     crawler.scanAllFolders();
 
+    //Scrolling-List fo games
     gameScrollLayout = new QVBoxLayout;
-
     ui->gameScrollArea->widget()->setLayout(gameScrollLayout);
-
 
     refreshList();
 
     //required to store WindowSize on Resize
     resizeTimer.setSingleShot( true );
     connect( &resizeTimer, SIGNAL(timeout()), SLOT(resizeDone()) );
+    connect( ui->setStylesheetAction, SIGNAL(triggered()), this, SLOT(openStylesheetDialog()));
+    connect( ui->resetStylesheetAction, SIGNAL(triggered()), this, SLOT(resetStylesheet()));
 }
 
 void MainWindow::reloadStylesheet()
@@ -90,46 +119,12 @@ void MainWindow::reloadStylesheet()
 
 void MainWindow::changeView()
 {
-    if(currentView==0){ //is now BiGView
-        db.updateIntPref("minviewWidth", this->width());
-        db.updateIntPref("minviewHeight", this->height());
-        currentView = 1;
 
-    } else { //is now smallview
-        db.updateIntPref("defaultviewWidth", this->width());
-        db.updateIntPref("defaultviewHeight", this->height());
-        currentView = 0;
-    }
-
-    setView();
 }
 
 
 void MainWindow::setView() {
-    if(currentView==0){
-        ui->gameScrollArea->setVisible(true);
-        ui->defaultViewWidget->setVisible(false);
-        this->resize(db.getIntPref("minviewWidth",360), db.getIntPref("minviewHeight", 600));
 
-    } else {
-        //Hide Small GUI
-        ui->gameScrollArea->setVisible(false);
-
-        //Show big Gui
-        ui->defaultViewWidget->setVisible(true);
-
-        //Show last Tab
-        int lastTab = db.getIntPref("lastTab", 2);
-        if(lastTab==1)
-            on_tabButton_Store_clicked();
-        else if (lastTab==2)
-            on_tabButton_Games_clicked();
-        else
-            on_tabButton_Community_clicked();
-
-        this->resize(db.getIntPref("defaultviewWidth", 700), db.getIntPref("defaultviewHeight", 400));
-    }
-    db.updateIntPref("lastView", currentView);
 }
 
 MainWindow::~MainWindow()
@@ -137,6 +132,7 @@ MainWindow::~MainWindow()
     for(int i=0;i<gameWidgetList.length();++i)
         delete gameWidgetList[i];
 
+    delete settingsMenu;
     delete ui;
 }
 
@@ -161,14 +157,13 @@ void MainWindow::setWatchedFolders(QList<QDir> folders)
 
 void MainWindow::refreshList()
 {
-    //ui->gameListWidget->clear();
     gameList = db.getGameList();
 
     for(int i=0;i<gameWidgetList.length();++i)
         delete gameWidgetList[i];
 
     gameWidgetList.clear();
-    ui->simpleGameList->clear();
+
 
     if(gameList.isEmpty())
     {
@@ -178,7 +173,7 @@ void MainWindow::refreshList()
     {
         for(int i = 0; i < gameList.length(); i++)
         {
-            ui->simpleGameList->addItem(gameList[i].getName());
+            //MinimalView
             FGameWidget *gw = new FGameWidget(ui->gameScrollArea);
             gw->setGame(&gameList[i]);
             connect(gw, SIGNAL(clicked(FGame*, QObject*)), this, SLOT(onGameClick(FGame*, QObject*)));
@@ -204,29 +199,6 @@ void MainWindow::on_GameInfoDialogFinished(int r) {
     refreshList();
 }
 
-void MainWindow::on_tabButton_Store_clicked()
-{
-    ui->tabWidget_Community->setVisible(false);
-    ui->tabWidget_Store->setVisible(true);
-    ui->tabWidget_Games->setVisible(false);
-    db.updateIntPref("lastTab", 1);
-}
-
-void MainWindow::on_tabButton_Games_clicked()
-{
-    ui->tabWidget_Community->setVisible(false);
-    ui->tabWidget_Store->setVisible(false);
-    ui->tabWidget_Games->setVisible(true);
-    db.updateIntPref("lastTab", 2);
-}
-
-void MainWindow::on_tabButton_Community_clicked()
-{
-    ui->tabWidget_Community->setVisible(true);
-    ui->tabWidget_Store->setVisible(false);
-    ui->tabWidget_Games->setVisible(false);
-    db.updateIntPref("lastTab", 3);
-}
 
 void MainWindow::on_tgw_GameIconButton_clicked()
 {
@@ -236,11 +208,7 @@ void MainWindow::on_tgw_GameIconButton_clicked()
         QString u("http://www.origin.com/en-us/store/browse?q=" + game->getName().replace(" ", "%20").replace("™", ""));
         ui->webView->setUrl(u);
     }
-
-
-    ui->tabWidget_Community->setVisible(false);
-    ui->tabWidget_Store->setVisible(true);
-    ui->tabWidget_Games->setVisible(false);
+    ui->tabWidget->setCurrentIndex(0);
 }
 
 void MainWindow::on_tgw_pb_Artwork_clicked()
@@ -250,36 +218,40 @@ void MainWindow::on_tgw_pb_Artwork_clicked()
     dialog->exec();
 }
 
-void MainWindow::on_simpleGameList_itemClicked(QListWidgetItem * item)
+void MainWindow::on_tabWidget_currentChanged(int index)
 {
-    game = &gameList[ui->simpleGameList->row(item)];
-    ui->tgw_GameTitle->setText(game->getName());
-
-    if(game->getBoxart() != "") {
-        ui->tgw_GameCover->setStyleSheet("#tgw_GameCover{border-image:url("+ game->getBoxart() +") 0 0 0 0 stretch stretch}");
-    }
-
-    if(game->getType() == Steam) {
-        QPixmap pixmap(":/gfx/FGameType_Steam.png");
-        QIcon ButtonIcon(pixmap);
-        ui->tgw_GameIconButton->setIcon(ButtonIcon);
-    } else if (game->getType() == Origin) {
-        QPixmap pixmap(":/gfx/FGameType_Origin.png");
-        QIcon ButtonIcon(pixmap);
-        ui->tgw_GameIconButton->setIcon(ButtonIcon);
-    } else {
-        ui->tgw_GameIconButton->setIcon(QIcon());
-    }
-
-
-    if(game->getClearart() != "") {
-        ui->gameDetailsWidget->setStyleSheet("#gameDetailsWidget{background-image:url("+ game->getClearart() +")}");
-    } else  if(game->getFanart() != ""){
-        ui->gameDetailsWidget->setStyleSheet("#gameDetailsWidget{background-image:url("+ game->getFanart() +")}");
-    } else {
-        ui->gameDetailsWidget->setStyleSheet("#gameDetailsWidget{background-image:none}");
-    }
+    db.updateIntPref("lastView", index);
 }
+
+void MainWindow::ShowSettingsContextMenu(const QPoint &pos)
+{
+       QPoint globalPos = ui->pb_Settings->mapToGlobal(pos);
+
+       //this is required, because (i assume) i re-calculates the sizes based on CSS, on show().
+       //at least id soesn't work if the menu was never open.
+       settingsMenu->show();
+       settingsMenu->close();
+
+       globalPos.setY(globalPos.y() - settingsMenu->height());
+       globalPos.setX(globalPos.x() - settingsMenu->width() - 20);
+
+
+       settingsMenu->exec(globalPos);
+}
+void MainWindow::on_SettingsMenueClicked(QAction* action) {
+
+    if(action->text()=="Edit Game")
+        on_tgw_pb_Artwork_clicked();
+    else if(action->text()=="Add Game")
+        on_libAddGameAction_triggered();
+}
+
+
+void MainWindow::on_pb_Settings_clicked()
+{
+    ShowSettingsContextMenu(ui->pb_Settings->pos());
+}
+
 
 void MainWindow::onGameDoubleClicked(FGame *game, QObject *sender)
 {
@@ -294,8 +266,16 @@ void MainWindow::onGameClick(FGame *game, QObject *sender)
 
        FGameWidget *widget = (FGameWidget*)sender;
        widget->setActive(true);
-       qDebug() << "is FGameWidget";
        this->setWindowTitle("FusionLauncher - " + game->getName());
+       this->game = game;
+
+       ui->tgw_GameTitle->setText(game->getName());
+
+       if(game->getBoxart() != "") {
+           ui->tgw_GameCover->setStyleSheet("#tgw_GameCover{border-image:url("+ game->getBoxart() +") 0 0 0 0 stretch stretch}");
+       }
+
+
     }
 }
 
@@ -310,11 +290,19 @@ void MainWindow::on_refreshUIAction_triggered()
     refreshList();
 }
 
-void MainWindow::on_setStylesheetAction_triggered()
+void MainWindow::resetStylesheet()
+{
+    db.deletePref("stylesheet");
+    reloadStylesheet();
+}
+
+void MainWindow::openStylesheetDialog()
 {
     QString stylesheetFile = QFileDialog::getOpenFileName(this, "Choose stylesheet", QDir::homePath(), "*.qss");
-    if(QDir(stylesheetFile).exists())
+    qDebug() << "Stylesheet: " << stylesheetFile;
+    if(QFile::exists(stylesheetFile))
     {
+        qDebug() << "New stylesheet added: " << stylesheetFile;
         if(db.getTextPref("stylesheet").isNull())
         {
             db.addTextPref("stylesheet", stylesheetFile);
@@ -371,10 +359,12 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 
 void MainWindow::resizeDone()
 {
+    /*
     if(currentView==0){
         db.updateIntPref("minviewWidth", this->width());
         db.updateIntPref("minviewHeight", this->height());
-    } else {
+    } else */
+    {
         db.updateIntPref("defaultviewWidth", this->width());
         db.updateIntPref("defaultviewHeight", this->height());
     }

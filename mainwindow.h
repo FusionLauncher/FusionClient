@@ -9,6 +9,7 @@
 #include <fdb.h>
 #include <fcrawler.h>
 #include <QListWidgetItem>
+#include <QMenu>
 
 namespace Ui {
 class MainWindow;
@@ -27,7 +28,8 @@ private slots:
     void addGame(FGame game);
     void on_removeDatabaseAction_triggered();
     void on_refreshUIAction_triggered();
-    void on_setStylesheetAction_triggered();
+    void openStylesheetDialog();
+    void resetStylesheet();
     void on_libAddGameAction_triggered();
     void on_libAddLibAction_triggered();
     void on_actionSwitch_View_triggered();
@@ -39,18 +41,17 @@ private slots:
     void onGameRightClicked(FGame *game, QObject *sender);
     void on_GameInfoDialogFinished(int r);
 
-    void on_tabButton_Store_clicked();
-    void on_tabButton_Games_clicked();
-    void on_tabButton_Community_clicked();
 
     void on_tgw_GameIconButton_clicked();
     void on_tgw_pb_Artwork_clicked();
 
-    void on_simpleGameList_itemClicked(QListWidgetItem * item);
+    void on_tabWidget_currentChanged(int index);
 
+    void ShowSettingsContextMenu(const QPoint& pos);
+    void on_pb_Settings_clicked();
 
     void resizeDone();
-
+    void on_SettingsMenueClicked(QAction *action);
     //http://doc.qt.io/qt-5/qtwidgets-widgets-shapedclock-example.html
 protected:
     void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
@@ -74,6 +75,7 @@ private:
 
     QLayout *gameScrollLayout;
     QString currentStyle;
+    QMenu *settingsMenu;
 
     int currentView;
     void setView();

@@ -1,6 +1,7 @@
 #ifndef FGAMEWIDGET_H
 #define FGAMEWIDGET_H
 
+#include <QGraphicsScene>
 #include <QWidget>
 #include <fgame.h>
 #include <qevent.h>
@@ -24,7 +25,8 @@ private:
     Ui::FGameWidget *ui;
 
     FGame *game;
-    QPixmap *pix_Type;
+    QGraphicsScene* scene;
+    QGraphicsPixmapItem* item;
     void updateProperty(QWidget *obj, const char *prop, const QVariant value);
 protected:
     void mousePressEvent(QMouseEvent *event);
@@ -34,10 +36,6 @@ signals:
     void clicked(FGame*, QObject*);
     void doubleClicked(FGame*, QObject*);
     void rightClicked(FGame*, QObject*);
-
-
-private slots:
-    void on_fgwDialog_launchButton_clicked();
 };
 
 #endif // FGAMEWIDGET_H
