@@ -26,7 +26,6 @@ FSettingsDialog::~FSettingsDialog()
 
 void FSettingsDialog::on_listWidget_currentRowChanged(int i)
 {
-    qDebug() << "Index changed:" << i;
     ui->settingPages->setCurrentIndex(i);
 }
 
@@ -53,4 +52,11 @@ void FSettingsDialog::on_pb_ScanNow_clicked()
 
     FCrawler crawler;
     crawler.scanAllFolders();
+}
+
+
+
+void FSettingsDialog::on_buttonBox_accepted()
+{
+   db->updateBoolPref("ScanLibsOnStartup", (bool)ui->cb_ScanLibOnStartup->checkState());
 }

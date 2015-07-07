@@ -108,8 +108,6 @@ MainWindow::MainWindow(QWidget *parent) :
     //required to store WindowSize on Resize
     resizeTimer.setSingleShot( true );
     connect( &resizeTimer, SIGNAL(timeout()), SLOT(resizeDone()) );
-    connect( ui->setStylesheetAction, SIGNAL(triggered()), this, SLOT(openStylesheetDialog()));
-    connect( ui->resetStylesheetAction, SIGNAL(triggered()), this, SLOT(resetStylesheet()));
 
     dragEnabled = false;
     resizeHeightEnabled = false;
@@ -117,6 +115,32 @@ MainWindow::MainWindow(QWidget *parent) :
     resizeWidthEnabledInv =false;
 
 }
+
+
+void MainWindow::changeView()
+{
+
+}
+
+
+void MainWindow::setView() {
+
+}
+
+MainWindow::~MainWindow()
+{
+    for(int i=0;i<gameWidgetList.length();++i)
+        delete gameWidgetList[i];
+
+    delete settingsMenu;
+    delete ui;
+}
+
+void MainWindow::setWatchedFolders(QList<QDir> folders)
+{
+    db.updateWatchedFolders(folders);
+}
+
 
 void MainWindow::reloadStylesheet()
 {
@@ -139,32 +163,6 @@ void MainWindow::reloadStylesheet()
     }
 }
 
-void MainWindow::changeView()
-{
-
-}
-
-
-void MainWindow::setView() {
-
-}
-
-MainWindow::~MainWindow()
-{
-    for(int i=0;i<gameWidgetList.length();++i)
-        delete gameWidgetList[i];
-
-    delete settingsMenu;
-    delete ui;
-}
-
-
-void MainWindow::resetDatabase()
-{
-    db.resetDatabase();
-    refreshList();
-}
-
 
 void MainWindow::addGame(FGame game)
 {
@@ -172,10 +170,6 @@ void MainWindow::addGame(FGame game)
     refreshList();
 }
 
-void MainWindow::setWatchedFolders(QList<QDir> folders)
-{
-    db.updateWatchedFolders(folders);
-}
 
 void MainWindow::refreshList()
 {
@@ -187,11 +181,7 @@ void MainWindow::refreshList()
     gameWidgetList.clear();
 
 
-    if(gameList.isEmpty())
-    {
-   //     ui->gameListWidget->addItem("NOTHING TO SEE HERE. Use the \"Add game\" button to add a new game.");
-    }
-    else
+    if(!gameList.isEmpty())
     {
         for(int i = 0; i < gameList.length(); i++)
         {
@@ -248,13 +238,6 @@ void MainWindow::on_tgw_GameIconButton_clicked()
     ui->tabWidget->setCurrentIndex(0);
 }
 
-void MainWindow::on_tgw_pb_Artwork_clicked()
-{
-    GameInfoDialog *dialog = new GameInfoDialog(game);
-    connect(dialog, SIGNAL(finished(int)), this, SLOT(on_GameInfoDialogFinished(int)));
-    dialog->exec();
-}
-
 void MainWindow::on_tabWidget_currentChanged(int index)
 {
     db.updateIntPref("lastView", index);
@@ -278,7 +261,7 @@ void MainWindow::ShowSettingsContextMenu(const QPoint &pos)
 void MainWindow::on_SettingsMenueClicked(QAction* action) {
 
     if(action->text()=="Edit Game")
-        on_tgw_pb_Artwork_clicked();
+        showGameEditDialog();
     else if(action->text()=="Add Game")
         on_libAddGameAction_triggered();
     else if(action->text()=="Manage Library")
@@ -287,8 +270,17 @@ void MainWindow::on_SettingsMenueClicked(QAction* action) {
         showSettingsDialog();
 }
 
+void MainWindow::showGameEditDialog()
+{
+    GameInfoDialog *dialog = new GameInfoDialog(game);
+    connect(dialog, SIGNAL(finished(int)), this, SLOT(on_GameInfoDialogFinished(int)));
+    dialog->exec();
+}
+
+
 void MainWindow::showSettingsDialog() {
     FSettingsDialog* dialog = new FSettingsDialog(&db, this);
+    connect(dialog, SIGNAL(reloadStylesheet()), this, SLOT(reloadStylesheet()));
     dialog->exec();
 }
 
@@ -325,40 +317,6 @@ void MainWindow::onGameClick(FGame *game, QObject *sender)
 }
 
 
-void MainWindow::on_removeDatabaseAction_triggered()
-{
-    resetDatabase();
-}
-
-void MainWindow::on_refreshUIAction_triggered()
-{
-    refreshList();
-}
-
-void MainWindow::resetStylesheet()
-{
-    db.deletePref("stylesheet");
-    reloadStylesheet();
-}
-
-void MainWindow::openStylesheetDialog()
-{
-    QString stylesheetFile = QFileDialog::getOpenFileName(this, "Choose stylesheet", QDir::homePath(), "*.qss");
-    qDebug() << "Stylesheet: " << stylesheetFile;
-    if(QFile::exists(stylesheetFile))
-    {
-        qDebug() << "New stylesheet added: " << stylesheetFile;
-        if(db.getTextPref("stylesheet").isNull())
-        {
-            db.addTextPref("stylesheet", stylesheetFile);
-        }
-        else
-        {
-            db.updateTextPref("stylesheet", stylesheetFile);
-        }
-        reloadStylesheet();
-    }
-}
 
 void MainWindow::on_libAddGameAction_triggered()
 {

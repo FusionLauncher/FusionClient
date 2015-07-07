@@ -24,17 +24,10 @@ public:
     ~MainWindow();
 
 private slots:
-    void resetDatabase();
     void addGame(FGame game);
-    void on_removeDatabaseAction_triggered();
-    void on_refreshUIAction_triggered();
-    void openStylesheetDialog();
-    void resetStylesheet();
     void on_libAddGameAction_triggered();
     void on_libAddLibAction_triggered();
     void on_actionSwitch_View_triggered();
-    void setWatchedFolders(QList<QDir> folders);
-
 
     void onGameClick(FGame *game, QObject *sender = NULL);
     void onGameDoubleClicked(FGame *game, QObject *sender);
@@ -46,7 +39,6 @@ private slots:
     void on_pb_Close_clicked();
 
     void on_tgw_GameIconButton_clicked();
-    void on_tgw_pb_Artwork_clicked();
 
     void on_tabWidget_currentChanged(int index);
 
@@ -54,7 +46,9 @@ private slots:
     void on_pb_Settings_clicked();
 
     void resizeDone();
+    void setWatchedFolders(QList<QDir> folders);
     void on_SettingsMenueClicked(QAction *action);
+    void reloadStylesheet();
     //http://doc.qt.io/qt-5/qtwidgets-widgets-shapedclock-example.html
 protected:
     void mouseMoveEvent(QMouseEvent *event);
@@ -73,7 +67,6 @@ private:
     QList<FGameWidget*> gameWidgetList;
 
     void refreshList();
-    void reloadStylesheet();
     void changeView();
 
     QLayout *gameScrollLayout;
@@ -97,6 +90,7 @@ private:
     bool resizeWidthEnabledInv;
 
     void showSettingsDialog();
+    void showGameEditDialog();
 };
 
 #endif // MAINWINDOW_H

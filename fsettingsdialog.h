@@ -32,6 +32,7 @@ private slots:
 
 
 
+    void on_buttonBox_accepted();
 signals:
     void reloadStylesheet();
 };
