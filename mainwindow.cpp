@@ -86,6 +86,10 @@ MainWindow::MainWindow(QWidget *parent) :
     if(this->width()> screenRes.width())
         this->resize(screenRes.width()-20, this->height());
 
+
+    this->setWindowState((Qt::WindowState)db.getIntPref("windowState", Qt::WindowNoState));
+
+
     reloadStylesheet();
     game = new FGame();
 
@@ -107,6 +111,7 @@ MainWindow::MainWindow(QWidget *parent) :
     dragEnabled = false;
     resizeHeightEnabled = false;
     resizeWidthEnabled = false;
+    resizeWidthEnabledInv =false;
 
 }
 
@@ -363,6 +368,10 @@ void MainWindow::resizeEvent(QResizeEvent* event)
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
+    if(this->windowState() != Qt::WindowNoState)
+        return;
+
+
     // is the height of the Header (blue Bar)
     if (event->button() == Qt::LeftButton && event->pos().y() <90) {
            dragPosition = event->globalPos() - frameGeometry().topLeft();
@@ -386,6 +395,15 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
         initSize = this->size();
         qDebug() << "Allow Window Resize Height";
     }
+    else if (event->pos().x()<15) {
+        qDebug() << event->pos();
+        this->setCursor(Qt::SizeHorCursor);
+        dragPosition = event->globalPos();
+        resizeWidthEnabledInv = true;
+        initSize = this->size();
+        initPos =  frameGeometry();
+        qDebug() << "Allow Window Resize Height";
+    }
 }
 
 void MainWindow::mouseReleaseEvent(QMouseEvent *event)
@@ -393,7 +411,18 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
     dragEnabled = false;
     resizeHeightEnabled = false;
     resizeWidthEnabled = false;
+    resizeWidthEnabledInv = false;
     this->setCursor(Qt::ArrowCursor);
+}
+
+void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    if(this->windowState() != Qt::WindowMaximized)
+        this->setWindowState(Qt::WindowMaximized);
+    else
+        this->setWindowState(Qt::WindowNoState);
+
+    db.updateIntPref("windowState", this->windowState());
 }
 
 
@@ -427,7 +456,14 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
         int target = initSize.width()+xResize;
         this->resize(target, this->height());
         qDebug() << "Resize W by: "<< xResize  << " to: " << target;
-    }  else {
-        qDebug() << event->pos();
+    }
+    else if (event->buttons() & Qt::LeftButton && resizeWidthEnabledInv) {
+        int xResize = dragPosition.x()-event->globalPos().x();
+        int target = initSize.width()+xResize;
+        this->resize(target, this->height());
+        QRect pos(initPos);
+        pos.setX(initPos.x()-xResize);
+        move(pos.topLeft());
+        qDebug() << "Resize W Inc by: "<< xResize  << " to: " << target;
     }
 }
