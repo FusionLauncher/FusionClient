@@ -57,12 +57,10 @@ private slots:
     void on_SettingsMenueClicked(QAction *action);
     //http://doc.qt.io/qt-5/qtwidgets-widgets-shapedclock-example.html
 protected:
-    void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-    void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-    void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void mouseMoveEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
     void mouseDoubleClickEvent(QMouseEvent *event);
- //   void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
-//    void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
 
 
 private:
