@@ -5,11 +5,13 @@
 #include <fdb.h>
 #include <QMessageBox>
 #include "addgamedialog.h"
+#include "fsettingsdialog.h"
 #include "gameinfodialog.h"
 #include "watchedfoldersdialog.h"
 #include <QDesktopWidget>
 #include <QFontDatabase>
 #include <QGraphicsDropShadowEffect>
+
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -60,6 +62,7 @@ MainWindow::MainWindow(QWidget *parent) :
    settingsMenu->addAction("Edit Game");
    settingsMenu->addAction("Add Game");
    settingsMenu->addAction("Add Launcher");
+   settingsMenu->addAction("Manage Library");
    settingsMenu->addAction("Settings");
    connect(settingsMenu, SIGNAL(triggered(QAction*)), this, SLOT(on_SettingsMenueClicked(QAction*)));
    QGraphicsDropShadowEffect* menuEffect = new QGraphicsDropShadowEffect();
@@ -93,7 +96,8 @@ MainWindow::MainWindow(QWidget *parent) :
     game = new FGame();
 
     //Scan for New Games First
-    crawler.scanAllFolders();
+    if(db.getBoolPref("ScanLibsOnStartup", true))
+        crawler.scanAllFolders();
 
     //Scrolling-List fo games
     gameScrollLayout = new QVBoxLayout;
@@ -277,8 +281,16 @@ void MainWindow::on_SettingsMenueClicked(QAction* action) {
         on_tgw_pb_Artwork_clicked();
     else if(action->text()=="Add Game")
         on_libAddGameAction_triggered();
+    else if(action->text()=="Manage Library")
+        on_libAddLibAction_triggered();
+    else if(action->text()=="Settings")
+        showSettingsDialog();
 }
 
+void MainWindow::showSettingsDialog() {
+    FSettingsDialog* dialog = new FSettingsDialog(&db, this);
+    dialog->exec();
+}
 
 void MainWindow::on_pb_Settings_clicked()
 {

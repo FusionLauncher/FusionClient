@@ -95,6 +95,8 @@ private:
     bool resizeHeightEnabled;
     bool resizeWidthEnabled;
     bool resizeWidthEnabledInv;
+
+    void showSettingsDialog();
 };
 
 #endif // MAINWINDOW_H
