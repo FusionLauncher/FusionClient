@@ -357,6 +357,18 @@ void MainWindow::resizeEvent(QResizeEvent* event)
 
 
 
+
+
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    // is the height of the Header (blue Bar)
+    if (event->button() == Qt::LeftButton && event->pos().y() <90) {
+           dragPosition = event->globalPos() - frameGeometry().topLeft();
+           event->accept();
+       }
+}
+
+
 void MainWindow::resizeDone()
 {
     if(currentView==0){
@@ -366,4 +378,13 @@ void MainWindow::resizeDone()
         db.updateIntPref("defaultviewWidth", this->width());
         db.updateIntPref("defaultviewHeight", this->height());
     }
+}
+
+void MainWindow::mouseMoveEvent(QMouseEvent *event)
+{
+    // is the height of the Header (blue Bar)
+    if (event->buttons() & Qt::LeftButton && event->pos().y() <90) {
+           move(event->globalPos() - dragPosition);
+           event->accept();
+       }
 }

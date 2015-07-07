@@ -50,6 +50,15 @@ private slots:
 
 
     void resizeDone();
+
+    //http://doc.qt.io/qt-5/qtwidgets-widgets-shapedclock-example.html
+protected:
+    void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+ //   void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
+//    void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
+
+
 private:
     Ui::MainWindow *ui;
     FGame *game;
@@ -72,6 +81,9 @@ private:
     //Save GUI-Size on resize
     void resizeEvent(QResizeEvent *event);
     QTimer resizeTimer;
+
+    //Frameless Moving
+    QPoint dragPosition;
 };
 
 #endif // MAINWINDOW_H
