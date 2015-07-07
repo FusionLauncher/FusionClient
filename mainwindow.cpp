@@ -363,20 +363,23 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
            qDebug() << "Allow Window Drag";
     }
     else if (event->pos().y()>this->height()-15) {
-        this->setCursor(Qt::SizeVerCursor);        
+        this->setCursor(Qt::SizeVerCursor);
+        prepareResize(event);
         resizeHeightEnabled = true;
     }
     else if (event->pos().x()>this->width()-15) {
         this->setCursor(Qt::SizeHorCursor);
+        prepareResize(event);
         resizeWidthEnabled = true;
     }
     else if (event->pos().x()<15) {
+        prepareResize(event);
         this->setCursor(Qt::SizeHorCursor);
         resizeWidthEnabledInv = true;
     }
 }
 
-void MainWindow::prepareResize() {
+void MainWindow::prepareResize(QMouseEvent *event) {
     dragPosition = event->globalPos();
     initSize = this->size();
     initPos =  frameGeometry();
@@ -425,13 +428,13 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
         int yResize = event->globalPos().y() - dragPosition.y();
         int target = initSize.height()+yResize;
         this->resize(this->width(),target);
-        qDebug() << "Resize H by: "<< yResize  << " to: " << target;
+  //      qDebug() << "Resize H by: "<< yResize  << " to: " << target;
     }
     else if (event->buttons() & Qt::LeftButton && resizeWidthEnabled) {
         int xResize = event->globalPos().x() - dragPosition.x();
         int target = initSize.width()+xResize;
         this->resize(target, this->height());
-        qDebug() << "Resize W by: "<< xResize  << " to: " << target;
+   //     qDebug() << "Resize W by: "<< xResize  << " to: " << target;
     }
     else if (event->buttons() & Qt::LeftButton && resizeWidthEnabledInv) {
         int xResize = dragPosition.x()-event->globalPos().x();
@@ -440,6 +443,6 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
         QRect pos(initPos);
         pos.setX(initPos.x()-xResize);
         move(pos.topLeft());
-        qDebug() << "Resize W Inc by: "<< xResize  << " to: " << target;
+  //      qDebug() << "Resize W Inc by: "<< xResize  << " to: " << target;
     }
 }

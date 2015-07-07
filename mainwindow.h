@@ -88,7 +88,7 @@ private:
     bool resizeHeightEnabled;
     bool resizeWidthEnabled;
     bool resizeWidthEnabledInv;
-    void prepareResize();
+    void prepareResize(QMouseEvent *event);
 
     void showSettingsDialog();
     void showGameEditDialog();
