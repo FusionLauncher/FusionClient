@@ -7,6 +7,7 @@
 #include "addgamedialog.h"
 #include "gameinfodialog.h"
 #include "watchedfoldersdialog.h"
+#include <QDesktopWidget>
 #include <QFontDatabase>
 #include <QGraphicsDropShadowEffect>
 
@@ -75,7 +76,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     currentView = db.getIntPref("lastView", 1);
     ui->tabWidget->setCurrentIndex(currentView);
+    //Resized to Stored Size
     this->resize(db.getIntPref("defaultviewWidth", 800), db.getIntPref("defaultviewHeight", 600));
+    QRect screenRes = QApplication::desktop()->screenGeometry();
+
+
+    if(this->height()> screenRes.height())
+        this->resize(this->width(), screenRes.height()-20);
+    if(this->width()> screenRes.width())
+        this->resize(screenRes.width()-20, this->height());
 
     reloadStylesheet();
     game = new FGame();
@@ -94,6 +103,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect( &resizeTimer, SIGNAL(timeout()), SLOT(resizeDone()) );
     connect( ui->setStylesheetAction, SIGNAL(triggered()), this, SLOT(openStylesheetDialog()));
     connect( ui->resetStylesheetAction, SIGNAL(triggered()), this, SLOT(resetStylesheet()));
+
+    dragEnabled = false;
+    resizeHeightEnabled = false;
+    resizeWidthEnabled = false;
+
 }
 
 void MainWindow::reloadStylesheet()
@@ -353,7 +367,33 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton && event->pos().y() <90) {
            dragPosition = event->globalPos() - frameGeometry().topLeft();
            event->accept();
-       }
+           dragEnabled = true;
+           qDebug() << "Allow Window Drag";
+    }
+    else if (event->pos().y()>this->height()-15) {
+        qDebug() << event->pos();
+        this->setCursor(Qt::SizeVerCursor);
+        dragPosition = event->globalPos();
+        resizeHeightEnabled = true;
+        initSize = this->size();
+        qDebug() << "Allow Window Resize Height";
+    }
+    else if (event->pos().x()>this->width()-15) {
+        qDebug() << event->pos();
+        this->setCursor(Qt::SizeHorCursor);
+        dragPosition = event->globalPos();
+        resizeWidthEnabled = true;
+        initSize = this->size();
+        qDebug() << "Allow Window Resize Height";
+    }
+}
+
+void MainWindow::mouseReleaseEvent(QMouseEvent *event)
+{
+    dragEnabled = false;
+    resizeHeightEnabled = false;
+    resizeWidthEnabled = false;
+    this->setCursor(Qt::ArrowCursor);
 }
 
 
@@ -372,9 +412,22 @@ void MainWindow::resizeDone()
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event)
 {
-    // is the height of the Header (blue Bar)
-    if (event->buttons() & Qt::LeftButton && event->pos().y() <90) {
+    if (event->buttons() & Qt::LeftButton && dragEnabled) {
            move(event->globalPos() - dragPosition);
            event->accept();
-       }
+    }
+    else if (event->buttons() & Qt::LeftButton && resizeHeightEnabled) {
+        int yResize = event->globalPos().y() - dragPosition.y();
+        int target = initSize.height()+yResize;
+        this->resize(this->width(),target);
+        qDebug() << "Resize H by: "<< yResize  << " to: " << target;
+    }
+    else if (event->buttons() & Qt::LeftButton && resizeWidthEnabled) {
+        int xResize = event->globalPos().x() - dragPosition.x();
+        int target = initSize.width()+xResize;
+        this->resize(target, this->height());
+        qDebug() << "Resize W by: "<< xResize  << " to: " << target;
+    }  else {
+        qDebug() << event->pos();
+    }
 }

@@ -4,7 +4,7 @@ QTabBar::tab
     color: #dadada;
     font-size: 24pt;
     width:230px;
-    height:70px;
+    height:60px;
 }
 
 #tabWidget QWidget {
