@@ -24,26 +24,21 @@ public:
     ~MainWindow();
 
 private slots:
-    void resetDatabase();
     void addGame(FGame game);
-    void on_removeDatabaseAction_triggered();
-    void on_refreshUIAction_triggered();
-    void openStylesheetDialog();
-    void resetStylesheet();
     void on_libAddGameAction_triggered();
     void on_libAddLibAction_triggered();
     void on_actionSwitch_View_triggered();
-    void setWatchedFolders(QList<QDir> folders);
-
 
     void onGameClick(FGame *game, QObject *sender = NULL);
     void onGameDoubleClicked(FGame *game, QObject *sender);
     void onGameRightClicked(FGame *game, QObject *sender);
     void on_GameInfoDialogFinished(int r);
 
+    void on_pb_Min_clicked();
+    void on_pb_Max_clicked();
+    void on_pb_Close_clicked();
 
     void on_tgw_GameIconButton_clicked();
-    void on_tgw_pb_Artwork_clicked();
 
     void on_tabWidget_currentChanged(int index);
 
@@ -51,7 +46,17 @@ private slots:
     void on_pb_Settings_clicked();
 
     void resizeDone();
+    void setWatchedFolders(QList<QDir> folders);
     void on_SettingsMenueClicked(QAction *action);
+    void reloadStylesheet();
+    //http://doc.qt.io/qt-5/qtwidgets-widgets-shapedclock-example.html
+protected:
+    void mouseMoveEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void mouseDoubleClickEvent(QMouseEvent *event);
+
+
 private:
     Ui::MainWindow *ui;
     FGame *game;
@@ -62,7 +67,6 @@ private:
     QList<FGameWidget*> gameWidgetList;
 
     void refreshList();
-    void reloadStylesheet();
     void changeView();
 
     QLayout *gameScrollLayout;
@@ -75,6 +79,19 @@ private:
     //Save GUI-Size on resize
     void resizeEvent(QResizeEvent *event);
     QTimer resizeTimer;
+
+    //Frameless Moving
+    QPoint dragPosition;
+    QSize initSize;
+    QRect initPos;
+    bool dragEnabled;
+    bool resizeHeightEnabled;
+    bool resizeWidthEnabled;
+    bool resizeWidthEnabledInv;
+    void prepareResize(QMouseEvent *event);
+
+    void showSettingsDialog();
+    void showGameEditDialog();
 };
 
 #endif // MAINWINDOW_H

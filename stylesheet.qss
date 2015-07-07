@@ -4,7 +4,7 @@ QTabBar::tab
     color: #dadada;
     font-size: 24pt;
     width:230px;
-    height:70px;
+    height:60px;
 }
 
 #tabWidget QWidget {
@@ -13,6 +13,13 @@ QTabBar::tab
 
 QTabWidget::pane {
     border-top: 0px solid #C2C7CB;
+}
+
+#meueBar QPushButton {
+    border:0px solid;
+    background-color:#1DAAE1;
+    color:#dadada;
+    width:20px;
 }
 
 #line_2 {

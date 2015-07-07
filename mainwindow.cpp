@@ -5,10 +5,13 @@
 #include <fdb.h>
 #include <QMessageBox>
 #include "addgamedialog.h"
+#include "fsettingsdialog.h"
 #include "gameinfodialog.h"
 #include "watchedfoldersdialog.h"
+#include <QDesktopWidget>
 #include <QFontDatabase>
 #include <QGraphicsDropShadowEffect>
+
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -59,6 +62,7 @@ MainWindow::MainWindow(QWidget *parent) :
    settingsMenu->addAction("Edit Game");
    settingsMenu->addAction("Add Game");
    settingsMenu->addAction("Add Launcher");
+   settingsMenu->addAction("Manage Library");
    settingsMenu->addAction("Settings");
    connect(settingsMenu, SIGNAL(triggered(QAction*)), this, SLOT(on_SettingsMenueClicked(QAction*)));
    QGraphicsDropShadowEffect* menuEffect = new QGraphicsDropShadowEffect();
@@ -75,13 +79,25 @@ MainWindow::MainWindow(QWidget *parent) :
 
     currentView = db.getIntPref("lastView", 1);
     ui->tabWidget->setCurrentIndex(currentView);
+    //Resized to Stored Size
     this->resize(db.getIntPref("defaultviewWidth", 800), db.getIntPref("defaultviewHeight", 600));
+    QRect screenRes = QApplication::desktop()->screenGeometry();
+
+
+    if(this->height()> screenRes.height())
+        this->resize(this->width(), screenRes.height()-20);
+    if(this->width()> screenRes.width())
+        this->resize(screenRes.width()-20, this->height());
+
+
+    this->setWindowState((Qt::WindowState)db.getIntPref("windowState", Qt::WindowNoState));
 
     reloadStylesheet();
     game = new FGame();
 
     //Scan for New Games First
-    crawler.scanAllFolders();
+    if(db.getBoolPref("ScanLibsOnStartup", true))
+        crawler.scanAllFolders();
 
     //Scrolling-List fo games
     gameScrollLayout = new QVBoxLayout;
@@ -92,9 +108,39 @@ MainWindow::MainWindow(QWidget *parent) :
     //required to store WindowSize on Resize
     resizeTimer.setSingleShot( true );
     connect( &resizeTimer, SIGNAL(timeout()), SLOT(resizeDone()) );
-    connect( ui->setStylesheetAction, SIGNAL(triggered()), this, SLOT(openStylesheetDialog()));
-    connect( ui->resetStylesheetAction, SIGNAL(triggered()), this, SLOT(resetStylesheet()));
+
+    dragEnabled = false;
+    resizeHeightEnabled = false;
+    resizeWidthEnabled = false;
+    resizeWidthEnabledInv =false;
+
 }
+
+
+void MainWindow::changeView()
+{
+
+}
+
+
+void MainWindow::setView() {
+
+}
+
+MainWindow::~MainWindow()
+{
+    for(int i=0;i<gameWidgetList.length();++i)
+        delete gameWidgetList[i];
+
+    delete settingsMenu;
+    delete ui;
+}
+
+void MainWindow::setWatchedFolders(QList<QDir> folders)
+{
+    db.updateWatchedFolders(folders);
+}
+
 
 void MainWindow::reloadStylesheet()
 {
@@ -117,32 +163,6 @@ void MainWindow::reloadStylesheet()
     }
 }
 
-void MainWindow::changeView()
-{
-
-}
-
-
-void MainWindow::setView() {
-
-}
-
-MainWindow::~MainWindow()
-{
-    for(int i=0;i<gameWidgetList.length();++i)
-        delete gameWidgetList[i];
-
-    delete settingsMenu;
-    delete ui;
-}
-
-
-void MainWindow::resetDatabase()
-{
-    db.resetDatabase();
-    refreshList();
-}
-
 
 void MainWindow::addGame(FGame game)
 {
@@ -150,10 +170,6 @@ void MainWindow::addGame(FGame game)
     refreshList();
 }
 
-void MainWindow::setWatchedFolders(QList<QDir> folders)
-{
-    db.updateWatchedFolders(folders);
-}
 
 void MainWindow::refreshList()
 {
@@ -165,11 +181,7 @@ void MainWindow::refreshList()
     gameWidgetList.clear();
 
 
-    if(gameList.isEmpty())
-    {
-   //     ui->gameListWidget->addItem("NOTHING TO SEE HERE. Use the \"Add game\" button to add a new game.");
-    }
-    else
+    if(!gameList.isEmpty())
     {
         for(int i = 0; i < gameList.length(); i++)
         {
@@ -199,6 +211,21 @@ void MainWindow::on_GameInfoDialogFinished(int r) {
     refreshList();
 }
 
+void MainWindow::on_pb_Min_clicked()
+{
+    this->setWindowState(Qt::WindowMinimized);
+}
+
+void MainWindow::on_pb_Max_clicked()
+{
+    mouseDoubleClickEvent(NULL);
+}
+
+void MainWindow::on_pb_Close_clicked()
+{
+    this->close();
+}
+
 
 void MainWindow::on_tgw_GameIconButton_clicked()
 {
@@ -209,13 +236,6 @@ void MainWindow::on_tgw_GameIconButton_clicked()
         ui->webView->setUrl(u);
     }
     ui->tabWidget->setCurrentIndex(0);
-}
-
-void MainWindow::on_tgw_pb_Artwork_clicked()
-{
-    GameInfoDialog *dialog = new GameInfoDialog(game);
-    connect(dialog, SIGNAL(finished(int)), this, SLOT(on_GameInfoDialogFinished(int)));
-    dialog->exec();
 }
 
 void MainWindow::on_tabWidget_currentChanged(int index)
@@ -241,11 +261,28 @@ void MainWindow::ShowSettingsContextMenu(const QPoint &pos)
 void MainWindow::on_SettingsMenueClicked(QAction* action) {
 
     if(action->text()=="Edit Game")
-        on_tgw_pb_Artwork_clicked();
+        showGameEditDialog();
     else if(action->text()=="Add Game")
         on_libAddGameAction_triggered();
+    else if(action->text()=="Manage Library")
+        on_libAddLibAction_triggered();
+    else if(action->text()=="Settings")
+        showSettingsDialog();
 }
 
+void MainWindow::showGameEditDialog()
+{
+    GameInfoDialog *dialog = new GameInfoDialog(game);
+    connect(dialog, SIGNAL(finished(int)), this, SLOT(on_GameInfoDialogFinished(int)));
+    dialog->exec();
+}
+
+
+void MainWindow::showSettingsDialog() {
+    FSettingsDialog* dialog = new FSettingsDialog(&db, this);
+    connect(dialog, SIGNAL(reloadStylesheet()), this, SLOT(reloadStylesheet()));
+    dialog->exec();
+}
 
 void MainWindow::on_pb_Settings_clicked()
 {
@@ -280,40 +317,6 @@ void MainWindow::onGameClick(FGame *game, QObject *sender)
 }
 
 
-void MainWindow::on_removeDatabaseAction_triggered()
-{
-    resetDatabase();
-}
-
-void MainWindow::on_refreshUIAction_triggered()
-{
-    refreshList();
-}
-
-void MainWindow::resetStylesheet()
-{
-    db.deletePref("stylesheet");
-    reloadStylesheet();
-}
-
-void MainWindow::openStylesheetDialog()
-{
-    QString stylesheetFile = QFileDialog::getOpenFileName(this, "Choose stylesheet", QDir::homePath(), "*.qss");
-    qDebug() << "Stylesheet: " << stylesheetFile;
-    if(QFile::exists(stylesheetFile))
-    {
-        qDebug() << "New stylesheet added: " << stylesheetFile;
-        if(db.getTextPref("stylesheet").isNull())
-        {
-            db.addTextPref("stylesheet", stylesheetFile);
-        }
-        else
-        {
-            db.updateTextPref("stylesheet", stylesheetFile);
-        }
-        reloadStylesheet();
-    }
-}
 
 void MainWindow::on_libAddGameAction_triggered()
 {
@@ -345,6 +348,63 @@ void MainWindow::resizeEvent(QResizeEvent* event)
 
 
 
+
+
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    if(this->windowState() != Qt::WindowNoState)
+        return;
+
+    // is the height of the Header (blue Bar)
+    if (event->button() == Qt::LeftButton && event->pos().y() <80) {
+           dragPosition = event->globalPos() - frameGeometry().topLeft();
+           event->accept();
+           dragEnabled = true;
+           qDebug() << "Allow Window Drag";
+    }
+    else if (event->pos().y()>this->height()-15) {
+        this->setCursor(Qt::SizeVerCursor);
+        prepareResize(event);
+        resizeHeightEnabled = true;
+    }
+    else if (event->pos().x()>this->width()-15) {
+        this->setCursor(Qt::SizeHorCursor);
+        prepareResize(event);
+        resizeWidthEnabled = true;
+    }
+    else if (event->pos().x()<15) {
+        prepareResize(event);
+        this->setCursor(Qt::SizeHorCursor);
+        resizeWidthEnabledInv = true;
+    }
+}
+
+void MainWindow::prepareResize(QMouseEvent *event) {
+    dragPosition = event->globalPos();
+    initSize = this->size();
+    initPos =  frameGeometry();
+}
+
+void MainWindow::mouseReleaseEvent(QMouseEvent *event)
+{
+    dragEnabled = false;
+    resizeHeightEnabled = false;
+    resizeWidthEnabled = false;
+    resizeWidthEnabledInv = false;
+    this->setCursor(Qt::ArrowCursor);
+}
+
+void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    if(this->windowState() != Qt::WindowMaximized)
+        this->setWindowState(Qt::WindowMaximized);
+    else
+        this->setWindowState(Qt::WindowNoState);
+
+    db.updateIntPref("windowState", this->windowState());
+}
+
+
 void MainWindow::resizeDone()
 {
     /*
@@ -355,5 +415,34 @@ void MainWindow::resizeDone()
     {
         db.updateIntPref("defaultviewWidth", this->width());
         db.updateIntPref("defaultviewHeight", this->height());
+    }
+}
+
+void MainWindow::mouseMoveEvent(QMouseEvent *event)
+{
+    if (event->buttons() & Qt::LeftButton && dragEnabled) {
+           move(event->globalPos() - dragPosition);
+           event->accept();
+    }
+    else if (event->buttons() & Qt::LeftButton && resizeHeightEnabled) {
+        int yResize = event->globalPos().y() - dragPosition.y();
+        int target = initSize.height()+yResize;
+        this->resize(this->width(),target);
+  //      qDebug() << "Resize H by: "<< yResize  << " to: " << target;
+    }
+    else if (event->buttons() & Qt::LeftButton && resizeWidthEnabled) {
+        int xResize = event->globalPos().x() - dragPosition.x();
+        int target = initSize.width()+xResize;
+        this->resize(target, this->height());
+   //     qDebug() << "Resize W by: "<< xResize  << " to: " << target;
+    }
+    else if (event->buttons() & Qt::LeftButton && resizeWidthEnabledInv) {
+        int xResize = dragPosition.x()-event->globalPos().x();
+        int target = initSize.width()+xResize;
+        this->resize(target, this->height());
+        QRect pos(initPos);
+        pos.setX(initPos.x()-xResize);
+        move(pos.topLeft());
+  //      qDebug() << "Resize W Inc by: "<< xResize  << " to: " << target;
     }
 }
