@@ -355,39 +355,31 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
     if(this->windowState() != Qt::WindowNoState)
         return;
 
-
     // is the height of the Header (blue Bar)
-    if (event->button() == Qt::LeftButton && event->pos().y() <90) {
+    if (event->button() == Qt::LeftButton && event->pos().y() <80) {
            dragPosition = event->globalPos() - frameGeometry().topLeft();
            event->accept();
            dragEnabled = true;
            qDebug() << "Allow Window Drag";
     }
     else if (event->pos().y()>this->height()-15) {
-        qDebug() << event->pos();
-        this->setCursor(Qt::SizeVerCursor);
-        dragPosition = event->globalPos();
+        this->setCursor(Qt::SizeVerCursor);        
         resizeHeightEnabled = true;
-        initSize = this->size();
-        qDebug() << "Allow Window Resize Height";
     }
     else if (event->pos().x()>this->width()-15) {
-        qDebug() << event->pos();
         this->setCursor(Qt::SizeHorCursor);
-        dragPosition = event->globalPos();
         resizeWidthEnabled = true;
-        initSize = this->size();
-        qDebug() << "Allow Window Resize Height";
     }
     else if (event->pos().x()<15) {
-        qDebug() << event->pos();
         this->setCursor(Qt::SizeHorCursor);
-        dragPosition = event->globalPos();
         resizeWidthEnabledInv = true;
-        initSize = this->size();
-        initPos =  frameGeometry();
-        qDebug() << "Allow Window Resize Height";
     }
+}
+
+void MainWindow::prepareResize() {
+    dragPosition = event->globalPos();
+    initSize = this->size();
+    initPos =  frameGeometry();
 }
 
 void MainWindow::mouseReleaseEvent(QMouseEvent *event)

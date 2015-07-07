@@ -88,6 +88,7 @@ private:
     bool resizeHeightEnabled;
     bool resizeWidthEnabled;
     bool resizeWidthEnabledInv;
+    void prepareResize();
 
     void showSettingsDialog();
     void showGameEditDialog();
