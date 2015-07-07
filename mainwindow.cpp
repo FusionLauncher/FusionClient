@@ -25,18 +25,18 @@ MainWindow::MainWindow(QWidget *parent) :
    QStringList list;
    list << "Lato-Light.ttf";
    int fID;
-   for (QStringList::const_iterator constIterator = list.constBegin(); constIterator != list.constEnd(); ++constIterator)
+   for (QStringList::const_iterator cIt = list.constBegin(); cIt != list.constEnd(); ++cIt)
    {
-       QFile res(":/fonts/" + *constIterator);
+       QFile res(":/fonts/" + *cIt);
        if (res.open(QIODevice::ReadOnly) == false)
        {
-           QMessageBox::warning(0, "Font-Loader", (QString)"Cannot open font: " + *constIterator + ".");
+           QMessageBox::warning(0, "Font-Loader", (QString)"Cannot open font: " + *cIt + ".");
        }
        else
        {
            fID = QFontDatabase::addApplicationFontFromData(res.readAll());
            if (fID == -1)
-               QMessageBox::warning(0, "Font-Loader", (QString)"Cannot load Font into System: " + *constIterator + ".");
+               QMessageBox::warning(0, "Font-Loader", (QString)"Cannot load Font into System: " + *cIt + ".");
        }
    }
 
@@ -55,11 +55,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
    //Shadow!
+   settingsMenu = new QMenu(ui->gameDetailsSidebarWidget);
+   settingsMenu->addAction("Edit Game");
+   settingsMenu->addAction("Add Game");
+   settingsMenu->addAction("Add Launcher");
+   settingsMenu->addAction("Settings");
+   connect(settingsMenu, SIGNAL(triggered(QAction*)), this, SLOT(on_SettingsMenueClicked(QAction*)));
+   QGraphicsDropShadowEffect* menuEffect = new QGraphicsDropShadowEffect();
+   menuEffect->setBlurRadius(15);
+   menuEffect->setOffset(5,5);
+   settingsMenu->setGraphicsEffect(menuEffect);
+
+   //Shadow!
    QGraphicsDropShadowEffect* scrollShadow = new QGraphicsDropShadowEffect();
    scrollShadow->setBlurRadius(15);
    scrollShadow->setOffset(5,0);
    ui->gameListWidget->setGraphicsEffect(scrollShadow);
-
 
 
     currentView = db.getIntPref("lastView", 1);
@@ -121,6 +132,7 @@ MainWindow::~MainWindow()
     for(int i=0;i<gameWidgetList.length();++i)
         delete gameWidgetList[i];
 
+    delete settingsMenu;
     delete ui;
 }
 
@@ -209,6 +221,35 @@ void MainWindow::on_tgw_pb_Artwork_clicked()
 void MainWindow::on_tabWidget_currentChanged(int index)
 {
     db.updateIntPref("lastView", index);
+}
+
+void MainWindow::ShowSettingsContextMenu(const QPoint &pos)
+{
+       QPoint globalPos = ui->pb_Settings->mapToGlobal(pos);
+
+       //this is required, because (i assume) i re-calculates the sizes based on CSS, on show().
+       //at least id soesn't work if the menu was never open.
+       settingsMenu->show();
+       settingsMenu->close();
+
+       globalPos.setY(globalPos.y() - settingsMenu->height());
+       globalPos.setX(globalPos.x() - settingsMenu->width() - 20);
+
+
+       settingsMenu->exec(globalPos);
+}
+void MainWindow::on_SettingsMenueClicked(QAction* action) {
+
+    if(action->text()=="Edit Game")
+        on_tgw_pb_Artwork_clicked();
+    else if(action->text()=="Add Game")
+        on_libAddGameAction_triggered();
+}
+
+
+void MainWindow::on_pb_Settings_clicked()
+{
+    ShowSettingsContextMenu(ui->pb_Settings->pos());
 }
 
 
@@ -306,10 +347,12 @@ void MainWindow::resizeEvent(QResizeEvent* event)
 
 void MainWindow::resizeDone()
 {
+    /*
     if(currentView==0){
         db.updateIntPref("minviewWidth", this->width());
         db.updateIntPref("minviewHeight", this->height());
-    } else {
+    } else */
+    {
         db.updateIntPref("defaultviewWidth", this->width());
         db.updateIntPref("defaultviewHeight", this->height());
     }

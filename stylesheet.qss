@@ -15,6 +15,11 @@ QTabWidget::pane {
     border-top: 0px solid #C2C7CB;
 }
 
+#line_2 {
+    border:2px solid #1DAAE1;
+    color:#1DAAE1;
+    background:#1DAEE1;
+}
 
 #MainWindow {
     background:#1DAEE1;
@@ -58,6 +63,26 @@ QScrollBar::down-arrow:vertical, #gameScrollArea::up-arrow:vertical{
 
 QScrollBar::down-button:vertical, #gameScrollArea::up-button:vertical{
 
+}
+
+#gameDetailsSidebarWidget QMenu {
+    background-color: #1DAAE1; /* sets background of the menu */
+   /* border-radius:20px; */
+    font-size: 18pt;
+    padding:0px;
+}
+
+#gameDetailsSidebarWidget QMenu::item {
+    background-color: #1DAAE1;
+    color:#dadada;
+    border-bottom:1px solid #dadada;
+    padding: 0px 10px 0px 10px;
+    margin:0px;
+}
+
+#gameDetailsSidebarWidget QMenu::item:selected {
+    background-color: #dadada;
+    color:#1DAAE1;
 }
 
 

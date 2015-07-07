@@ -9,6 +9,7 @@
 #include <fdb.h>
 #include <fcrawler.h>
 #include <QListWidgetItem>
+#include <QMenu>
 
 namespace Ui {
 class MainWindow;
@@ -46,8 +47,11 @@ private slots:
 
     void on_tabWidget_currentChanged(int index);
 
+    void ShowSettingsContextMenu(const QPoint& pos);
+    void on_pb_Settings_clicked();
 
     void resizeDone();
+    void on_SettingsMenueClicked(QAction *action);
 private:
     Ui::MainWindow *ui;
     FGame *game;
@@ -63,6 +67,7 @@ private:
 
     QLayout *gameScrollLayout;
     QString currentStyle;
+    QMenu *settingsMenu;
 
     int currentView;
     void setView();
