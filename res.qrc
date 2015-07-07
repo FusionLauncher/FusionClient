@@ -8,5 +8,8 @@
         <file>fonts/Lato-Light.ttf</file>
         <file>fonts/Lato-Regular.ttf</file>
         <file>gfx/gears.png</file>
+        <file>gfx/close.png</file>
+        <file>gfx/max.png</file>
+        <file>gfx/min.png</file>
     </qresource>
 </RCC>

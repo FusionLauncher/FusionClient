@@ -41,6 +41,9 @@ private slots:
     void onGameRightClicked(FGame *game, QObject *sender);
     void on_GameInfoDialogFinished(int r);
 
+    void on_pb_Min_clicked();
+    void on_pb_Max_clicked();
+    void on_pb_Close_clicked();
 
     void on_tgw_GameIconButton_clicked();
     void on_tgw_pb_Artwork_clicked();

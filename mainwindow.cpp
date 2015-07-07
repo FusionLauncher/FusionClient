@@ -89,7 +89,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->setWindowState((Qt::WindowState)db.getIntPref("windowState", Qt::WindowNoState));
 
-
     reloadStylesheet();
     game = new FGame();
 
@@ -216,6 +215,21 @@ void MainWindow::onGameRightClicked(FGame *game, QObject *sender)
 
 void MainWindow::on_GameInfoDialogFinished(int r) {
     refreshList();
+}
+
+void MainWindow::on_pb_Min_clicked()
+{
+    this->setWindowState(Qt::WindowMinimized);
+}
+
+void MainWindow::on_pb_Max_clicked()
+{
+    mouseDoubleClickEvent(NULL);
+}
+
+void MainWindow::on_pb_Close_clicked()
+{
+    this->close();
 }
 
 
