@@ -8,15 +8,21 @@
 #include <QFileDialog>
 #include <QDesktopServices>
 #include <QFileInfo>
+#include <fdb.h>
 
 
-GameInfoDialog::GameInfoDialog(FGame *g, QWidget *parent) :
+GameInfoDialog::GameInfoDialog(FGame *g, FDB *database, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::GameInfoDialog)
 {
     ui->setupUi(this);
     game = g;
-    ui->lineEdit->setText(game->getName());
+    this->db = database;
+
+    ui->le_Title->setText(game->getName());
+    ui->le_Exec->setText(game->getExe());
+    ui->le_Directory->setText(game->getPath());
+    //ui->le_Params->setText();
 
     runningDownloads = 0;
     totalDownloads = 0;
@@ -24,7 +30,7 @@ GameInfoDialog::GameInfoDialog(FGame *g, QWidget *parent) :
 
 
     ui->aw_la_Cover->setStyleSheet("#aw_la_Cover{border-image:url("+ game->getBoxart() +") 0 0 0 0 stretch stretch}");
-    //ui->aw_la_Banner->setStyleSheet("#aw_la_Banner{border-image:url("+ game->getBanner() +") 0 0 0 0 repeat stretch}");
+    ui->aw_la_Banner->setStyleSheet("#aw_la_Banner{border-image:url("+ game->getBanner() +") 0 0 0 0 repeat stretch}");
     ui->aw_la_Clearart->setStyleSheet("#aw_la_Clearart{border-image:url("+ game->getClearart() +") 0 0 0 0 stretch stretch}");
     ui->aw_la_Fanart->setStyleSheet("#aw_la_Fanart{border-image:url("+ game->getFanart() +") 0 0 0 0 stretch stretch}");
 
@@ -104,6 +110,17 @@ void GameInfoDialog::on_gameSelected(TheGameDBStorage* selectedGame) {
     connect(artmanager, SIGNAL(finishedDownload()), this, SLOT(downloadFinished()));
     connect(artmanager, SIGNAL(foundMultipleGames(QList<TheGameDBStorage*>)),  this, SLOT(on_foundMultipleGames(QList<TheGameDBStorage*>)));
     artmanager->getGameData(game, selectedGame);
+}
+
+void GameInfoDialog::on_buttonBox_accepted()
+{
+  //  qDebug() << game->getName() << "," << game->getExe() << "," << game->getPath() << ","<< game->dbId;
+    game->setName(ui->le_Title->text());
+    game->setExe(ui->le_Exec->text());
+    game->setPath(ui->le_Directory->text());
+    qDebug() << game->getName() << "," << game->getExe() << "," << game->getPath() << ","<< game->dbId;
+    db->updateGame(game);
+    emit reloadRequired();
 }
 
 void GameInfoDialog::downloadFinished() {

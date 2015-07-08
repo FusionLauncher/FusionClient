@@ -32,7 +32,7 @@ private slots:
     void onGameClick(FGame *game, QObject *sender = NULL);
     void onGameDoubleClicked(FGame *game, QObject *sender);
     void onGameRightClicked(FGame *game, QObject *sender);
-    void on_GameInfoDialogFinished(int r);
+    void on_GameInfoDialogFinished();
 
     void on_pb_Min_clicked();
     void on_pb_Max_clicked();
