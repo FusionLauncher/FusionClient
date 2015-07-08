@@ -25,8 +25,13 @@ private:
     Ui::FGameWidget *ui;
 
     FGame *game;
-    QGraphicsScene* scene;
-    QGraphicsPixmapItem* item;
+    QGraphicsScene* sceneBanner;
+    QGraphicsPixmapItem* itemBanner;
+
+
+    QGraphicsScene* sceneCover;
+    QGraphicsPixmapItem* itemCover;
+
     void updateProperty(QWidget *obj, const char *prop, const QVariant value);
 protected:
     void mousePressEvent(QMouseEvent *event);

@@ -147,11 +147,9 @@ void GameInfoDialog::on_gameSelected(TheGameDBStorage* selectedGame) {
 
 void GameInfoDialog::on_buttonBox_accepted()
 {
-  //  qDebug() << game->getName() << "," << game->getExe() << "," << game->getPath() << ","<< game->dbId;
     game->setName(ui->le_Title->text());
     game->setExe(ui->le_Exec->text());
     game->setPath(ui->le_Directory->text());
-    qDebug() << game->getName() << "," << game->getExe() << "," << game->getPath() << ","<< game->dbId;
     db->updateGame(game);
     emit reloadRequired();
 }
