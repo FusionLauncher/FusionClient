@@ -40,7 +40,10 @@ private slots:
     void on_foundMultipleGames(QList<TheGameDBStorage *> Games);
     void on_gameSelected(TheGameDBStorage *selectedGame);
     void on_buttonBox_accepted();
- signals:
+    void on_chooseGameExecutableButton_clicked();
+    void on_chooseGameDirButton_clicked();
+    void on_pb_deleteGame_clicked();
+signals:
     void reloadRequired();
 };
 

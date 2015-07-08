@@ -36,6 +36,37 @@ GameInfoDialog::GameInfoDialog(FGame *g, FDB *database, QWidget *parent) :
 
 }
 
+
+
+void GameInfoDialog::on_chooseGameDirButton_clicked()
+{
+
+    QDir gameDir = QFileDialog::getExistingDirectory(this, "Choose the game directory", ui->le_Directory->text());
+    if(gameDir.dirName()!=".")
+        ui->le_Directory->setText(gameDir.absolutePath());
+}
+
+void GameInfoDialog::on_pb_deleteGame_clicked()
+{
+    QMessageBox::StandardButton btn = QMessageBox::warning(this, "Really delete Game?", "Please confirm, do you want to delete '"  + game->getName() + "'?", QMessageBox::Yes|QMessageBox::No);
+    if(btn == QMessageBox::Yes) {
+        db->removeGameById(game->dbId);
+        emit reloadRequired();
+        this->close();
+    }
+}
+
+void GameInfoDialog::on_chooseGameExecutableButton_clicked()
+{
+    QString file;
+    QDir gameDir = QDir(ui->le_Directory->text());
+    file = QFileDialog::getOpenFileName(this, "Choose executable", gameDir.absolutePath());
+    if(file.isEmpty())
+        return;
+    file = gameDir.relativeFilePath(file);
+    ui->le_Exec->setText(file);
+}
+
 GameInfoDialog::~GameInfoDialog()
 {
     delete ui;
@@ -75,6 +106,8 @@ void GameInfoDialog::openFile(QString destFileName) {
 
     }
 }
+
+
 
 void GameInfoDialog::on_importBannerButton_clicked()
 {
@@ -135,3 +168,4 @@ void GameInfoDialog::downloadStarted() {
     ++totalDownloads;
     ui->label_2->setText("Running Downloads:" + QString::number(runningDownloads));
 }
+

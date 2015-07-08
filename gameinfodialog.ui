@@ -36,7 +36,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="3" column="4">
-       <widget class="QPushButton" name="pb_getExecutable">
+       <widget class="QPushButton" name="chooseGameExecutableButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -125,7 +125,7 @@
        </widget>
       </item>
       <item row="3" column="2">
-       <widget class="QPushButton" name="pb_getDirectory">
+       <widget class="QPushButton" name="chooseGameDirButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
