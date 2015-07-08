@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent) :
    //set Font
    if(fID >= 0) {
        QFontDatabase fodb;
-       QFont latoFont = fodb.font("Lato Light", "Light", 12);
+       QFont latoFont = fodb.font("Lato Light", "Light", 11);
        qApp->setFont(latoFont);
     }
 
@@ -185,7 +185,6 @@ void MainWindow::refreshList()
     {
         for(int i = 0; i < gameList.length(); i++)
         {
-            //MinimalView
             FGameWidget *gw = new FGameWidget(ui->gameScrollArea);
             gw->setGame(&gameList[i]);
             connect(gw, SIGNAL(clicked(FGame*, QObject*)), this, SLOT(onGameClick(FGame*, QObject*)));
@@ -194,6 +193,8 @@ void MainWindow::refreshList()
             gameWidgetList.append(gw);
             gameScrollLayout->addWidget(gw);
         }
+        //Select first game by default
+        onGameClick(&gameList[0], gameWidgetList[0]);
     }
 }
 
@@ -201,14 +202,14 @@ void MainWindow::refreshList()
 
 void MainWindow::onGameRightClicked(FGame *game, QObject *sender)
 {
-    GameInfoDialog *dialog = new GameInfoDialog(game);
-    connect(dialog, SIGNAL(finished(int)), this, SLOT(on_GameInfoDialogFinished(int)));
+    GameInfoDialog *dialog = new GameInfoDialog(game, &db, this);
+    connect(dialog, SIGNAL(reloadRequired()), this, SLOT(on_GameInfoDialogFinished()));
     dialog->exec();
 }
 
 
-void MainWindow::on_GameInfoDialogFinished(int r) {
-    refreshList();
+void MainWindow::on_GameInfoDialogFinished() {
+        refreshList();
 }
 
 void MainWindow::on_pb_Min_clicked()
@@ -272,8 +273,8 @@ void MainWindow::on_SettingsMenueClicked(QAction* action) {
 
 void MainWindow::showGameEditDialog()
 {
-    GameInfoDialog *dialog = new GameInfoDialog(game);
-    connect(dialog, SIGNAL(finished(int)), this, SLOT(on_GameInfoDialogFinished(int)));
+    GameInfoDialog *dialog = new GameInfoDialog(game, &db, this);
+    connect(dialog, SIGNAL(reloadRequired()), this, SLOT(on_GameInfoDialogFinished()));
     dialog->exec();
 }
 
@@ -297,7 +298,8 @@ void MainWindow::onGameDoubleClicked(FGame *game, QObject *sender)
 
 void MainWindow::onGameClick(FGame *game, QObject *sender)
 {
-    if(qobject_cast<FGameWidget*>(sender)) {
+    if(qobject_cast<FGameWidget*>(sender))
+    {
        for(int i=0;i<gameWidgetList.length();++i)
            gameWidgetList[i]->setActive(false);
 

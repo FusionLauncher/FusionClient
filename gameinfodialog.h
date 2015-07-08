@@ -2,6 +2,7 @@
 #define GAMEINFODIALOG_H
 
 #include <QDialog>
+#include <fdb.h>
 #include <fgame.h>
 #include <thegamedbstorage.h>
 
@@ -14,15 +15,17 @@ class GameInfoDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit GameInfoDialog(FGame *g, QWidget *parent = 0);
+    explicit GameInfoDialog(FGame *g, FDB *database, QWidget *parent);
     ~GameInfoDialog();
-    FGame *game;
 private:
     Ui::GameInfoDialog *ui;
     int runningDownloads;
     int totalDownloads;
     QString lastDir;
     void openFile(QString destFileName);
+
+    FGame *game;
+    FDB *db;
 private slots:
     void on_downloadArtButton_clicked();
     void on_ShowArtworkFolder_clicked();
@@ -36,6 +39,12 @@ private slots:
     void downloadStarted();
     void on_foundMultipleGames(QList<TheGameDBStorage *> Games);
     void on_gameSelected(TheGameDBStorage *selectedGame);
+    void on_buttonBox_accepted();
+    void on_chooseGameExecutableButton_clicked();
+    void on_chooseGameDirButton_clicked();
+    void on_pb_deleteGame_clicked();
+signals:
+    void reloadRequired();
 };
 
 #endif // GAMEINFODIALOG_H

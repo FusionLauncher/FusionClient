@@ -61,18 +61,15 @@ void FGameWidget::mousePressEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton)
     {
         emit clicked(game, this);
-        qDebug() << "Clicked";
     } else if (event->button() == Qt::RightButton)
     {
         emit rightClicked(game, this);
-        qDebug() << "RightClicked";
     }
 }
 
 void FGameWidget::mouseDoubleClickEvent(QMouseEvent *event)
 {
     emit doubleClicked(game, this);
-    qDebug() << "doubleClicked";
 }
 
 
