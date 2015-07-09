@@ -104,7 +104,7 @@ QScrollBar::down-button:vertical, #gameScrollArea::up-button:vertical{
     padding: 5px;
 }
 
-#gameDetailsSidebarWidget #pb_Settings {
+#gameDetailsSidebarWidget #pb_Settings, #gameDetailsSidebarWidget #pb_LaunchGame {
     background-color:#1daae1;
     color: #dadada;
     height:50px;

@@ -57,6 +57,12 @@ MainWindow::MainWindow(QWidget *parent) :
    ui->pb_Settings->setGraphicsEffect(effect);
 
 
+   QGraphicsDropShadowEffect* Leffect = new QGraphicsDropShadowEffect();
+   Leffect->setBlurRadius(15);
+   Leffect->setOffset(5,5);
+   ui->pb_LaunchGame->setGraphicsEffect(Leffect);
+
+
    //Shadow!
    settingsMenu = new QMenu(ui->gameDetailsSidebarWidget);
    settingsMenu->addAction("Edit Game");
@@ -293,6 +299,12 @@ void MainWindow::showSettingsDialog() {
 void MainWindow::on_pb_Settings_clicked()
 {
     ShowSettingsContextMenu(ui->pb_Settings->pos());
+}
+
+void MainWindow::on_pb_LaunchGame_clicked()
+{
+    if(game != NULL)
+        game->execute();
 }
 
 
