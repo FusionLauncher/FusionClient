@@ -11,5 +11,6 @@
         <file>gfx/close.png</file>
         <file>gfx/max.png</file>
         <file>gfx/min.png</file>
+        <file>gfx/Launch.png</file>
     </qresource>
 </RCC>

@@ -8,44 +8,61 @@ FGameWidget::FGameWidget(QWidget *parent) :
     ui(new Ui::FGameWidget)
 {
     ui->setupUi(this);
-    item = NULL;
-    scene = NULL;
+    itemBanner = NULL;
+    sceneBanner = NULL;
+    itemCover = NULL;
+    sceneCover = NULL;
     //ui->fgwDialog_launchButton->setVisible(false);
 }
 
 FGameWidget::~FGameWidget()
 {
-    if(item)
-        delete item;
+    if(itemBanner)
+        delete itemBanner;
 
-    if(scene)
-        delete scene;
+    if(sceneBanner)
+        delete sceneBanner;
+
+
+    if(itemCover)
+        delete itemCover;
+
+    if(sceneCover)
+        delete sceneCover;
 
     delete ui;
 }
 
 void FGameWidget::setGame(FGame *g) {
+
+ //   QElapsedTimer timer;
+//    timer.start();
+
+
     game = g;
     ui->fgwDialog_GameTitle->setText(game->getName());
 
     if(game->getBanner() != "") {
         ui->viewOne->setVisible(false);
-
-        scene = new QGraphicsScene();
-        ui->graphicsView->setScene(scene);
-        QImage image(game->getBanner());
-        QPixmap p = QPixmap::fromImage(image).scaledToWidth(300, Qt::SmoothTransformation);
-        item = new QGraphicsPixmapItem(p);
-        scene->addItem(item);
-
+        sceneBanner = new QGraphicsScene();
+        ui->graphicsView->setScene(sceneBanner);
+   //     QImage image(game->getBanner());
+        QPixmap p(game->getBanner());
+        p = p.scaledToWidth(300, Qt::SmoothTransformation); //SmoothTransformation
+        itemBanner = new QGraphicsPixmapItem(p);
+        sceneBanner->addItem(itemBanner);
     } else {
         ui->graphicsView->setVisible(false);
+        sceneCover = new QGraphicsScene();
+        ui->gvCover->setScene(sceneCover);
+       // QImage image(game->getBoxart());
+        QPixmap p(game->getBoxart());
+        p = p.scaledToWidth(40, Qt::SmoothTransformation);
+        itemCover = new QGraphicsPixmapItem(p);
+        sceneCover->addItem(itemCover);
     }
 
-    if(game->getBoxart() != "") {
-        ui->fgwDialog_Cover->setStyleSheet("#fgwDialog_Cover{border-image:url("+ game->getBoxart() +") 0 0 0 0 stretch stretch}");
-    }
-
+ //   qDebug() << timer.elapsed();
 
 }
 
