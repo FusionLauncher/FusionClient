@@ -49,6 +49,7 @@ private slots:
     void setWatchedFolders(QList<QDir> folders);
     void on_SettingsMenueClicked(QAction *action);
     void reloadStylesheet();
+    void refreshList();
     //http://doc.qt.io/qt-5/qtwidgets-widgets-shapedclock-example.html
 protected:
     void mouseMoveEvent(QMouseEvent *event);
@@ -66,7 +67,6 @@ private:
     QList<FGame> gameList;
     QList<FGameWidget*> gameWidgetList;
 
-    void refreshList();
     void changeView();
 
     QLayout *gameScrollLayout;

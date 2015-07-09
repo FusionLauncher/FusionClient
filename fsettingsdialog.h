@@ -35,6 +35,7 @@ private slots:
     void on_buttonBox_accepted();
 signals:
     void reloadStylesheet();
+    void reloadLibrary();
 };
 
 #endif // FSETTINGSDIALOG_H

@@ -52,6 +52,7 @@ void FSettingsDialog::on_pb_ScanNow_clicked()
 
     FCrawler crawler;
     crawler.scanAllFolders();
+    emit reloadLibrary();
 }
 
 

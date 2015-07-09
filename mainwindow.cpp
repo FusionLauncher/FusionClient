@@ -173,13 +173,15 @@ void MainWindow::addGame(FGame game)
 
 void MainWindow::refreshList()
 {
-    gameList = db.getGameList();
+    QElapsedTimer timer;
+    timer.start();
 
+
+    gameList = db.getGameList();
     for(int i=0;i<gameWidgetList.length();++i)
         delete gameWidgetList[i];
 
     gameWidgetList.clear();
-
 
     if(!gameList.isEmpty())
     {
@@ -196,6 +198,8 @@ void MainWindow::refreshList()
         //Select first game by default
         onGameClick(&gameList[0], gameWidgetList[0]);
     }
+
+    qDebug() << "Time to Load List:" << timer.elapsed();
 }
 
 
@@ -282,6 +286,7 @@ void MainWindow::showGameEditDialog()
 void MainWindow::showSettingsDialog() {
     FSettingsDialog* dialog = new FSettingsDialog(&db, this);
     connect(dialog, SIGNAL(reloadStylesheet()), this, SLOT(reloadStylesheet()));
+    connect(dialog, SIGNAL(reloadLibrary()), this, SLOT(refreshList()));
     dialog->exec();
 }
 

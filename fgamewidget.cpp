@@ -34,6 +34,11 @@ FGameWidget::~FGameWidget()
 }
 
 void FGameWidget::setGame(FGame *g) {
+
+ //   QElapsedTimer timer;
+//    timer.start();
+
+
     game = g;
     ui->fgwDialog_GameTitle->setText(game->getName());
 
@@ -41,21 +46,23 @@ void FGameWidget::setGame(FGame *g) {
         ui->viewOne->setVisible(false);
         sceneBanner = new QGraphicsScene();
         ui->graphicsView->setScene(sceneBanner);
-        QImage image(game->getBanner());
-        QPixmap p = QPixmap::fromImage(image).scaledToWidth(300, Qt::SmoothTransformation);
+   //     QImage image(game->getBanner());
+        QPixmap p(game->getBanner());
+        p = p.scaledToWidth(300, Qt::SmoothTransformation); //SmoothTransformation
         itemBanner = new QGraphicsPixmapItem(p);
         sceneBanner->addItem(itemBanner);
     } else {
         ui->graphicsView->setVisible(false);
         sceneCover = new QGraphicsScene();
         ui->gvCover->setScene(sceneCover);
-        QImage image(game->getBoxart());
-        QPixmap p = QPixmap::fromImage(image).scaledToWidth(40, Qt::SmoothTransformation);
+       // QImage image(game->getBoxart());
+        QPixmap p(game->getBoxart());
+        p = p.scaledToWidth(40, Qt::SmoothTransformation);
         itemCover = new QGraphicsPixmapItem(p);
         sceneCover->addItem(itemCover);
     }
 
-
+ //   qDebug() << timer.elapsed();
 
 }
 
