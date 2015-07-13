@@ -46,18 +46,14 @@ void FGameWidget::setGame(FGame *g) {
         ui->viewOne->setVisible(false);
         sceneBanner = new QGraphicsScene();
         ui->graphicsView->setScene(sceneBanner);
-   //     QImage image(game->getBanner());
-        QPixmap p(game->getBanner());
-        p = p.scaledToWidth(300, Qt::SmoothTransformation); //SmoothTransformation
+        QPixmap p(game->getArt(FArtBanner, true, 300, FWidth));
         itemBanner = new QGraphicsPixmapItem(p);
         sceneBanner->addItem(itemBanner);
     } else {
         ui->graphicsView->setVisible(false);
         sceneCover = new QGraphicsScene();
         ui->gvCover->setScene(sceneCover);
-       // QImage image(game->getBoxart());
-        QPixmap p(game->getBoxart());
-        p = p.scaledToWidth(40, Qt::SmoothTransformation);
+        QPixmap p(game->getArt(FArtBox, true, 40, FHeight));
         itemCover = new QGraphicsPixmapItem(p);
         sceneCover->addItem(itemCover);
     }

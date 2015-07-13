@@ -327,11 +327,7 @@ void MainWindow::onGameClick(FGame *game, QObject *sender)
 
        ui->tgw_GameTitle->setText(game->getName());
 
-       if(game->getBoxart() != "") {
-           ui->tgw_GameCover->setStyleSheet("#tgw_GameCover{border-image:url("+ game->getBoxart() +") 0 0 0 0 stretch stretch}");
-       }
-
-
+       ui->tgw_GameCover->setStyleSheet("#tgw_GameCover{border-image:url("+ game->getArt(FArtBox) +") 0 0 0 0 stretch stretch}");
     }
 }
 
