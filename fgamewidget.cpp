@@ -53,7 +53,7 @@ void FGameWidget::setGame(FGame *g) {
         ui->graphicsView->setVisible(false);
         sceneCover = new QGraphicsScene();
         ui->gvCover->setScene(sceneCover);
-        QPixmap p(game->getArt(FArtBox, true, 40, FHeight));
+        QPixmap p(game->getArt(FArtBox, true, 55, FHeight));
         itemCover = new QGraphicsPixmapItem(p);
         sceneCover->addItem(itemCover);
     }

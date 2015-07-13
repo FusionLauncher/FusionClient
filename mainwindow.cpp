@@ -107,6 +107,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Scrolling-List fo games
     gameScrollLayout = new QVBoxLayout;
+    gameScrollLayout->setMargin(1);
+    gameScrollLayout->setSpacing(0);
     ui->gameScrollArea->widget()->setLayout(gameScrollLayout);
 
     refreshList();
