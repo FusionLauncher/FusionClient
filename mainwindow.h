@@ -94,6 +94,10 @@ private:
 
     void showSettingsDialog();
     void showGameEditDialog();
+
+
+    QGraphicsScene* sceneCover;
+    QGraphicsPixmapItem* itemCover;
 };
 
 #endif // MAINWINDOW_H

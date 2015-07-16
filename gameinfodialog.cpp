@@ -29,10 +29,10 @@ GameInfoDialog::GameInfoDialog(FGame *g, FDB *database, QWidget *parent) :
     lastDir =  "/";
 
 
-    ui->aw_la_Cover->setStyleSheet("#aw_la_Cover{border-image:url("+ game->getBoxart() +") 0 0 0 0 stretch stretch}");
-    ui->aw_la_Banner->setStyleSheet("#aw_la_Banner{border-image:url("+ game->getBanner() +") 0 0 0 0 repeat stretch}");
-    ui->aw_la_Clearart->setStyleSheet("#aw_la_Clearart{border-image:url("+ game->getClearart() +") 0 0 0 0 stretch stretch}");
-    ui->aw_la_Fanart->setStyleSheet("#aw_la_Fanart{border-image:url("+ game->getFanart() +") 0 0 0 0 stretch stretch}");
+    ui->aw_la_Cover->setStyleSheet("#aw_la_Cover{border-image:url("+ game->getArt(FArtBox) +") 0 0 0 0 stretch stretch}");
+    ui->aw_la_Banner->setStyleSheet("#aw_la_Banner{border-image:url("+ game->getArt(FArtBanner) +") 0 0 0 0 repeat stretch}");
+    ui->aw_la_Clearart->setStyleSheet("#aw_la_Clearart{border-image:url("+ game->getArt(FArtClearart) +") 0 0 0 0 stretch stretch}");
+    ui->aw_la_Fanart->setStyleSheet("#aw_la_Fanart{border-image:url("+ game->getArt(FArtFanart) +") 0 0 0 0 stretch stretch}");
 
 }
 
@@ -111,23 +111,23 @@ void GameInfoDialog::openFile(QString destFileName) {
 
 void GameInfoDialog::on_importBannerButton_clicked()
 {
-    openFile("banner");
+    openFile(FGame::FGameArtToStr(FArtBanner));
 
 }
 
 void GameInfoDialog::on_importClearartButton_clicked()
 {
-    openFile("clearlogo");
+    openFile(FGame::FGameArtToStr(FArtClearart));
 }
 
 void GameInfoDialog::on_importCoverButton_clicked()
 {
-    openFile("boxart");
+    openFile(FGame::FGameArtToStr(FArtBox));
 }
 
 void GameInfoDialog::on_importFanartButton_clicked()
 {
-    openFile("fanart");
+    openFile(FGame::FGameArtToStr(FArtFanart));
 }
 
 
