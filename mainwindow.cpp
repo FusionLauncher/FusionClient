@@ -330,8 +330,18 @@ void MainWindow::onGameClick(FGame *game, QObject *sender)
 
        ui->tgw_GameTitle->setText(game->getName());
 
-        if(game->getArt(FArtBox) != "") {
-            QPixmap p(game->getArt(FArtBox, true, 125, FHeight));
+       QString art = "";
+        if(game->getArt(FArtClearart) != "") {
+            art = (game->getArt(FArtClearart, true, 125, FHeight));
+            ui->tgw_GameTitle->setVisible(false);
+        }
+        else if (game->getArt(FArtBox) != "") {
+            art = (game->getArt(FArtBox, true, 125, FHeight));
+            ui->tgw_GameTitle->setVisible(true);
+        }
+
+
+            QPixmap p(art);
 
             ui->gvCover->resize(p.width(), 125);
             ui->gvCover->setMaximumWidth(p.width());
@@ -341,7 +351,7 @@ void MainWindow::onGameClick(FGame *game, QObject *sender)
 
             itemCover = new QGraphicsPixmapItem(p);
             sceneCover->addItem(itemCover);
-        }
+
 //       ui->tgw_GameCover->setStyleSheet("#tgw_GameCover{border-image:url("+ game->getArt(FArtBox) +") 0 0 0 0 stretch stretch}");
     }
 }

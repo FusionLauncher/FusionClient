@@ -42,7 +42,7 @@ void FGameWidget::setGame(FGame *g) {
     game = g;
     ui->fgwDialog_GameTitle->setText(game->getName());
 
-    if(game->getBanner() != "") {
+    if(game->getArt(FArtBanner) != "") {
         ui->viewOne->setVisible(false);
         sceneBanner = new QGraphicsScene();
         ui->graphicsView->setScene(sceneBanner);
