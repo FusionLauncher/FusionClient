@@ -11,6 +11,7 @@
 #include <QDesktopWidget>
 #include <QFontDatabase>
 #include <QGraphicsDropShadowEffect>
+#include <QGraphicsPixmapItem>
 
 
 
@@ -107,6 +108,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Scrolling-List fo games
     gameScrollLayout = new QVBoxLayout;
+    gameScrollLayout->setMargin(1);
+    gameScrollLayout->setSpacing(0);
     ui->gameScrollArea->widget()->setLayout(gameScrollLayout);
 
     refreshList();
@@ -327,11 +330,29 @@ void MainWindow::onGameClick(FGame *game, QObject *sender)
 
        ui->tgw_GameTitle->setText(game->getName());
 
-       if(game->getBoxart() != "") {
-           ui->tgw_GameCover->setStyleSheet("#tgw_GameCover{border-image:url("+ game->getBoxart() +") 0 0 0 0 stretch stretch}");
-       }
+       QString art = "";
+        if(game->getArt(FArtClearart) != "") {
+            art = (game->getArt(FArtClearart, true, 125, FHeight));
+            ui->tgw_GameTitle->setVisible(false);
+        }
+        else if (game->getArt(FArtBox) != "") {
+            art = (game->getArt(FArtBox, true, 125, FHeight));
+            ui->tgw_GameTitle->setVisible(true);
+        }
 
 
+            QPixmap p(art);
+
+            ui->gvCover->resize(p.width(), 125);
+            ui->gvCover->setMaximumWidth(p.width());
+            ui->gvCover->setMinimumWidth(p.width());
+            sceneCover = new QGraphicsScene();
+            ui->gvCover->setScene(sceneCover);
+
+            itemCover = new QGraphicsPixmapItem(p);
+            sceneCover->addItem(itemCover);
+
+//       ui->tgw_GameCover->setStyleSheet("#tgw_GameCover{border-image:url("+ game->getArt(FArtBox) +") 0 0 0 0 stretch stretch}");
     }
 }
 

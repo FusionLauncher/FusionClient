@@ -338,7 +338,7 @@
                <number>0</number>
               </property>
               <item>
-               <widget class="QLabel" name="tgw_GameCover">
+               <widget class="QGraphicsView" name="gvCover">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -357,11 +357,14 @@
                   <height>125</height>
                  </size>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">border:1px solid</string>
+                <property name="frameShape">
+                 <enum>QFrame::NoFrame</enum>
                 </property>
-                <property name="text">
-                 <string/>
+                <property name="verticalScrollBarPolicy">
+                 <enum>Qt::ScrollBarAlwaysOff</enum>
+                </property>
+                <property name="horizontalScrollBarPolicy">
+                 <enum>Qt::ScrollBarAlwaysOff</enum>
                 </property>
                </widget>
               </item>
