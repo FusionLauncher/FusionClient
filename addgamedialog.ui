@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>114</height>
+    <height>207</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,81 +15,120 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="gameDirBox">
+    <layout class="QVBoxLayout" name="mainLayout">
      <item>
-      <widget class="QPushButton" name="chooseGameDirButton">
-       <property name="text">
-        <string>Choose directory</string>
-       </property>
-      </widget>
+      <layout class="QHBoxLayout" name="gameNameBox">
+       <item>
+        <widget class="QLabel" name="gameNameLabel">
+         <property name="text">
+          <string>Game name:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="gameNameEdit"/>
+       </item>
+      </layout>
      </item>
      <item>
-      <widget class="QLabel" name="gameDirLabel">
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="text">
-        <string>No game directory set</string>
-       </property>
-      </widget>
+      <layout class="QHBoxLayout" name="gameDirBox">
+       <item>
+        <widget class="QPushButton" name="chooseGameDirButton">
+         <property name="text">
+          <string>Choose directory</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="gameDirLabel">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string>No game directory set</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="gameDirSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
      </item>
      <item>
-      <spacer name="gameDirSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="gameExecutableBox">
-     <item>
-      <widget class="QPushButton" name="chooseGameExecutableButton">
-       <property name="text">
-        <string>Choose executable</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="gameExecutableLabel">
-       <property name="text">
-        <string>No executable set</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="gameExecutableSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="gameNameBox">
-     <item>
-      <widget class="QLabel" name="gameNameLabel">
-       <property name="text">
-        <string>Game name:</string>
-       </property>
-      </widget>
+      <layout class="QHBoxLayout" name="gameExecutableBox">
+       <item>
+        <widget class="QPushButton" name="chooseGameExecutableButton">
+         <property name="text">
+          <string>Choose executable</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="gameExecutableLabel">
+         <property name="text">
+          <string>No executable set</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="gameExecutableSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
      </item>
      <item>
-      <widget class="QLineEdit" name="gameNameEdit"/>
+      <layout class="QHBoxLayout" name="gameCommandLayout">
+       <item>
+        <widget class="QLabel" name="gameCommandLabel">
+         <property name="text">
+          <string>Open using:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="gameCommandEdit"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="gameCommandBrowse">
+         <property name="text">
+          <string>Browse...</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="gameArgsLayout">
+       <item>
+        <widget class="QLabel" name="gameArgsLabel">
+         <property name="text">
+          <string>Arguments:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="gameArgsEdit"/>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>

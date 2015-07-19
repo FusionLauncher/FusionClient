@@ -1,6 +1,6 @@
 #include "addgamedialog.h"
 #include "ui_addgamedialog.h"
-#include <fgame.h>
+#include "fgame.h"
 #include <QFileDialog>
 
 AddGameDialog::AddGameDialog(QWidget *parent) :
@@ -38,5 +38,17 @@ void AddGameDialog::on_chooseGameExecutableButton_clicked()
 void AddGameDialog::on_buttonBox_accepted()
 {
     game.setName(ui->gameNameEdit->text());
+    game.setCommand(ui->gameCommandEdit->text());
+    game.setArgs(QStringList(ui->gameArgsEdit->text()));
+    game.setType(Executable);
+    qDebug() << "Name: " << game.getName() << "command: " << game.getCommand() << "commandEdit: " << ui->gameCommandEdit->text();
     emit AddGameDialog::gameSet(game);
+}
+
+void AddGameDialog::on_gameCommandBrowse_clicked()
+{
+    QString command = QFileDialog::getOpenFileName(this, "Choose command");
+    if(command.isEmpty())
+        return;
+    ui->gameCommandEdit->setText(command);
 }
