@@ -10,6 +10,7 @@
 #include "watchedfoldersdialog.h"
 #include <QDesktopWidget>
 #include <QFontDatabase>
+#include <QMessageBox>
 #include <QGraphicsDropShadowEffect>
 #include <QGraphicsPixmapItem>
 
@@ -22,7 +23,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     if(!db.init())
     {
-        return;
+        QMessageBox msg(QMessageBox::Warning, "Error!", "Couldn't init the DB. Things may not work correctly. If this happened after an update, please submit a bug report.", QMessageBox::Ok, this);
+        msg.exec();
+        qDebug() << "Couldn't init DB.";
+        //return;
     }
 
    //load Fonts

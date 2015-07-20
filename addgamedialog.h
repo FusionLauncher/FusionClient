@@ -24,6 +24,8 @@ private slots:
     void on_chooseGameExecutableButton_clicked();
     void on_buttonBox_accepted();
 
+    void on_gameCommandBrowse_clicked();
+
 private:
     Ui::AddGameDialog *ui;
     FGame game;
