@@ -9,6 +9,7 @@
 #include <fdb.h>
 #include <fcrawler.h>
 #include <QListWidgetItem>
+#include <QMenu>
 
 namespace Ui {
 class MainWindow;
@@ -23,34 +24,42 @@ public:
     ~MainWindow();
 
 private slots:
-    void resetDatabase();
     void addGame(FGame game);
-    void on_removeDatabaseAction_triggered();
-    void on_refreshUIAction_triggered();
-    void openStylesheetDialog();
-    void resetStylesheet();
     void on_libAddGameAction_triggered();
     void on_libAddLibAction_triggered();
     void on_actionSwitch_View_triggered();
-    void setWatchedFolders(QList<QDir> folders);
-
 
     void onGameClick(FGame *game, QObject *sender = NULL);
     void onGameDoubleClicked(FGame *game, QObject *sender);
     void onGameRightClicked(FGame *game, QObject *sender);
-    void on_GameInfoDialogFinished(int r);
+    void on_GameInfoDialogFinished();
 
-    void on_tabButton_Store_clicked();
-    void on_tabButton_Games_clicked();
-    void on_tabButton_Community_clicked();
+    void on_pb_Min_clicked();
+    void on_pb_Max_clicked();
+    void on_pb_Close_clicked();
 
     void on_tgw_GameIconButton_clicked();
-    void on_tgw_pb_Artwork_clicked();
 
-    void on_simpleGameList_itemClicked(QListWidgetItem * item);
+    void on_tabWidget_currentChanged(int index);
+
+    void ShowSettingsContextMenu(const QPoint& pos);
+    void on_pb_Settings_clicked();
+    void on_pb_LaunchGame_clicked();
 
 
     void resizeDone();
+    void setWatchedFolders(QList<QDir> folders);
+    void on_SettingsMenueClicked(QAction *action);
+    void reloadStylesheet();
+    void refreshList();
+    //http://doc.qt.io/qt-5/qtwidgets-widgets-shapedclock-example.html
+protected:
+    void mouseMoveEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void mouseDoubleClickEvent(QMouseEvent *event);
+
+
 private:
     Ui::MainWindow *ui;
     FGame *game;
@@ -60,12 +69,11 @@ private:
     QList<FGame> gameList;
     QList<FGameWidget*> gameWidgetList;
 
-    void refreshList();
-    void reloadStylesheet();
     void changeView();
 
     QLayout *gameScrollLayout;
     QString currentStyle;
+    QMenu *settingsMenu;
 
     int currentView;
     void setView();
@@ -73,6 +81,23 @@ private:
     //Save GUI-Size on resize
     void resizeEvent(QResizeEvent *event);
     QTimer resizeTimer;
+
+    //Frameless Moving
+    QPoint dragPosition;
+    QSize initSize;
+    QRect initPos;
+    bool dragEnabled;
+    bool resizeHeightEnabled;
+    bool resizeWidthEnabled;
+    bool resizeWidthEnabledInv;
+    void prepareResize(QMouseEvent *event);
+
+    void showSettingsDialog();
+    void showGameEditDialog();
+
+
+    QGraphicsScene* sceneCover;
+    QGraphicsPixmapItem* itemCover;
 };
 
 #endif // MAINWINDOW_H

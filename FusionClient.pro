@@ -19,6 +19,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = FusionClient
 TEMPLATE = app
 
+RC_ICONS = gfx/Icon.ico
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -27,7 +28,8 @@ SOURCES += main.cpp\
     fgamewidget.cpp \
     gameinfodialog.cpp \
     general.cpp \
-    gamedbartselectordialog.cpp
+    gamedbartselectordialog.cpp \
+    fsettingsdialog.cpp
 
 HEADERS  += mainwindow.h \
     addgamedialog.h \
@@ -35,14 +37,16 @@ HEADERS  += mainwindow.h \
     fgamewidget.h \
     gameinfodialog.h \
     general.h \
-    gamedbartselectordialog.h
+    gamedbartselectordialog.h \
+    fsettingsdialog.h
 
 FORMS    += mainwindow.ui \
     addgamedialog.ui \
     watchedfoldersdialog.ui \
     fgamewidget.ui \
     gameinfodialog.ui \
-    gamedbartselectordialog.ui
+    gamedbartselectordialog.ui \
+    fsettingsdialog.ui
 
 unix|win32: LIBS += -lLibFusion
 

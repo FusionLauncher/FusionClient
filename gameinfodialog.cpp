@@ -8,26 +8,63 @@
 #include <QFileDialog>
 #include <QDesktopServices>
 #include <QFileInfo>
+#include <fdb.h>
 
 
-GameInfoDialog::GameInfoDialog(FGame *g, QWidget *parent) :
+GameInfoDialog::GameInfoDialog(FGame *g, FDB *database, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::GameInfoDialog)
 {
     ui->setupUi(this);
     game = g;
-    ui->lineEdit->setText(game->getName());
+    this->db = database;
+
+    ui->le_Title->setText(game->getName());
+    ui->le_Exec->setText(game->getExe());
+    ui->le_Directory->setText(game->getPath());
+    //ui->le_Params->setText();
 
     runningDownloads = 0;
     totalDownloads = 0;
     lastDir =  "/";
 
 
-    ui->aw_la_Cover->setStyleSheet("#aw_la_Cover{border-image:url("+ game->getBoxart() +") 0 0 0 0 stretch stretch}");
-    //ui->aw_la_Banner->setStyleSheet("#aw_la_Banner{border-image:url("+ game->getBanner() +") 0 0 0 0 repeat stretch}");
-    ui->aw_la_Clearart->setStyleSheet("#aw_la_Clearart{border-image:url("+ game->getClearart() +") 0 0 0 0 stretch stretch}");
-    ui->aw_la_Fanart->setStyleSheet("#aw_la_Fanart{border-image:url("+ game->getFanart() +") 0 0 0 0 stretch stretch}");
+    ui->aw_la_Cover->setStyleSheet("#aw_la_Cover{border-image:url("+ game->getArt(FArtBox) +") 0 0 0 0 stretch stretch}");
+    ui->aw_la_Banner->setStyleSheet("#aw_la_Banner{border-image:url("+ game->getArt(FArtBanner) +") 0 0 0 0 repeat stretch}");
+    ui->aw_la_Clearart->setStyleSheet("#aw_la_Clearart{border-image:url("+ game->getArt(FArtClearart) +") 0 0 0 0 stretch stretch}");
+    ui->aw_la_Fanart->setStyleSheet("#aw_la_Fanart{border-image:url("+ game->getArt(FArtFanart) +") 0 0 0 0 stretch stretch}");
 
+}
+
+
+
+void GameInfoDialog::on_chooseGameDirButton_clicked()
+{
+
+    QDir gameDir = QFileDialog::getExistingDirectory(this, "Choose the game directory", ui->le_Directory->text());
+    if(gameDir.dirName()!=".")
+        ui->le_Directory->setText(gameDir.absolutePath());
+}
+
+void GameInfoDialog::on_pb_deleteGame_clicked()
+{
+    QMessageBox::StandardButton btn = QMessageBox::warning(this, "Really delete Game?", "Please confirm, do you want to delete '"  + game->getName() + "'?", QMessageBox::Yes|QMessageBox::No);
+    if(btn == QMessageBox::Yes) {
+        db->removeGameById(game->dbId);
+        emit reloadRequired();
+        this->close();
+    }
+}
+
+void GameInfoDialog::on_chooseGameExecutableButton_clicked()
+{
+    QString file;
+    QDir gameDir = QDir(ui->le_Directory->text());
+    file = QFileDialog::getOpenFileName(this, "Choose executable", gameDir.absolutePath());
+    if(file.isEmpty())
+        return;
+    file = gameDir.relativeFilePath(file);
+    ui->le_Exec->setText(file);
 }
 
 GameInfoDialog::~GameInfoDialog()
@@ -70,25 +107,27 @@ void GameInfoDialog::openFile(QString destFileName) {
     }
 }
 
+
+
 void GameInfoDialog::on_importBannerButton_clicked()
 {
-    openFile("banner");
+    openFile(FGame::FGameArtToStr(FArtBanner));
 
 }
 
 void GameInfoDialog::on_importClearartButton_clicked()
 {
-    openFile("clearlogo");
+    openFile(FGame::FGameArtToStr(FArtClearart));
 }
 
 void GameInfoDialog::on_importCoverButton_clicked()
 {
-    openFile("boxart");
+    openFile(FGame::FGameArtToStr(FArtBox));
 }
 
 void GameInfoDialog::on_importFanartButton_clicked()
 {
-    openFile("fanart");
+    openFile(FGame::FGameArtToStr(FArtFanart));
 }
 
 
@@ -106,6 +145,15 @@ void GameInfoDialog::on_gameSelected(TheGameDBStorage* selectedGame) {
     artmanager->getGameData(game, selectedGame);
 }
 
+void GameInfoDialog::on_buttonBox_accepted()
+{
+    game->setName(ui->le_Title->text());
+    game->setExe(ui->le_Exec->text());
+    game->setPath(ui->le_Directory->text());
+    db->updateGame(game);
+    emit reloadRequired();
+}
+
 void GameInfoDialog::downloadFinished() {
     --runningDownloads;
     ui->label_2->setText("Running Downloads:" + QString::number(runningDownloads));
@@ -118,3 +166,4 @@ void GameInfoDialog::downloadStarted() {
     ++totalDownloads;
     ui->label_2->setText("Running Downloads:" + QString::number(runningDownloads));
 }
+

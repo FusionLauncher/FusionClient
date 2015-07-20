@@ -1,46 +1,75 @@
 #include "fgamewidget.h"
 #include "ui_fgamewidget.h"
 
+#include <QGraphicsPixmapItem>
+
 FGameWidget::FGameWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FGameWidget)
 {
     ui->setupUi(this);
-    ui->fgwDialog_launchButton->setVisible(false);
+    itemBanner = NULL;
+    sceneBanner = NULL;
+    itemCover = NULL;
+    sceneCover = NULL;
+    //ui->fgwDialog_launchButton->setVisible(false);
 }
 
 FGameWidget::~FGameWidget()
 {
+    if(itemBanner)
+        delete itemBanner;
+
+    if(sceneBanner)
+        delete sceneBanner;
+
+
+    if(itemCover)
+        delete itemCover;
+
+    if(sceneCover)
+        delete sceneCover;
+
     delete ui;
 }
 
 void FGameWidget::setGame(FGame *g) {
+
+ //   QElapsedTimer timer;
+//    timer.start();
+
+
     game = g;
     ui->fgwDialog_GameTitle->setText(game->getName());
 
-    //pix_Cover = game->getBoxart();
-   // ui->fgwDialog_Cover->setPixmap( pix_Cover->scaled(80,110,Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
+    if(game->getArt(FArtBanner) != "") {
+        ui->viewOne->setVisible(false);
+        sceneBanner = new QGraphicsScene();
+        ui->graphicsView->setScene(sceneBanner);
+        QPixmap p(game->getArt(FArtBanner, true, 300, FWidth));
+        itemBanner = new QGraphicsPixmapItem(p);
+        sceneBanner->addItem(itemBanner);
+    } else {
+        ui->graphicsView->setVisible(false);
+        QPixmap p(game->getArt(FArtBox, true, 55, FHeight));
+        ui->gvCover->resize(p.width(), 60);
+        ui->gvCover->setMaximumWidth(p.width());
+        ui->gvCover->setMinimumWidth(p.width());
+        sceneCover = new QGraphicsScene();
+        ui->gvCover->setScene(sceneCover);
 
-
-    if(game->getBoxart() != "") {
-        ui->fgwDialog_Cover->setStyleSheet("#fgwDialog_Cover{border-image:url("+ game->getBoxart() +") 0 0 0 0 stretch stretch}");
+        itemCover = new QGraphicsPixmapItem(p);
+        sceneCover->addItem(itemCover);
     }
 
-
-    if(g->getType()==Steam) {
-        pix_Type = new QPixmap(":/gfx/FGameType_Steam.png");
-        ui->fgwDialog_TypeIcon->setPixmap( pix_Type->scaled(50,50,Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
-    } else if(g->getType()==Origin) {
-        pix_Type = new QPixmap(":/gfx/FGameType_Origin.png");
-        ui->fgwDialog_TypeIcon->setPixmap( pix_Type->scaled(50,50,Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
-    }
+ //   qDebug() << timer.elapsed();
 
 }
 
 void FGameWidget::setActive(bool state)
 {
     updateProperty(ui->fgwDialog_Background, "gameSelected", state);
-    ui->fgwDialog_launchButton->setVisible(state);
+ //   ui->fgwDialog_launchButton->setVisible(state);
 }
 
 
@@ -49,23 +78,15 @@ void FGameWidget::mousePressEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton)
     {
         emit clicked(game, this);
-        qDebug() << "Clicked";
     } else if (event->button() == Qt::RightButton)
     {
         emit rightClicked(game, this);
-        qDebug() << "RightClicked";
     }
 }
 
 void FGameWidget::mouseDoubleClickEvent(QMouseEvent *event)
 {
     emit doubleClicked(game, this);
-    qDebug() << "doubleClicked";
-}
-
-void FGameWidget::on_fgwDialog_launchButton_clicked()
-{
-    game->execute();
 }
 
 
