@@ -1,0 +1,4 @@
+_dbupdater_1
+ALTER TABLE games ADD COLUMN gameCommand TEXT;
+ALTER TABLE games ADD COLUMN gameArgs TEXT;
+#end
