@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QFileDialog>
 #include <fgame.h>
+#include <flauncher.h>
 #include <fdb.h>
 #include <QMessageBox>
 #include "addgamedialog.h"
@@ -126,7 +127,6 @@ MainWindow::MainWindow(QWidget *parent) :
     resizeHeightEnabled = false;
     resizeWidthEnabled = false;
     resizeWidthEnabledInv =false;
-
 }
 
 
@@ -364,7 +364,9 @@ void MainWindow::onGameClick(FGame *game, QObject *sender)
 
 void MainWindow::on_libAddGameAction_triggered()
 {
-    AddGameDialog* dialog = new AddGameDialog(this);
+    QList<FLauncher> launchers = db.getLaunchers();
+    qDebug() << "List length: " << launchers.length();
+    AddGameDialog* dialog = new AddGameDialog(this, &launchers);
     connect(dialog, SIGNAL(gameSet(FGame)), this, SLOT(addGame(FGame)));
     dialog->exec();
 }

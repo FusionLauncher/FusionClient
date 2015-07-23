@@ -16,7 +16,7 @@ signals:
     void gameSet(FGame game);
 
 public:
-    explicit AddGameDialog(QWidget *parent = 0);
+    explicit AddGameDialog(QWidget *parent = 0, QList<FLauncher> *launchers = 0);
     ~AddGameDialog();
 
 private slots:
@@ -26,9 +26,13 @@ private slots:
 
     void on_gameCommandBrowse_clicked();
 
+    void on_launcherEnabledCheckBox_clicked();
+
 private:
     Ui::AddGameDialog *ui;
     FGame game;
+    bool launchersAvailable;
+    QList<FLauncher>*launchers;
 };
 
 #endif // ADDGAMEDIALOG_H

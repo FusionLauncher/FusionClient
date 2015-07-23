@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>207</height>
+    <height>218</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -129,6 +129,20 @@
         <widget class="QLineEdit" name="gameArgsEdit"/>
        </item>
       </layout>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="launcherEnabledCheckBox">
+       <property name="text">
+        <string>Use launcher</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="launcherComboBox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
