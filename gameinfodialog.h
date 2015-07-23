@@ -43,6 +43,8 @@ private slots:
     void on_chooseGameExecutableButton_clicked();
     void on_chooseGameDirButton_clicked();
     void on_pb_deleteGame_clicked();
+    void on_launcherCheckBox_clicked();
+
 signals:
     void reloadRequired();
 };

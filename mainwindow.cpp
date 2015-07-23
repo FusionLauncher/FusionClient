@@ -191,8 +191,10 @@ void MainWindow::refreshList()
 
 
     gameList = db.getGameList();
-    for(int i=0;i<gameWidgetList.length();++i)
-        delete gameWidgetList[i];
+    for(int i=0;i<gameWidgetList.length();i++)
+        gameWidgetList.at(i)->deleteLater();
+        //gameWidgetList.removeAt(i);
+        //delete gameWidgetList[i];
 
     gameWidgetList.clear();
 
