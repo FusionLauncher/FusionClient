@@ -173,8 +173,8 @@ void GameInfoDialog::on_buttonBox_accepted()
     qDebug() << "Updating game.";
     if(ui->launcherCheckBox->isChecked())
     {
-        game->setLauncher(db->getLauncher(ui->launcherComboBox->currentData().toInt()));
-        qDebug() << "Launcher set, id:" <<  game->getLauncher().getDbId() << ", name:" << game->getLauncher().getName() << ", boxId:" << ui->launcherComboBox->currentData().toInt();
+        game->setLauncher(db->getLauncher(ui->launcherComboBox->itemData(ui->launcherComboBox->currentIndex()).toInt()));
+        qDebug() << "Launcher set, id:" <<  game->getLauncher().getDbId() << ", name:" << game->getLauncher().getName() << ", boxId:" << ui->launcherComboBox->itemData(ui->launcherComboBox->currentIndex()).toInt();
     }
     else
     {

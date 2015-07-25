@@ -61,7 +61,7 @@ void AddGameDialog::on_buttonBox_accepted()
     game.setType(Executable);
     if(ui->launcherEnabledCheckBox->isChecked())
     {
-        game.setLauncher(launchers->at(ui->launcherComboBox->currentData().toInt()));
+        game.setLauncher(launchers->at(ui->launcherComboBox->itemData(ui->launcherComboBox->currentIndex()).toInt()));
     }
     qDebug() << "Name: " << game.getName() << "command: " << game.getCommand() << "commandEdit: " << ui->gameCommandEdit->text() << game.getLauncher().getName();
     emit AddGameDialog::gameSet(game);
