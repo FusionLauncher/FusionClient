@@ -52,6 +52,8 @@ private slots:
     void on_SettingsMenueClicked(QAction *action);
     void reloadStylesheet();
     void refreshList();
+
+    void on_launcherSet(FLauncher launcher);
     //http://doc.qt.io/qt-5/qtwidgets-widgets-shapedclock-example.html
 protected:
     void mouseMoveEvent(QMouseEvent *event);
@@ -94,6 +96,7 @@ private:
 
     void showSettingsDialog();
     void showGameEditDialog();
+    void showAddLauncherDialog();
 
 
     QGraphicsScene* sceneCover;

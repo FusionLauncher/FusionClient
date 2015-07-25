@@ -1,4 +1,7 @@
-_dbupdater_1
+_custom_commands_2
+ALTER TABLE games ADD COLUMN gameLauncher INTEGER;
+CREATE TABLE IF NOT EXISTS launchers(id INTEGER PRIMARY KEY ASC, launcherName TEXT NOT NULL, launcherPath TEXT NOT NULL, launcherArgs TEXT NOT NULL);
+_custom_commands_1
 ALTER TABLE games ADD COLUMN gameCommand TEXT;
 ALTER TABLE games ADD COLUMN gameArgs TEXT;
 #end

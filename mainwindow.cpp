@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QFileDialog>
 #include <fgame.h>
+#include <flauncher.h>
 #include <fdb.h>
 #include <QMessageBox>
 #include "addgamedialog.h"
@@ -13,7 +14,7 @@
 #include <QMessageBox>
 #include <QGraphicsDropShadowEffect>
 #include <QGraphicsPixmapItem>
-
+#include "addlauncherdialog.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -126,7 +127,6 @@ MainWindow::MainWindow(QWidget *parent) :
     resizeHeightEnabled = false;
     resizeWidthEnabled = false;
     resizeWidthEnabledInv =false;
-
 }
 
 
@@ -191,8 +191,10 @@ void MainWindow::refreshList()
 
 
     gameList = db.getGameList();
-    for(int i=0;i<gameWidgetList.length();++i)
-        delete gameWidgetList[i];
+    for(int i=0;i<gameWidgetList.length();i++)
+        gameWidgetList.at(i)->deleteLater();
+        //gameWidgetList.removeAt(i);
+        //delete gameWidgetList[i];
 
     gameWidgetList.clear();
 
@@ -278,7 +280,7 @@ void MainWindow::ShowSettingsContextMenu(const QPoint &pos)
 }
 void MainWindow::on_SettingsMenueClicked(QAction* action) {
 
-    if(action->text()=="Edit Game")
+    if(action->text()=="Edit Game") //please, matching by text? What about translations?
         showGameEditDialog();
     else if(action->text()=="Add Game")
         on_libAddGameAction_triggered();
@@ -286,6 +288,8 @@ void MainWindow::on_SettingsMenueClicked(QAction* action) {
         on_libAddLibAction_triggered();
     else if(action->text()=="Settings")
         showSettingsDialog();
+    else if(action->text()=="Add Launcher")
+        showAddLauncherDialog();
 }
 
 void MainWindow::showGameEditDialog()
@@ -301,6 +305,18 @@ void MainWindow::showSettingsDialog() {
     connect(dialog, SIGNAL(reloadStylesheet()), this, SLOT(reloadStylesheet()));
     connect(dialog, SIGNAL(reloadLibrary()), this, SLOT(refreshList()));
     dialog->exec();
+}
+
+void MainWindow::showAddLauncherDialog()
+{
+    AddLauncherDialog* dialog = new AddLauncherDialog(this);
+    connect(dialog, SIGNAL(launcherSet(FLauncher)), this, SLOT(on_launcherSet(FLauncher)));
+    dialog->exec();
+}
+
+void MainWindow::on_launcherSet(FLauncher launcher)
+{
+    db.addLauncher(launcher);
 }
 
 void MainWindow::on_pb_Settings_clicked()
@@ -364,7 +380,9 @@ void MainWindow::onGameClick(FGame *game, QObject *sender)
 
 void MainWindow::on_libAddGameAction_triggered()
 {
-    AddGameDialog* dialog = new AddGameDialog(this);
+    QList<FLauncher> launchers = db.getLaunchers();
+    qDebug() << "List length: " << launchers.length();
+    AddGameDialog* dialog = new AddGameDialog(this, &launchers);
     connect(dialog, SIGNAL(gameSet(FGame)), this, SLOT(addGame(FGame)));
     dialog->exec();
 }

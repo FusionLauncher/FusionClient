@@ -2,13 +2,31 @@
 #include "ui_addgamedialog.h"
 #include "fgame.h"
 #include <QFileDialog>
+#include "fdb.h"
+#include "flauncher.h"
 
-AddGameDialog::AddGameDialog(QWidget *parent) :
+AddGameDialog::AddGameDialog(QWidget *parent, QList<FLauncher> *launchers) :
     QDialog(parent),
     ui(new Ui::AddGameDialog)
 {
+    this->launchers = launchers;
+    if(launchers == 0)
+    {
+        return;
+    }
     ui->setupUi(this);
     game = FGame();
+    if(launchers->length() > 0)
+    {
+        launchersAvailable = true;
+        for(int i = 0; i < launchers->length(); i++)
+        {
+            FLauncher launcher = launchers->at(i);
+            ui->launcherComboBox->addItem(launcher.getName(), QVariant(i));
+            qDebug() << "Name:" << launcher.getName();
+        }
+    }
+
 }
 
 AddGameDialog::~AddGameDialog()
@@ -41,7 +59,11 @@ void AddGameDialog::on_buttonBox_accepted()
     game.setCommand(ui->gameCommandEdit->text());
     game.setArgs(QStringList(ui->gameArgsEdit->text()));
     game.setType(Executable);
-    qDebug() << "Name: " << game.getName() << "command: " << game.getCommand() << "commandEdit: " << ui->gameCommandEdit->text();
+    if(ui->launcherEnabledCheckBox->isChecked())
+    {
+        game.setLauncher(launchers->at(ui->launcherComboBox->itemData(ui->launcherComboBox->currentIndex()).toInt()));
+    }
+    qDebug() << "Name: " << game.getName() << "command: " << game.getCommand() << "commandEdit: " << ui->gameCommandEdit->text() << game.getLauncher().getName();
     emit AddGameDialog::gameSet(game);
 }
 
@@ -51,4 +73,10 @@ void AddGameDialog::on_gameCommandBrowse_clicked()
     if(command.isEmpty())
         return;
     ui->gameCommandEdit->setText(command);
+}
+
+void AddGameDialog::on_launcherEnabledCheckBox_clicked()
+{
+
+    ui->launcherComboBox->setEnabled(ui->launcherEnabledCheckBox->isChecked());
 }

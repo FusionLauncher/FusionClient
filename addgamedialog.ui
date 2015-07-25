@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>207</height>
+    <height>218</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -130,6 +130,20 @@
        </item>
       </layout>
      </item>
+     <item>
+      <widget class="QCheckBox" name="launcherEnabledCheckBox">
+       <property name="text">
+        <string>Use launcher</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="launcherComboBox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -159,22 +173,6 @@
  </widget>
  <resources/>
  <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>AddGameDialog</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
