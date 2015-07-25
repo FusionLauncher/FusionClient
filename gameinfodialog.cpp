@@ -22,7 +22,13 @@ GameInfoDialog::GameInfoDialog(FGame *g, FDB *database, QWidget *parent) :
     ui->le_Title->setText(game->getName());
     ui->le_Exec->setText(game->getExe());
     ui->le_Directory->setText(game->getPath());
-    //ui->le_Params->setText();
+
+    QString args;
+    for(int i=0;i<game->getArgs().length();++i)
+        args += " " + game->getArgs()[i];
+
+    ui->le_Params->setText(args);
+
 
     runningDownloads = 0;
     totalDownloads = 0;
@@ -150,6 +156,7 @@ void GameInfoDialog::on_buttonBox_accepted()
     game->setName(ui->le_Title->text());
     game->setExe(ui->le_Exec->text());
     game->setPath(ui->le_Directory->text());
+    game->setArgs(QStringList(ui->le_Params->text()));
     db->updateGame(game);
     emit reloadRequired();
 }
