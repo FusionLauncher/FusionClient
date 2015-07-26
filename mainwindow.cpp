@@ -351,26 +351,28 @@ void MainWindow::onGameClick(FGame *game, QObject *sender)
        ui->tgw_GameTitle->setText(game->getName());
 
        QString art = "";
-        if(game->getArt(FArtClearart) != "") {
+        if(game->getArt(FArtClearart) != "") { //Has clearart
             art = (game->getArt(FArtClearart, true, 125, FHeight));
             ui->tgw_GameTitle->setVisible(false);
         }
-        else if (game->getArt(FArtBox) != "") {
+        else if (game->getArt(FArtBox) != "") { //Has Boxart
             art = (game->getArt(FArtBox, true, 125, FHeight));
+            ui->tgw_GameTitle->setVisible(true);
+        } else { //Has no Images
             ui->tgw_GameTitle->setVisible(true);
         }
 
 
-            QPixmap p(art);
+        QPixmap p(art);
 
-            ui->gvCover->resize(p.width(), 125);
-            ui->gvCover->setMaximumWidth(p.width());
-            ui->gvCover->setMinimumWidth(p.width());
-            sceneCover = new QGraphicsScene();
-            ui->gvCover->setScene(sceneCover);
+        ui->gvCover->resize(p.width(), 125);
+        ui->gvCover->setMaximumWidth(p.width());
+        ui->gvCover->setMinimumWidth(p.width());
+        sceneCover = new QGraphicsScene();
+        ui->gvCover->setScene(sceneCover);
 
-            itemCover = new QGraphicsPixmapItem(p);
-            sceneCover->addItem(itemCover);
+        itemCover = new QGraphicsPixmapItem(p);
+        sceneCover->addItem(itemCover);
 
 //       ui->tgw_GameCover->setStyleSheet("#tgw_GameCover{border-image:url("+ game->getArt(FArtBox) +") 0 0 0 0 stretch stretch}");
     }
