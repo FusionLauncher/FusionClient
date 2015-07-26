@@ -61,7 +61,8 @@ INCLUDEPATH += $$PWD/../LibFusion
 DEPENDPATH += $$PWD/../LibFusion
 
 DISTFILES += \
-    stylesheet.qss
+    stylesheet.qss \
+    dbUpdate
 
 RESOURCES += \
     res.qrc
