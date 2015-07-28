@@ -105,7 +105,18 @@ void FSettingsDialog::on_btn_Artwork_openCache_clicked() {
 
 void FSettingsDialog::on_btn_Artwork_ClearCache_clicked() {
     QDir cacheDir(FGame::getCacheDir());
-    cacheDir.removeRecursively();
+
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
+    cacheDir.setNameFilters(QStringList()<<"*.*");
+    QStringList steamFiles = cacheDir.entryList();
+    for(int i=0;i<steamFiles.length();++i) {
+        cacheDir.remove(steamFiles[i]);
+    }
+#else
+   cacheDir.removeRecursively();
+#endif
+
+
 }
 
 
