@@ -71,12 +71,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
    //Shadow!
    settingsMenu = new QMenu(ui->gameDetailsSidebarWidget);
-   settingsMenu->addAction("Edit Game");
-   settingsMenu->addAction("Add Game");
-   settingsMenu->addAction("Add Launcher");
-   settingsMenu->addAction("Manage Library");
-   settingsMenu->addAction("Settings");
-   connect(settingsMenu, SIGNAL(triggered(QAction*)), this, SLOT(on_SettingsMenueClicked(QAction*)));
+   QAction * editGameAction = new QAction("Edit Game", this);
+   connect(editGameAction, SIGNAL(triggered()), this, SLOT(showGameEditDialog()));
+   settingsMenu->addAction(editGameAction);
+   QAction * addGameAction = new QAction("Add game", this);
+   connect(addGameAction, SIGNAL(triggered()), this, SLOT(on_libAddGameAction_triggered()));
+   settingsMenu->addAction(addGameAction);
+   QAction * addLauncherAction = new QAction("Add Launcher", this);
+   connect(addLauncherAction, SIGNAL(triggered()), this, SLOT(showAddLauncherDialog()));
+   settingsMenu->addAction(addLauncherAction);
+   QAction * manageLibraryAction = new QAction("Manage Library", this);
+   connect(manageLibraryAction, SIGNAL(triggered()), this, SLOT(on_libAddLibAction_triggered()));
+   settingsMenu->addAction(manageLibraryAction);
+   QAction * showSettingsAction = new QAction("Settings", this);
+   connect(showSettingsAction, SIGNAL(triggered()), this, SLOT(showSettingsDialog()));
+   settingsMenu->addAction(showSettingsAction);
+   //connect(settingsMenu, SIGNAL(triggered(QAction*)), this, SLOT(on_SettingsMenueClicked(QAction*)));
    QGraphicsDropShadowEffect* menuEffect = new QGraphicsDropShadowEffect();
    menuEffect->setBlurRadius(15);
    menuEffect->setOffset(5,5);
@@ -277,19 +287,6 @@ void MainWindow::ShowSettingsContextMenu(const QPoint &pos)
 
 
        settingsMenu->exec(globalPos);
-}
-void MainWindow::on_SettingsMenueClicked(QAction* action) {
-
-    if(action->text()=="Edit Game") //please, matching by text? What about translations?
-        showGameEditDialog();
-    else if(action->text()=="Add Game")
-        on_libAddGameAction_triggered();
-    else if(action->text()=="Manage Library")
-        on_libAddLibAction_triggered();
-    else if(action->text()=="Settings")
-        showSettingsDialog();
-    else if(action->text()=="Add Launcher")
-        showAddLauncherDialog();
 }
 
 void MainWindow::showGameEditDialog()

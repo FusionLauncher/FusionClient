@@ -49,11 +49,14 @@ private slots:
 
     void resizeDone();
     void setWatchedFolders(QList<QDir> folders);
-    void on_SettingsMenueClicked(QAction *action);
     void reloadStylesheet();
     void refreshList();
 
     void on_launcherSet(FLauncher launcher);
+    void showAddLauncherDialog();
+    void showGameEditDialog();
+    void showSettingsDialog();
+
     //http://doc.qt.io/qt-5/qtwidgets-widgets-shapedclock-example.html
 protected:
     void mouseMoveEvent(QMouseEvent *event);
@@ -94,9 +97,6 @@ private:
     bool resizeWidthEnabledInv;
     void prepareResize(QMouseEvent *event);
 
-    void showSettingsDialog();
-    void showGameEditDialog();
-    void showAddLauncherDialog();
 
 
     QGraphicsScene* sceneCover;
