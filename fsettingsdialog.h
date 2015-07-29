@@ -23,6 +23,10 @@ private:
 
     Ui::FSettingsDialog *ui;
     FDB *db;
+
+    int runningDownloads;
+    int totalDownloads;
+    QList<FGame> gameList;
 private slots:
     void on_listWidget_currentRowChanged(int i);
 
@@ -33,6 +37,11 @@ private slots:
 
 
     void on_buttonBox_accepted();
+    void downloadStarted();
+    void downloadFinished();
+    void on_btn_Artwork_ClearCache_clicked();
+    void on_btn_Artwork_openCache_clicked();
+    void on_btn_Artwork_DownloadAll_clicked();
 signals:
     void reloadStylesheet();
     void reloadLibrary();

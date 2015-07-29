@@ -25,8 +25,6 @@ public:
 
 private slots:
     void addGame(FGame game);
-    void on_libAddGameAction_triggered();
-    void on_libAddLibAction_triggered();
     void on_actionSwitch_View_triggered();
 
     void onGameClick(FGame *game, QObject *sender = NULL);
@@ -53,11 +51,11 @@ private slots:
     void refreshList();
 
     void on_launcherSet(FLauncher launcher);
-    void showAddLauncherDialog();
-    void showGameEditDialog();
-    void showSettingsDialog();
-
-    //http://doc.qt.io/qt-5/qtwidgets-widgets-shapedclock-example.html
+    void sttngsBtn_opnSttngs_triggered();
+    void sttngsBtn_mngLib_triggered();
+    void sttngsBtn_addLnchr_triggered();
+    void sttngsBtn_addGame_triggered();
+    void sttngsBtn_edtGame_triggered();
 protected:
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
@@ -96,8 +94,6 @@ private:
     bool resizeWidthEnabled;
     bool resizeWidthEnabledInv;
     void prepareResize(QMouseEvent *event);
-
-
 
     QGraphicsScene* sceneCover;
     QGraphicsPixmapItem* itemCover;
