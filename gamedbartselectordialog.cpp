@@ -12,7 +12,7 @@ GameDBArtSelectorDialog::GameDBArtSelectorDialog(QList<TheGameDBStorage*> Games,
 
 
     for(int i=0;i<Gamelist.length();++i)
-        ui->listWidget->addItem(Gamelist[i]->gameName);
+        ui->listWidget->addItem(Gamelist[i]->gameName + " (" + Gamelist[i]->Platform + ")");
 }
 
 GameDBArtSelectorDialog::~GameDBArtSelectorDialog()

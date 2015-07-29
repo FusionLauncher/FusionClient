@@ -22,6 +22,7 @@ GameInfoDialog::GameInfoDialog(FGame *g, FDB *database, QWidget *parent) :
     ui->le_Title->setText(game->getName());
     ui->le_Exec->setText(game->getExe());
     ui->le_Directory->setText(game->getPath());
+    ui->le_Type->setText(FGame::FGameTypeToStr(game->getType()));
 
     QString args;
     for(int i=0;i<game->getArgs().length();++i)

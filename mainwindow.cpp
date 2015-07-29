@@ -69,14 +69,15 @@ MainWindow::MainWindow(QWidget *parent) :
    ui->pb_LaunchGame->setGraphicsEffect(Leffect);
 
 
-   //Shadow!
+   //Build the Settings-Button
    settingsMenu = new QMenu(ui->gameDetailsSidebarWidget);
-   settingsMenu->addAction("Edit Game");
-   settingsMenu->addAction("Add Game");
-   settingsMenu->addAction("Add Launcher");
-   settingsMenu->addAction("Manage Library");
-   settingsMenu->addAction("Settings");
-   connect(settingsMenu, SIGNAL(triggered(QAction*)), this, SLOT(on_SettingsMenueClicked(QAction*)));
+   settingsMenu->addAction("Edit Game", this, SLOT(sttngsBtn_edtGame_triggered()));
+   settingsMenu->addAction("Add Game", this, SLOT(sttngsBtn_addGame_triggered()));
+   settingsMenu->addAction("Add Launcher", this, SLOT(sttngsBtn_addLnchr_triggered()));
+   settingsMenu->addAction("Manage Library", this, SLOT(sttngsBtn_mngLib_triggered()));
+   settingsMenu->addAction("Settings", this, SLOT(sttngsBtn_opnSttngs_triggered()));
+
+
    QGraphicsDropShadowEffect* menuEffect = new QGraphicsDropShadowEffect();
    menuEffect->setBlurRadius(15);
    menuEffect->setOffset(5,5);
@@ -133,6 +134,37 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::changeView()
 {
 
+}
+
+
+void MainWindow::sttngsBtn_opnSttngs_triggered() {
+    FSettingsDialog* dialog = new FSettingsDialog(&db, this);
+    connect(dialog, SIGNAL(reloadStylesheet()), this, SLOT(reloadStylesheet()));
+    connect(dialog, SIGNAL(reloadLibrary()), this, SLOT(refreshList()));
+    dialog->exec();
+}
+void MainWindow::sttngsBtn_mngLib_triggered() {
+    WatchedFoldersDialog* dialog =  new WatchedFoldersDialog(this);
+    connect(dialog, SIGNAL(folderSet(QList<QDir>)), this, SLOT(setWatchedFolders(QList<QDir>)));
+    dialog->exec();
+
+}
+void MainWindow::sttngsBtn_addLnchr_triggered() {
+    AddLauncherDialog* dialog = new AddLauncherDialog(this);
+    connect(dialog, SIGNAL(launcherSet(FLauncher)), this, SLOT(on_launcherSet(FLauncher)));
+    dialog->exec();
+}
+void MainWindow::sttngsBtn_addGame_triggered() {
+    QList<FLauncher> launchers = db.getLaunchers();
+    qDebug() << "List length: " << launchers.length();
+    AddGameDialog* dialog = new AddGameDialog(this, &launchers);
+    connect(dialog, SIGNAL(gameSet(FGame)), this, SLOT(addGame(FGame)));
+    dialog->exec();
+}
+void MainWindow::sttngsBtn_edtGame_triggered() {
+    GameInfoDialog *dialog = new GameInfoDialog(game, &db, this);
+    connect(dialog, SIGNAL(reloadRequired()), this, SLOT(on_GameInfoDialogFinished()));
+    dialog->exec();
 }
 
 
@@ -278,41 +310,6 @@ void MainWindow::ShowSettingsContextMenu(const QPoint &pos)
 
        settingsMenu->exec(globalPos);
 }
-void MainWindow::on_SettingsMenueClicked(QAction* action) {
-
-    if(action->text()=="Edit Game") //please, matching by text? What about translations?
-        showGameEditDialog();
-    else if(action->text()=="Add Game")
-        on_libAddGameAction_triggered();
-    else if(action->text()=="Manage Library")
-        on_libAddLibAction_triggered();
-    else if(action->text()=="Settings")
-        showSettingsDialog();
-    else if(action->text()=="Add Launcher")
-        showAddLauncherDialog();
-}
-
-void MainWindow::showGameEditDialog()
-{
-    GameInfoDialog *dialog = new GameInfoDialog(game, &db, this);
-    connect(dialog, SIGNAL(reloadRequired()), this, SLOT(on_GameInfoDialogFinished()));
-    dialog->exec();
-}
-
-
-void MainWindow::showSettingsDialog() {
-    FSettingsDialog* dialog = new FSettingsDialog(&db, this);
-    connect(dialog, SIGNAL(reloadStylesheet()), this, SLOT(reloadStylesheet()));
-    connect(dialog, SIGNAL(reloadLibrary()), this, SLOT(refreshList()));
-    dialog->exec();
-}
-
-void MainWindow::showAddLauncherDialog()
-{
-    AddLauncherDialog* dialog = new AddLauncherDialog(this);
-    connect(dialog, SIGNAL(launcherSet(FLauncher)), this, SLOT(on_launcherSet(FLauncher)));
-    dialog->exec();
-}
 
 void MainWindow::on_launcherSet(FLauncher launcher)
 {
@@ -351,48 +348,33 @@ void MainWindow::onGameClick(FGame *game, QObject *sender)
        ui->tgw_GameTitle->setText(game->getName());
 
        QString art = "";
-        if(game->getArt(FArtClearart) != "") {
+        if(game->getArt(FArtClearart) != "") { //Has clearart
             art = (game->getArt(FArtClearart, true, 125, FHeight));
             ui->tgw_GameTitle->setVisible(false);
         }
-        else if (game->getArt(FArtBox) != "") {
+        else if (game->getArt(FArtBox) != "") { //Has Boxart
             art = (game->getArt(FArtBox, true, 125, FHeight));
+            ui->tgw_GameTitle->setVisible(true);
+        } else { //Has no Images
             ui->tgw_GameTitle->setVisible(true);
         }
 
 
-            QPixmap p(art);
+        QPixmap p(art);
 
-            ui->gvCover->resize(p.width(), 125);
-            ui->gvCover->setMaximumWidth(p.width());
-            ui->gvCover->setMinimumWidth(p.width());
-            sceneCover = new QGraphicsScene();
-            ui->gvCover->setScene(sceneCover);
+        ui->gvCover->resize(p.width(), 125);
+        ui->gvCover->setMaximumWidth(p.width());
+        ui->gvCover->setMinimumWidth(p.width());
+        sceneCover = new QGraphicsScene();
+        ui->gvCover->setScene(sceneCover);
 
-            itemCover = new QGraphicsPixmapItem(p);
-            sceneCover->addItem(itemCover);
+        itemCover = new QGraphicsPixmapItem(p);
+        sceneCover->addItem(itemCover);
 
 //       ui->tgw_GameCover->setStyleSheet("#tgw_GameCover{border-image:url("+ game->getArt(FArtBox) +") 0 0 0 0 stretch stretch}");
     }
 }
 
-
-
-void MainWindow::on_libAddGameAction_triggered()
-{
-    QList<FLauncher> launchers = db.getLaunchers();
-    qDebug() << "List length: " << launchers.length();
-    AddGameDialog* dialog = new AddGameDialog(this, &launchers);
-    connect(dialog, SIGNAL(gameSet(FGame)), this, SLOT(addGame(FGame)));
-    dialog->exec();
-}
-
-void MainWindow::on_libAddLibAction_triggered()
-{
-    WatchedFoldersDialog* dialog =  new WatchedFoldersDialog(this);
-    connect(dialog, SIGNAL(folderSet(QList<QDir>)), this, SLOT(setWatchedFolders(QList<QDir>)));
-    dialog->exec();
-}
 
 void MainWindow::on_actionSwitch_View_triggered()
 {
