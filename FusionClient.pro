@@ -63,6 +63,11 @@ else:unix: LIBS += -L$$PWD/../LibFusion/ -lLibFusion
 INCLUDEPATH += $$PWD/../LibFusion
 DEPENDPATH += $$PWD/../LibFusion
 
+unix {
+    target.path = /usr/bin
+    INSTALLS += target
+}
+
 DISTFILES += \
     stylesheet.qss \
     dbUpdate
