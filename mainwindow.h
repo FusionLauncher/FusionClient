@@ -52,6 +52,7 @@ private slots:
 
     void on_launcherSet(FLauncher launcher);
     void on_launcherEdited(FLauncher launcher);
+
     void sttngsBtn_opnSttngs_triggered();
     void sttngsBtn_mngLib_triggered();
     void sttngsBtn_addLnchr_triggered();

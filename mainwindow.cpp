@@ -79,6 +79,7 @@ MainWindow::MainWindow(QWidget *parent) :
    settingsMenu->addAction("Add Launcher", this, SLOT(sttngsBtn_addLnchr_triggered()));
    settingsMenu->addAction("Manage Library", this, SLOT(sttngsBtn_mngLib_triggered()));
    settingsMenu->addAction("Settings", this, SLOT(sttngsBtn_opnSttngs_triggered()));
+
    QGraphicsDropShadowEffect* menuEffect = new QGraphicsDropShadowEffect();
    menuEffect->setBlurRadius(15);
    menuEffect->setOffset(5,5);
@@ -203,7 +204,6 @@ void MainWindow::sttngsBtn_edtLnchr_triggered()
     connect(dialog, SIGNAL(on_launcherEdited(FLauncher)), this, SLOT(on_launcherEdited(FLauncher)));
     dialog->exec();
 }
-
 
 void MainWindow::setView() {
 
