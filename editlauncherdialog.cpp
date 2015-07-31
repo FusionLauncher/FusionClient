@@ -1,16 +1,15 @@
 #include "editlauncherdialog.h"
 #include "ui_editlauncherdialog.h"
 
-EditLauncherDialog::EditLauncherDialog(QWidget *parent, QList<FLauncher> *launchers) :
+EditLauncherDialog::EditLauncherDialog(QWidget *parent, FLauncher *launcher) :
     QDialog(parent),
     ui(new Ui::EditLauncherDialog)
 {
     ui->setupUi(this);
-    Iterator<FLauncher> launcher;
-    for(launcher = launchers->begin(); launcher != launchers->end(); launcher++)
-    {
-        ui->chooseLauncherComboBox->addItem();
-    }
+    ui->launcherNameEdit->setText(launcher->getName());
+    ui->pathEdit->setText(launcher->getPath());
+    ui->argEdit->setText(launcher->getArgs());
+    dbId = launcher->getDbId();
 }
 
 EditLauncherDialog::~EditLauncherDialog()
@@ -20,6 +19,11 @@ EditLauncherDialog::~EditLauncherDialog()
 
 void EditLauncherDialog::on_buttonBox_accepted()
 {
-    FLauncher launcher;
-    emit launcherEdited(launcher);
+    FLauncher editedLauncher;
+    editedLauncher.setName(ui->launcherNameEdit->text());
+    editedLauncher.setPath(ui->pathEdit->text());
+    editedLauncher.setArgs(ui->argEdit->text());
+    editedLauncher.setDbId(dbId);
+    accept();
+    emit on_launcherEdited(editedLauncher);
 }
