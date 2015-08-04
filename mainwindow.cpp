@@ -15,6 +15,8 @@
 #include <QGraphicsDropShadowEffect>
 #include <QGraphicsPixmapItem>
 #include "addlauncherdialog.h"
+#include "editlauncherdialog.h"
+#include "qinputdialog.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -73,10 +75,10 @@ MainWindow::MainWindow(QWidget *parent) :
    settingsMenu = new QMenu(ui->gameDetailsSidebarWidget);
    settingsMenu->addAction("Edit Game", this, SLOT(sttngsBtn_edtGame_triggered()));
    settingsMenu->addAction("Add Game", this, SLOT(sttngsBtn_addGame_triggered()));
+   settingsMenu->addAction("Edit Launcher", this, SLOT(sttngsBtn_edtLnchr_triggered()));
    settingsMenu->addAction("Add Launcher", this, SLOT(sttngsBtn_addLnchr_triggered()));
    settingsMenu->addAction("Manage Library", this, SLOT(sttngsBtn_mngLib_triggered()));
    settingsMenu->addAction("Settings", this, SLOT(sttngsBtn_opnSttngs_triggered()));
-
 
    QGraphicsDropShadowEffect* menuEffect = new QGraphicsDropShadowEffect();
    menuEffect->setBlurRadius(15);
@@ -167,6 +169,41 @@ void MainWindow::sttngsBtn_edtGame_triggered() {
     dialog->exec();
 }
 
+void MainWindow::sttngsBtn_edtLnchr_triggered()
+{
+    //show nice dialog here
+    QList<FLauncher> launcherList = db.getLaunchers();
+    QList<FLauncher>::Iterator launcher;
+    QStringList launcherNameList;
+    for(launcher = launcherList.begin(); launcher != launcherList.end(); launcher++)
+    {
+        QString name = launcher->getName();
+        if(launcherNameList.contains(name))
+        {
+            int counter = 1;
+            while(launcherNameList.contains(name+" ("+QString::number(counter)+')'))
+            {
+                counter++;
+            }
+            launcherNameList.append(name+" ("+QString::number(counter)+')');
+        }
+        else
+        {
+            launcherNameList.append(name);
+        }
+    }
+    bool accepted;
+    QString editedLauncherName = QInputDialog::getItem(this, "Choose launcher to edit", "Choose launcher", launcherNameList, 0, false, &accepted);
+    if(!accepted)
+    {
+        return;
+    }
+    FLauncher editedLauncher = launcherList.at(launcherNameList.indexOf(editedLauncherName));
+    EditLauncherDialog *dialog = new EditLauncherDialog(this, &editedLauncher);
+    qDebug() << "Launcher args:" << editedLauncher.getArgs();
+    connect(dialog, SIGNAL(on_launcherEdited(FLauncher)), this, SLOT(on_launcherEdited(FLauncher)));
+    dialog->exec();
+}
 
 void MainWindow::setView() {
 
@@ -314,6 +351,12 @@ void MainWindow::ShowSettingsContextMenu(const QPoint &pos)
 void MainWindow::on_launcherSet(FLauncher launcher)
 {
     db.addLauncher(launcher);
+}
+
+void MainWindow::on_launcherEdited(FLauncher launcher)
+{
+    qDebug() << "Launcher edited!";
+    db.updateLauncher(launcher);
 }
 
 void MainWindow::on_pb_Settings_clicked()

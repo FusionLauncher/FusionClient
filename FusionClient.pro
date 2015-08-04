@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     general.cpp \
     gamedbartselectordialog.cpp \
     fsettingsdialog.cpp \
-    addlauncherdialog.cpp
+    addlauncherdialog.cpp \
+    editlauncherdialog.cpp
 
 HEADERS  += mainwindow.h \
     addgamedialog.h \
@@ -40,7 +41,8 @@ HEADERS  += mainwindow.h \
     general.h \
     gamedbartselectordialog.h \
     fsettingsdialog.h \
-    addlauncherdialog.h
+    addlauncherdialog.h \
+    editlauncherdialog.h
 
 FORMS    += mainwindow.ui \
     addgamedialog.ui \
@@ -49,7 +51,8 @@ FORMS    += mainwindow.ui \
     gameinfodialog.ui \
     gamedbartselectordialog.ui \
     fsettingsdialog.ui \
-    addlauncherdialog.ui
+    addlauncherdialog.ui \
+    editlauncherdialog.ui
 
 unix|win32: LIBS += -lLibFusion
 
@@ -59,6 +62,11 @@ else:unix: LIBS += -L$$PWD/../LibFusion/ -lLibFusion
 
 INCLUDEPATH += $$PWD/../LibFusion
 DEPENDPATH += $$PWD/../LibFusion
+
+unix {
+    target.path = /usr/bin
+    INSTALLS += target
+}
 
 DISTFILES += \
     stylesheet.qss \
