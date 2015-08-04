@@ -24,6 +24,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+#ifdef OS == Windows
+    cUpdater->writeVersion(FCVersion, QDir::currentPath() + "/FVersionW");
+#elif OS == Linux
+    cUpdater->writeVersion(FCVersion, QDir::currentPath() + "/FVersionL");
+#endif
     if(!db.init())
     {
         QMessageBox msg(QMessageBox::Warning, "Error!", "Couldn't init the DB. Things may not work correctly. If this happened after an update, please submit a bug report.", QMessageBox::Ok, this);
