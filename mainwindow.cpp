@@ -24,10 +24,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-#ifdef OS == Windows
+#ifdef _WIN32
     cUpdater->writeVersion(FCVersion, QDir::currentPath() + "/FVersionW");
-#elif OS == Linux
+    qDebug() << "Creating FVersion file for Windows.";
+#elif __linux
     cUpdater->writeVersion(FCVersion, QDir::currentPath() + "/FVersionL");
+    qDebug() << "Creating FVersion file for Linux.";
 #endif
     if(!db.init())
     {
