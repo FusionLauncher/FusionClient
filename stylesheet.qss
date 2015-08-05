@@ -5,6 +5,7 @@ QTabBar::tab
     font-size: 24pt;
     width:230px;
     height:60px;
+    padding:0px;
 }
 
 #tabWidget QWidget {
@@ -112,6 +113,3 @@ QScrollBar::down-button:vertical, #gameScrollArea::up-button:vertical{
     border-radius:30px;
 }
 
-
-
-<RCC/>
