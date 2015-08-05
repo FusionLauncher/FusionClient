@@ -318,12 +318,7 @@ void MainWindow::on_pb_Close_clicked()
 
 void MainWindow::on_tgw_GameIconButton_clicked()
 {
-    if(game->getType() == Steam) {
-        ui->webView->setUrl("http://store.steampowered.com/app/" + game->getExe() + "/");
-    } else if(game->getType() == Origin) {
-        QString u("http://www.origin.com/en-us/store/browse?q=" + game->getName().replace(" ", "%20").replace("™", ""));
-        ui->webView->setUrl(u);
-    }
+
     ui->tabWidget->setCurrentIndex(0);
 }
 
