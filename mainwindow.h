@@ -8,6 +8,7 @@
 #include <fgame.h>
 #include <fdb.h>
 #include <fcrawler.h>
+#include <fclientupdater.h>
 #include <QListWidgetItem>
 #include <QMenu>
 
@@ -67,10 +68,13 @@ protected:
 
 
 private:
+    QString FCVersion = "0.0.1";
+
     Ui::MainWindow *ui;
     FGame *game;
     FCrawler crawler;
     FDB db;
+    FClientUpdater *cUpdater = new FClientUpdater();
 
     QList<FGame> gameList;
     QList<FGameWidget*> gameWidgetList;

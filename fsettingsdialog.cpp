@@ -79,7 +79,6 @@ void FSettingsDialog::on_btn_Artwork_DownloadAll_clicked() {
        connect(artmanager, SIGNAL(startedDownload()), this, SLOT(downloadStarted()));
        connect(artmanager, SIGNAL(finishedDownload()), this, SLOT(downloadFinished()));
        artmanager->getGameData(&gameList[i], "PC");
-       artmanager->deleteLater();
    }
 
 }
