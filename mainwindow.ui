@@ -130,7 +130,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_Store">
        <attribute name="title">
@@ -191,13 +191,17 @@
          </widget>
         </item>
         <item>
-         <widget class="QWebView" name="webView">
-          <property name="url">
-           <url>
-            <string>about:blank</string>
-           </url>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
-         </widget>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>
@@ -282,8 +286,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>310</width>
-                <height>403</height>
+                <width>303</width>
+                <height>395</height>
                </rect>
               </property>
              </widget>
@@ -708,13 +712,6 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>QWebView</class>
-   <extends>QWidget</extends>
-   <header>QtWebKitWidgets/QWebView</header>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="res.qrc"/>
  </resources>
