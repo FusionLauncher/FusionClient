@@ -282,8 +282,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>310</width>
-                <height>403</height>
+                <width>303</width>
+                <height>395</height>
                </rect>
               </property>
              </widget>
@@ -371,7 +371,7 @@
               <item>
                <widget class="QLabel" name="tgw_GameTitle">
                 <property name="text">
-                 <string>TextLabel</string>
+                 <string>Nothing found.</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>

@@ -7,6 +7,17 @@ QTabBar::tab
     height:60px;
 }
 
+QTabBar::tab:hover
+{
+    color: #ffffff;
+    text-decoration: underline;
+}
+QTabBar::tab:selected
+{
+    color: #ffffff;
+    text-decoration: underline;
+}
+
 #tabWidget QWidget {
     background: #DADADA;
 }
