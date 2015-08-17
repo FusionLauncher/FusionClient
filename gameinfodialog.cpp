@@ -40,15 +40,16 @@ GameInfoDialog::GameInfoDialog(FGame *g, FDB *database, QWidget *parent) :
     ui->aw_la_Banner->setStyleSheet("#aw_la_Banner{border-image:url("+ game->getArt(FArtBanner) +") 0 0 0 0 repeat stretch}");
     ui->aw_la_Clearart->setStyleSheet("#aw_la_Clearart{border-image:url("+ game->getArt(FArtClearart) +") 0 0 0 0 stretch stretch}");
     ui->aw_la_Fanart->setStyleSheet("#aw_la_Fanart{border-image:url("+ game->getArt(FArtFanart) +") 0 0 0 0 stretch stretch}");
+
     QList<FLauncher> launchers = db->getLaunchers();
     for(int i = 0; i < launchers.length(); i++)
     {
         FLauncher launcher = launchers.at(i);
         ui->launcherComboBox->addItem(launcher.getName(), QVariant(launcher.getDbId()));
     }
-    qDebug() << "Current launcher:" << game->getLauncher().getName() << ", id:" << game->getLauncher().getDbId();
     if(game->doesUseLauncher())
     {
+        qDebug() << "Current launcher:" << game->getLauncher().getName() << ", id:" << game->getLauncher().getDbId();
         qDebug() << "Game is using launcher.";
         ui->launcherCheckBox->setChecked(true);
         ui->launcherComboBox->setEnabled(true);

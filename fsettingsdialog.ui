@@ -57,7 +57,7 @@
       <item>
        <widget class="QStackedWidget" name="settingPages">
         <property name="currentIndex">
-         <number>3</number>
+         <number>4</number>
         </property>
         <widget class="QWidget" name="General">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -238,6 +238,9 @@
         </widget>
         <widget class="QWidget" name="Artwork">
          <layout class="QVBoxLayout" name="verticalLayout_5">
+          <property name="topMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QCheckBox" name="cb_Artwork_UseCache">
             <property name="enabled">
@@ -304,6 +307,51 @@
              </size>
             </property>
            </spacer>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="WatchedFolders">
+         <layout class="QFormLayout" name="formLayout">
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <item row="2" column="0">
+           <widget class="QPushButton" name="btn_Folder_Add">
+            <property name="text">
+             <string>Add</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QPushButton" name="bn_Folder_Remove">
+            <property name="text">
+             <string>Remove</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QListWidget" name="lw_Folder_FolderList"/>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="la_Folder_Head">
+            <property name="text">
+             <string>Watched Folders</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QCheckBox" name="cb_Folder_ForLauncher">
+            <property name="text">
+             <string>for Launcher</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0" colspan="2">
+           <widget class="QComboBox" name="cb_Folder_LauncherList">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>

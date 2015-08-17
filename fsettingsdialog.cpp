@@ -18,6 +18,7 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
    ui->listWidget->addItem("Database");
    ui->listWidget->addItem("Interface");
    ui->listWidget->addItem("Artwork");
+   ui->listWidget->addItem("Watched Folders");
    ui->listWidget->setCurrentRow(0);
 
    ui->le_Stylesheet->setText(db->getTextPref("stylesheet"));
@@ -26,6 +27,20 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
 
    ui->cb_Artwork_UseCache->setChecked(db->getBoolPref("useArtworkCache", true));
 
+    //##########################
+   //WatchedFolders
+   QList<FWatchedFolder> folders = db->getWatchedFoldersList();
+   for(int i=0;i<folders.length();++i) {
+       ui->lw_Folder_FolderList->addItem(folders[i].getDirectory().absolutePath());
+   }
+   QList<FLauncher> launchers = db->getLaunchers();
+   for(int i = 0; i < launchers.length(); i++)
+   {
+       FLauncher launcher = launchers.at(i);
+       ui->cb_Folder_LauncherList->addItem(launcher.getName(), QVariant(launcher.getDbId()));
+   }
+
+   //##########################
 
 }
 
@@ -80,6 +95,23 @@ void FSettingsDialog::on_btn_Artwork_DownloadAll_clicked() {
        connect(artmanager, SIGNAL(finishedDownload()), this, SLOT(downloadFinished()));
        artmanager->getGameData(&gameList[i], "PC");
    }
+
+}
+
+void FSettingsDialog::on_btn_Folder_Add_clicked()
+{
+    QDir gameDir = QFileDialog::getExistingDirectory(this, "Choose the Lib-Directory", QDir::homePath());
+    ui->lw_Folder_FolderList->addItem(gameDir.absolutePath());
+}
+
+void FSettingsDialog::on_btn_Folder_Delete_clicked()
+{
+
+}
+
+void FSettingsDialog::on_cb_Folder_ForLauncher_clicked()
+{
+    ui->cb_Folder_LauncherList->setEnabled(ui->cb_Folder_ForLauncher->checkState());
 
 }
 

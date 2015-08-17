@@ -8,10 +8,10 @@ WatchedFoldersDialog::WatchedFoldersDialog(QWidget *parent) :
     ui(new Ui::WatchedFoldersDialog)
 {
     ui->setupUi(this);
-    QList<QDir> folders = db.getWatchedFoldersList();
+    QList<FWatchedFolder> folders = db.getWatchedFoldersList();
     for(int i=0;i<folders.length();++i) {
-        ui->listWidget->addItem(folders[i].absolutePath());
-        folder.append(folders[i]);
+        ui->listWidget->addItem(folders[i].getDirectory().absolutePath());
+    //    folder.append(folders[i]);
     }
 }
 

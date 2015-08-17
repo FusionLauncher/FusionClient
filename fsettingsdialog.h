@@ -42,6 +42,9 @@ private slots:
     void on_btn_Artwork_ClearCache_clicked();
     void on_btn_Artwork_openCache_clicked();
     void on_btn_Artwork_DownloadAll_clicked();
+    void on_btn_Folder_Add_clicked();
+    void on_btn_Folder_Delete_clicked();
+    void on_cb_Folder_ForLauncher_clicked();
 signals:
     void reloadStylesheet();
     void reloadLibrary();
