@@ -84,7 +84,6 @@ MainWindow::MainWindow(QWidget *parent) :
    settingsMenu->addAction("Add Game", this, SLOT(sttngsBtn_addGame_triggered()));
    settingsMenu->addAction("Edit Launcher", this, SLOT(sttngsBtn_edtLnchr_triggered()));
    settingsMenu->addAction("Add Launcher", this, SLOT(sttngsBtn_addLnchr_triggered()));
-   settingsMenu->addAction("Manage Library", this, SLOT(sttngsBtn_mngLib_triggered()));
    settingsMenu->addAction("Settings", this, SLOT(sttngsBtn_opnSttngs_triggered()));
 
    QGraphicsDropShadowEffect* menuEffect = new QGraphicsDropShadowEffect();
@@ -223,12 +222,6 @@ MainWindow::~MainWindow()
 
     delete settingsMenu;
     delete ui;
-}
-
-void MainWindow::setWatchedFolders(QList<QDir> folders)
-{
-    //TODO: Remove
-    //db.updateWatchedFolders(folders);
 }
 
 

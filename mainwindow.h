@@ -47,7 +47,6 @@ private slots:
 
 
     void resizeDone();
-    void setWatchedFolders(QList<QDir> folders);
     void reloadStylesheet();
     void refreshList();
 
