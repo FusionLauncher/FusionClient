@@ -27,12 +27,16 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
 
    ui->cb_Artwork_UseCache->setChecked(db->getBoolPref("useArtworkCache", true));
 
-    //##########################
+   //##########################
    //WatchedFolders
-   QList<FWatchedFolder> folders = db->getWatchedFoldersList();
-   for(int i=0;i<folders.length();++i) {
-       ui->lw_Folder_FolderList->addItem(folders[i].getDirectory().absolutePath());
+   QList<FWatchedFolder> tmpList = db->getWatchedFoldersList();
+
+   for(int i=0;i<tmpList.length();++i)
+   {
+       watchedFolders.insert(tmpList[i].getDirectory().absolutePath(), tmpList[i]);
+       ui->lw_Folder_FolderList->addItem(tmpList[i].getDirectory().absolutePath());
    }
+
    QList<FLauncher> launchers = db->getLaunchers();
    for(int i = 0; i < launchers.length(); i++)
    {
@@ -79,6 +83,15 @@ void FSettingsDialog::on_pb_ScanNow_clicked()
     emit reloadLibrary();
 }
 
+void FSettingsDialog::on_lw_Folder_FolderList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+{
+    ui->label_5->setText(current->text());
+    selectedFolder = &watchedFolders[current->text()];
+    ui->cb_Folder_ForLauncher->setChecked(selectedFolder->forLauncher);
+    ui->cb_Folder_LauncherList->setEnabled(selectedFolder->forLauncher);
+
+}
+
 void FSettingsDialog::on_btn_Artwork_DownloadAll_clicked() {
     if(QMessageBox::warning(this, "Please confirm!", "If Fusion is able to find Artwork, existing Artwork will be overwritten!",QMessageBox::Ok, QMessageBox::Cancel) ==QMessageBox::Cancel)
         return;
@@ -102,6 +115,10 @@ void FSettingsDialog::on_btn_Folder_Add_clicked()
 {
     QDir gameDir = QFileDialog::getExistingDirectory(this, "Choose the Lib-Directory", QDir::homePath());
     ui->lw_Folder_FolderList->addItem(gameDir.absolutePath());
+
+    FWatchedFolder w;
+    w.setDirectory(gameDir);
+    watchedFolders.insert(w.getDirectory().absolutePath(), w);
 }
 
 void FSettingsDialog::on_btn_Folder_Delete_clicked()
@@ -113,6 +130,8 @@ void FSettingsDialog::on_cb_Folder_ForLauncher_clicked()
 {
     ui->cb_Folder_LauncherList->setEnabled(ui->cb_Folder_ForLauncher->checkState());
 
+    if(selectedFolder != NULL)
+        selectedFolder->forLauncher = (bool)ui->cb_Folder_ForLauncher->checkState();
 }
 
 void FSettingsDialog::downloadFinished() {
@@ -147,7 +166,6 @@ void FSettingsDialog::on_btn_Artwork_ClearCache_clicked() {
    cacheDir.removeRecursively();
 #endif
 
-
 }
 
 
@@ -158,4 +176,11 @@ void FSettingsDialog::on_buttonBox_accepted()
 
    //Artwortk-Page
    db->updateBoolPref("useArtworkCache", (bool)ui->cb_Artwork_UseCache->checkState());
+
+
+   //##########################
+   //WatchedFolders
+    db->updateWatchedFolders(watchedFolders.values());
+
+   //##########################
 }

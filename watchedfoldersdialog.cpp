@@ -2,6 +2,7 @@
 #include "ui_watchedfoldersdialog.h"
 
 #include <QFileDialog>
+#include <fwatchedfolder.h>
 
 WatchedFoldersDialog::WatchedFoldersDialog(QWidget *parent) :
     QDialog(parent),

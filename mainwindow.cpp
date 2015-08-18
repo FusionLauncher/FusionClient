@@ -227,7 +227,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::setWatchedFolders(QList<QDir> folders)
 {
-    db.updateWatchedFolders(folders);
+    //TODO: Remove
+    //db.updateWatchedFolders(folders);
 }
 
 
