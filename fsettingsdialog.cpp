@@ -30,7 +30,7 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
    //##########################
    //WatchedFolders
    QList<FWatchedFolder> tmpList = db->getWatchedFoldersList();
-
+    ui->lw_Folder_FolderList->clear();
    for(int i=0;i<tmpList.length();++i)
    {
        watchedFolders.insert(tmpList[i].getDirectory().absolutePath(), tmpList[i]);
@@ -85,11 +85,11 @@ void FSettingsDialog::on_pb_ScanNow_clicked()
 
 void FSettingsDialog::on_lw_Folder_FolderList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
 {
-    ui->label_5->setText(current->text());
-    selectedFolder = &watchedFolders[current->text()];
-    ui->cb_Folder_ForLauncher->setChecked(selectedFolder->forLauncher);
-    ui->cb_Folder_LauncherList->setEnabled(selectedFolder->forLauncher);
-
+    if(current) {
+        selectedFolder = &watchedFolders[current->text()];
+        ui->cb_Folder_ForLauncher->setChecked(selectedFolder->forLauncher);
+        ui->cb_Folder_LauncherList->setEnabled(selectedFolder->forLauncher);
+    }
 }
 
 void FSettingsDialog::on_btn_Artwork_DownloadAll_clicked() {
@@ -121,8 +121,17 @@ void FSettingsDialog::on_btn_Folder_Add_clicked()
     watchedFolders.insert(w.getDirectory().absolutePath(), w);
 }
 
-void FSettingsDialog::on_btn_Folder_Delete_clicked()
+void FSettingsDialog::on_btn_Folder_Remove_clicked()
 {
+    if(QMessageBox::warning(this, "Please confirm!", "Do you really wan't to remove the Folder '" +selectedFolder->getDirectory().absolutePath()+ "'?\r\nThe containing Games won't be removed.",QMessageBox::Ok, QMessageBox::Cancel)==QMessageBox::Ok) {
+        watchedFolders.remove(selectedFolder->getDirectory().absolutePath());
+
+        ui->lw_Folder_FolderList->clear();
+
+        for(int i=0;i<watchedFolders.count();++i)
+            ui->lw_Folder_FolderList->addItem(watchedFolders.values()[i].getDirectory().absolutePath());
+
+    }
 
 }
 

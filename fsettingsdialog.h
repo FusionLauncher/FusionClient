@@ -46,7 +46,7 @@ private slots:
     void on_btn_Artwork_DownloadAll_clicked();
 
     void on_btn_Folder_Add_clicked();
-    void on_btn_Folder_Delete_clicked();
+    void on_btn_Folder_Remove_clicked();
     void on_cb_Folder_ForLauncher_clicked();
     void on_lw_Folder_FolderList_currentItemChanged(QListWidgetItem * current, QListWidgetItem * previous);
 signals:
