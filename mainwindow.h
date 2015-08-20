@@ -45,7 +45,6 @@ private slots:
     void on_pb_Settings_clicked();
     void on_pb_LaunchGame_clicked();
 
-
     void resizeDone();
     void reloadStylesheet();
     void refreshList();
@@ -67,6 +66,7 @@ protected:
 
 
 private:
+
     QString FCVersion = "0.0.1";
 
     Ui::MainWindow *ui;

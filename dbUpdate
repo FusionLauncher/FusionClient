@@ -1,3 +1,7 @@
+_launchers_1
+ALTER TABLE launchers ADD COLUMN suffix TEXT DEFAULT NULL;
+
+
 _watched_folders_1
 ALTER TABLE watchedFolders ADD COLUMN forLauncher TINY INT DEFAULT '0';
 ALTER TABLE watchedFolders ADD COLUMN launcherID INT DEFAULT NULL;

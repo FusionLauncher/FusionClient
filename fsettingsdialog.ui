@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>473</width>
+    <width>637</width>
     <height>384</height>
    </rect>
   </property>
@@ -57,7 +57,7 @@
       <item>
        <widget class="QStackedWidget" name="settingPages">
         <property name="currentIndex">
-         <number>4</number>
+         <number>5</number>
         </property>
         <widget class="QWidget" name="General">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -70,19 +70,6 @@
           <property name="bottomMargin">
            <number>0</number>
           </property>
-          <item>
-           <widget class="QLabel" name="label">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>General</string>
-            </property>
-           </widget>
-          </item>
           <item>
            <widget class="QWidget" name="widget_2" native="true">
             <layout class="QGridLayout" name="gridLayout_2">
@@ -130,13 +117,6 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>Database</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <spacer name="verticalSpacer_3">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -162,13 +142,6 @@
           <property name="bottomMargin">
            <number>0</number>
           </property>
-          <item>
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>Interface</string>
-            </property>
-           </widget>
-          </item>
           <item>
            <widget class="QWidget" name="widget_3" native="true">
             <layout class="QGridLayout" name="gridLayout">
@@ -315,43 +288,119 @@
           <property name="topMargin">
            <number>0</number>
           </property>
-          <item row="2" column="0">
+          <item row="0" column="0" colspan="2">
+           <widget class="QListWidget" name="lw_Folder_FolderList"/>
+          </item>
+          <item row="1" column="0">
            <widget class="QPushButton" name="btn_Folder_Add">
             <property name="text">
              <string>Add</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
+          <item row="2" column="0">
            <widget class="QPushButton" name="btn_Folder_Remove">
             <property name="text">
              <string>Remove</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QListWidget" name="lw_Folder_FolderList"/>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="la_Folder_Head">
-            <property name="text">
-             <string>Watched Folders</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
+          <item row="3" column="0">
            <widget class="QCheckBox" name="cb_Folder_ForLauncher">
             <property name="text">
-             <string>for Launcher</string>
+             <string>Contains ROMs for Launcher</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="0" colspan="2">
+          <item row="4" column="0" colspan="2">
            <widget class="QComboBox" name="cb_Folder_LauncherList">
             <property name="enabled">
              <bool>false</bool>
             </property>
            </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="Launchers">
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="1" column="0">
+           <widget class="QLabel" name="nameLabel">
+            <property name="text">
+             <string>Name</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="5">
+           <widget class="QPushButton" name="btn_launcher_browsePath">
+            <property name="text">
+             <string>Browse</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="argLabel">
+            <property name="text">
+             <string>Arguments</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1" colspan="5">
+           <widget class="QLineEdit" name="le_launcher_argEdit"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="fileLabel">
+            <property name="text">
+             <string>Path</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0" colspan="6">
+           <widget class="QTextBrowser" name="tb_launcher_infoBrowser">
+            <property name="html">
+             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans Serif'; font-size:9pt;&quot;&gt;Possible arguments:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans Serif'; font-size:9pt;&quot;&gt;$GAMENAME	The game name&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans Serif'; font-size:9pt;&quot;&gt;$GAMEPATH	The path the game is launched from&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans Serif'; font-size:9pt;&quot;&gt;$GAMEEXE	The path to the executable, relative to $GAMEPATH&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1" colspan="4">
+           <widget class="QLineEdit" name="le_launcher_pathEdit"/>
+          </item>
+          <item row="6" column="4">
+           <widget class="QPushButton" name="btn_launcher_Add">
+            <property name="text">
+             <string>Create</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="6">
+           <widget class="QListWidget" name="lw_launcher_launchers"/>
+          </item>
+          <item row="6" column="5">
+           <widget class="QPushButton" name="btn_launcher_remove">
+            <property name="text">
+             <string>Remove</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" colspan="4">
+           <widget class="QLineEdit" name="le_launcher_nameEdit"/>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Compatible Files:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1" colspan="5">
+           <widget class="QLineEdit" name="le_launcher_suffix"/>
           </item>
          </layout>
         </widget>
@@ -381,8 +430,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>257</x>
+     <y>374</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -397,8 +446,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>325</x>
+     <y>374</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
