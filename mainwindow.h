@@ -53,11 +53,8 @@ private slots:
     void on_launcherEdited(FLauncher launcher);
 
     void sttngsBtn_opnSttngs_triggered();
-    void sttngsBtn_mngLib_triggered();
-    void sttngsBtn_addLnchr_triggered();
     void sttngsBtn_addGame_triggered();
     void sttngsBtn_edtGame_triggered();
-    void sttngsBtn_edtLnchr_triggered();
 protected:
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
