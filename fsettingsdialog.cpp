@@ -179,11 +179,7 @@ void FSettingsDialog::on_lw_launcher_launchers_currentItemChanged(QListWidgetIte
         ui->le_launcher_nameEdit->setText(selectedLauncher->getName());
         ui->le_launcher_pathEdit->setText(selectedLauncher->getPath());
         ui->le_launcher_argEdit->setText(selectedLauncher->getArgs());
-        QString tmpLst;
-        for(QString s : selectedLauncher->getFileEndings())
-            tmpLst +=  s + ",";
-
-        ui->le_launcher_suffix->setText(tmpLst);
+        ui->le_launcher_suffix->setText(selectedLauncher->getFileEndings());
     }
 }
 
