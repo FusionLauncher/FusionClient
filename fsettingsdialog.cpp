@@ -18,6 +18,8 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
    ui->listWidget->addItem("Database");
    ui->listWidget->addItem("Interface");
    ui->listWidget->addItem("Artwork");
+   ui->listWidget->addItem("Watched Folders");
+   ui->listWidget->addItem("Launchers");
    ui->listWidget->setCurrentRow(0);
 
    ui->le_Stylesheet->setText(db->getTextPref("stylesheet"));
@@ -26,12 +28,48 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
 
    ui->cb_Artwork_UseCache->setChecked(db->getBoolPref("useArtworkCache", true));
 
+   //##########################
+   //WatchedFolders
+   QList<FWatchedFolder> tmpList = db->getWatchedFoldersList();
+    ui->lw_Folder_FolderList->clear();
+   for(int i=0;i<tmpList.length();++i)
+   {
+       watchedFolders.insert(tmpList[i].getDirectory().absolutePath(), tmpList[i]);
+       ui->lw_Folder_FolderList->addItem(tmpList[i].getDirectory().absolutePath());
+   }
+
+   //##########################
+   // LAUNCHERS
+
+  loadLaunchers();
+
+
+   //##########################
 
 }
 
 FSettingsDialog::~FSettingsDialog()
 {
     delete ui;
+}
+
+void FSettingsDialog::loadLaunchers()
+{
+    QList<FLauncher> tmpLnchr = db->getLaunchers();
+    ui->lw_launcher_launchers->clear();
+    ui->cb_Folder_LauncherList->clear();
+    ui->cb_Folder_LauncherList->blockSignals(true);
+    ui->lw_launcher_launchers->blockSignals(true);
+    for(int i = 0; i < tmpLnchr.length(); i++)
+    {
+        launchers.insert(tmpLnchr[i].getName(), tmpLnchr[i]);
+        ui->lw_launcher_launchers->addItem(tmpLnchr[i].getName());
+        //this is for the WatchedfFolders
+        ui->cb_Folder_LauncherList->addItem(tmpLnchr[i].getName(), QVariant(tmpLnchr[i].getDbId()));
+    }
+
+    ui->cb_Folder_LauncherList->blockSignals(false);
+    ui->lw_launcher_launchers->blockSignals(false);
 }
 
 void FSettingsDialog::on_listWidget_currentRowChanged(int i)
@@ -64,6 +102,103 @@ void FSettingsDialog::on_pb_ScanNow_clicked()
     emit reloadLibrary();
 }
 
+void FSettingsDialog::on_lw_Folder_FolderList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+{
+    if(current) {
+        selectedFolder = &watchedFolders[current->text()];
+        ui->cb_Folder_ForLauncher->setChecked(selectedFolder->forLauncher);
+        ui->cb_Folder_LauncherList->setEnabled(selectedFolder->forLauncher);
+
+        ui->cb_Folder_LauncherList->blockSignals(true);
+        if(selectedFolder->forLauncher) {
+            int indx = ui->cb_Folder_LauncherList->findData(selectedFolder->getLauncherID());
+            if(indx>=0)
+                ui->cb_Folder_LauncherList->setCurrentIndex(indx);
+        }
+        ui->cb_Folder_LauncherList->blockSignals(false);
+    }
+}
+
+void FSettingsDialog::on_cb_Folder_LauncherList_currentIndexChanged(int index)
+{
+    if(selectedFolder) {
+        QVariant lID = ui->cb_Folder_LauncherList->itemData(index);
+        selectedFolder->setLauncherID(lID.toInt());
+    }
+}
+
+void FSettingsDialog::on_btn_launcher_Add_clicked()
+{
+    FLauncher l;
+    if(ui->le_launcher_nameEdit->text().isEmpty())
+    {
+       QMessageBox::information(this, "Error", "Please set a name.", QMessageBox::Ok);
+        return;
+    }
+    if(ui->le_launcher_pathEdit->text().isEmpty())
+    {
+        QMessageBox::information(this, "Error", "Please set a path.", QMessageBox::Ok);
+        return;
+    }
+
+    l.setName(ui->le_launcher_nameEdit->text());
+    l.setPath(ui->le_launcher_pathEdit->text());
+    l.setArgs(ui->le_launcher_argEdit->text());
+    l.setFileEndings(ui->le_launcher_suffix->text());
+
+    if(launchers.contains(l.getName())) {
+        QMessageBox::information(this, "Error", "This name already exists!", QMessageBox::Ok);
+        return;
+    }
+
+    launchers.insert(l.getName(), l);
+    ui->lw_launcher_launchers->addItem(l.getName());
+    ui->le_launcher_nameEdit->setText("");
+    ui->le_launcher_pathEdit->setText("");
+    ui->le_launcher_argEdit->setText("");
+    ui->le_launcher_suffix->setText("");
+    db->updateLaunchers(launchers.values());
+    loadLaunchers();
+}
+
+void FSettingsDialog::on_btn_launcher_remove_clicked()
+{
+
+}
+
+void FSettingsDialog::on_btn_launcher_browsePath_clicked()
+{
+    QString path = QFileDialog::getOpenFileName(this, "Choose launcher", ".", "*");
+    ui->le_launcher_pathEdit->setText(path);
+}
+
+void FSettingsDialog::on_lw_launcher_launchers_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+{
+    if(current) {
+        selectedLauncher = &launchers[current->text()];
+        ui->le_launcher_nameEdit->setText(selectedLauncher->getName());
+        ui->le_launcher_pathEdit->setText(selectedLauncher->getPath());
+        ui->le_launcher_argEdit->setText(selectedLauncher->getArgs());
+        ui->le_launcher_suffix->setText(selectedLauncher->getFileEndings());
+    }
+}
+
+void FSettingsDialog::on_le_launcher_nameEdit_editingFinished()
+{ updateLauncher(); }
+void FSettingsDialog::on_le_launcher_pathEdit_editingFinished()
+{ updateLauncher(); }
+void FSettingsDialog::on_le_launcher_argEdit_editingFinished()
+{ updateLauncher(); }
+void FSettingsDialog::on_le_launcher_suffix_editingFinished()
+{ updateLauncher(); }
+
+void FSettingsDialog::updateLauncher() {
+    selectedLauncher->setName(ui->le_launcher_nameEdit->text());
+    selectedLauncher->setPath(ui->le_launcher_pathEdit->text());
+    selectedLauncher->setArgs(ui->le_launcher_argEdit->text());
+    selectedLauncher->setFileEndings(ui->le_launcher_suffix->text());
+}
+
 void FSettingsDialog::on_btn_Artwork_DownloadAll_clicked() {
     if(QMessageBox::warning(this, "Please confirm!", "If Fusion is able to find Artwork, existing Artwork will be overwritten!",QMessageBox::Ok, QMessageBox::Cancel) ==QMessageBox::Cancel)
         return;
@@ -81,6 +216,38 @@ void FSettingsDialog::on_btn_Artwork_DownloadAll_clicked() {
        artmanager->getGameData(&gameList[i], "PC");
    }
 
+}
+
+void FSettingsDialog::on_btn_Folder_Add_clicked()
+{
+    QDir gameDir = QFileDialog::getExistingDirectory(this, "Choose the Lib-Directory", QDir::homePath());
+    ui->lw_Folder_FolderList->addItem(gameDir.absolutePath());
+
+    FWatchedFolder w;
+    w.setDirectory(gameDir);
+    watchedFolders.insert(w.getDirectory().absolutePath(), w);
+}
+
+void FSettingsDialog::on_btn_Folder_Remove_clicked()
+{
+    if(QMessageBox::warning(this, "Please confirm!", "Do you really wan't to remove the Folder '" +selectedFolder->getDirectory().absolutePath()+ "'?\r\nThe containing Games won't be removed.",QMessageBox::Ok, QMessageBox::Cancel)==QMessageBox::Ok) {
+        watchedFolders.remove(selectedFolder->getDirectory().absolutePath());
+
+        ui->lw_Folder_FolderList->clear();
+
+        for(int i=0;i<watchedFolders.count();++i)
+            ui->lw_Folder_FolderList->addItem(watchedFolders.values()[i].getDirectory().absolutePath());
+
+    }
+
+}
+
+void FSettingsDialog::on_cb_Folder_ForLauncher_clicked()
+{
+    ui->cb_Folder_LauncherList->setEnabled(ui->cb_Folder_ForLauncher->checkState());
+
+    if(selectedFolder != NULL)
+        selectedFolder->forLauncher = (bool)ui->cb_Folder_ForLauncher->checkState();
 }
 
 void FSettingsDialog::downloadFinished() {
@@ -115,7 +282,6 @@ void FSettingsDialog::on_btn_Artwork_ClearCache_clicked() {
    cacheDir.removeRecursively();
 #endif
 
-
 }
 
 
@@ -126,4 +292,13 @@ void FSettingsDialog::on_buttonBox_accepted()
 
    //Artwortk-Page
    db->updateBoolPref("useArtworkCache", (bool)ui->cb_Artwork_UseCache->checkState());
+
+
+   //##########################
+   //WatchedFolders
+    db->updateWatchedFolders(watchedFolders.values());
+
+   //##########################
+    //Launchers
+    db->updateLaunchers(launchers.values());
 }

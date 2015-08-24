@@ -82,9 +82,6 @@ MainWindow::MainWindow(QWidget *parent) :
    settingsMenu = new QMenu(ui->gameDetailsSidebarWidget);
    settingsMenu->addAction("Edit Game", this, SLOT(sttngsBtn_edtGame_triggered()));
    settingsMenu->addAction("Add Game", this, SLOT(sttngsBtn_addGame_triggered()));
-   settingsMenu->addAction("Edit Launcher", this, SLOT(sttngsBtn_edtLnchr_triggered()));
-   settingsMenu->addAction("Add Launcher", this, SLOT(sttngsBtn_addLnchr_triggered()));
-   settingsMenu->addAction("Manage Library", this, SLOT(sttngsBtn_mngLib_triggered()));
    settingsMenu->addAction("Settings", this, SLOT(sttngsBtn_opnSttngs_triggered()));
 
    QGraphicsDropShadowEffect* menuEffect = new QGraphicsDropShadowEffect();
@@ -152,17 +149,7 @@ void MainWindow::sttngsBtn_opnSttngs_triggered() {
     connect(dialog, SIGNAL(reloadLibrary()), this, SLOT(refreshList()));
     dialog->exec();
 }
-void MainWindow::sttngsBtn_mngLib_triggered() {
-    WatchedFoldersDialog* dialog =  new WatchedFoldersDialog(this);
-    connect(dialog, SIGNAL(folderSet(QList<QDir>)), this, SLOT(setWatchedFolders(QList<QDir>)));
-    dialog->exec();
 
-}
-void MainWindow::sttngsBtn_addLnchr_triggered() {
-    AddLauncherDialog* dialog = new AddLauncherDialog(this);
-    connect(dialog, SIGNAL(launcherSet(FLauncher)), this, SLOT(on_launcherSet(FLauncher)));
-    dialog->exec();
-}
 void MainWindow::sttngsBtn_addGame_triggered() {
     QList<FLauncher> launchers = db.getLaunchers();
     qDebug() << "List length: " << launchers.length();
@@ -173,42 +160,6 @@ void MainWindow::sttngsBtn_addGame_triggered() {
 void MainWindow::sttngsBtn_edtGame_triggered() {
     GameInfoDialog *dialog = new GameInfoDialog(game, &db, this);
     connect(dialog, SIGNAL(reloadRequired()), this, SLOT(on_GameInfoDialogFinished()));
-    dialog->exec();
-}
-
-void MainWindow::sttngsBtn_edtLnchr_triggered()
-{
-    //show nice dialog here
-    QList<FLauncher> launcherList = db.getLaunchers();
-    QList<FLauncher>::Iterator launcher;
-    QStringList launcherNameList;
-    for(launcher = launcherList.begin(); launcher != launcherList.end(); launcher++)
-    {
-        QString name = launcher->getName();
-        if(launcherNameList.contains(name))
-        {
-            int counter = 1;
-            while(launcherNameList.contains(name+" ("+QString::number(counter)+')'))
-            {
-                counter++;
-            }
-            launcherNameList.append(name+" ("+QString::number(counter)+')');
-        }
-        else
-        {
-            launcherNameList.append(name);
-        }
-    }
-    bool accepted;
-    QString editedLauncherName = QInputDialog::getItem(this, "Choose launcher to edit", "Choose launcher", launcherNameList, 0, false, &accepted);
-    if(!accepted)
-    {
-        return;
-    }
-    FLauncher editedLauncher = launcherList.at(launcherNameList.indexOf(editedLauncherName));
-    EditLauncherDialog *dialog = new EditLauncherDialog(this, &editedLauncher);
-    qDebug() << "Launcher args:" << editedLauncher.getArgs();
-    connect(dialog, SIGNAL(on_launcherEdited(FLauncher)), this, SLOT(on_launcherEdited(FLauncher)));
     dialog->exec();
 }
 
@@ -223,11 +174,6 @@ MainWindow::~MainWindow()
 
     delete settingsMenu;
     delete ui;
-}
-
-void MainWindow::setWatchedFolders(QList<QDir> folders)
-{
-    db.updateWatchedFolders(folders);
 }
 
 

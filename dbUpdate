@@ -1,3 +1,10 @@
+_launchers_1
+ALTER TABLE launchers ADD COLUMN suffix TEXT DEFAULT NULL;
+
+
+_watched_folders_1
+ALTER TABLE watchedFolders ADD COLUMN forLauncher TINY INT DEFAULT '0';
+ALTER TABLE watchedFolders ADD COLUMN launcherID INT DEFAULT NULL;
 _custom_commands_2
 ALTER TABLE games ADD COLUMN gameLauncher INTEGER;
 CREATE TABLE IF NOT EXISTS launchers(id INTEGER PRIMARY KEY ASC, launcherName TEXT NOT NULL, launcherPath TEXT NOT NULL, launcherArgs TEXT NOT NULL);

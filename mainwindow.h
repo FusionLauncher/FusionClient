@@ -45,9 +45,7 @@ private slots:
     void on_pb_Settings_clicked();
     void on_pb_LaunchGame_clicked();
 
-
     void resizeDone();
-    void setWatchedFolders(QList<QDir> folders);
     void reloadStylesheet();
     void refreshList();
 
@@ -55,11 +53,8 @@ private slots:
     void on_launcherEdited(FLauncher launcher);
 
     void sttngsBtn_opnSttngs_triggered();
-    void sttngsBtn_mngLib_triggered();
-    void sttngsBtn_addLnchr_triggered();
     void sttngsBtn_addGame_triggered();
     void sttngsBtn_edtGame_triggered();
-    void sttngsBtn_edtLnchr_triggered();
 protected:
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
@@ -68,6 +63,7 @@ protected:
 
 
 private:
+
     QString FCVersion = "0.0.1";
 
     Ui::MainWindow *ui;
