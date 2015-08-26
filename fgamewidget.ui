@@ -110,8 +110,7 @@
          <item>
           <widget class="QLabel" name="fgwDialog_GameTitle">
            <property name="text">
-            <string>TextLabel lasls l
-salsladasd</string>
+            <string>No title found.</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

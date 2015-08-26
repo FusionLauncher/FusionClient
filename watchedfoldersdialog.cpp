@@ -23,7 +23,7 @@ WatchedFoldersDialog::~WatchedFoldersDialog()
 
 void WatchedFoldersDialog::on_pb_AddFolder_clicked()
 {
-    QDir gameDir = QFileDialog::getExistingDirectory(this, "Choose the Lib-Directory (SteamApps)", QDir::homePath());
+    QDir gameDir = QFileDialog::getExistingDirectory(this, "Choose the library folder (for example SteamApps)", QDir::homePath());
     ui->listWidget->addItem(gameDir.absolutePath());
     folder.append(gameDir);
 }

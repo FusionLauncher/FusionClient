@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
 #endif
     if(!db.init())
     {
-        QMessageBox msg(QMessageBox::Warning, "Error!", "Couldn't init the DB. Things may not work correctly. If this happened after an update, please submit a bug report.", QMessageBox::Ok, this);
+        QMessageBox msg(QMessageBox::Warning, "Error!", "Couldn't init the database. Things may not work correctly. If this happened after an update, please submit a bug report.", QMessageBox::Ok, this);
         msg.exec();
         qDebug() << "Couldn't init DB.";
         //return;
@@ -48,13 +48,13 @@ MainWindow::MainWindow(QWidget *parent) :
        QFile res(":/fonts/" + *cIt);
        if (res.open(QIODevice::ReadOnly) == false)
        {
-           QMessageBox::warning(0, "Font-Loader", (QString)"Cannot open font: " + *cIt + ".");
+           QMessageBox::warning(0, "Font Loader", (QString)"Cannot open font: " + *cIt + ".");
        }
        else
        {
            fID = QFontDatabase::addApplicationFontFromData(res.readAll());
            if (fID == -1)
-               QMessageBox::warning(0, "Font-Loader", (QString)"Cannot load Font into System: " + *cIt + ".");
+               QMessageBox::warning(0, "Font Loader", (QString)"Cannot load font: " + *cIt + ".");
        }
    }
 
@@ -236,7 +236,7 @@ void MainWindow::refreshList()
         onGameClick(&gameList[0], gameWidgetList[0]);
     }
 
-    qDebug() << "Time to Load List:" << timer.elapsed();
+    qDebug() << "Time to load list:" << timer.elapsed();
 }
 
 
@@ -374,7 +374,7 @@ void MainWindow::on_actionSwitch_View_triggered()
 
 void MainWindow::resizeEvent(QResizeEvent* event)
 {
-    //This event Fires everytime, the window is resized by a pixel.
+    //This event fires everytime, the window is resized by a pixel.
     //using a timer to get some delay  & not flooding the DB.
     resizeTimer.start( 500 );
    QMainWindow::resizeEvent(event);
