@@ -26,7 +26,7 @@ private:
 
     int runningDownloads;
     int totalDownloads;
-    QList<FGame> gameList;
+    QList<FGame*> gameList;
 
     QMap<QString, FWatchedFolder> watchedFolders;
     FWatchedFolder *selectedFolder;

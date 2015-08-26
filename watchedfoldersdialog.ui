@@ -32,14 +32,14 @@
       <item>
        <widget class="QPushButton" name="pb_AddFolder">
         <property name="text">
-         <string>Add Folder</string>
+         <string>Add folder</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="pb_RemoveFolder">
         <property name="text">
-         <string>Remove Folder</string>
+         <string>Remove folder</string>
         </property>
        </widget>
       </item>

@@ -211,7 +211,7 @@ void FSettingsDialog::updateLauncher() {
 }
 
 void FSettingsDialog::on_btn_Artwork_DownloadAll_clicked() {
-    if(QMessageBox::warning(this, "Please confirm!", "If Fusion is able to find Artwork, existing Artwork will be overwritten!",QMessageBox::Ok, QMessageBox::Cancel) ==QMessageBox::Cancel)
+    if(QMessageBox::warning(this, "Please confirm!", "If artwork is found, existing artwork will be overwritten!",QMessageBox::Ok, QMessageBox::Cancel) ==QMessageBox::Cancel)
         return;
 
 
@@ -224,14 +224,14 @@ void FSettingsDialog::on_btn_Artwork_DownloadAll_clicked() {
        FArtManager *artmanager = new FArtManager();
        connect(artmanager, SIGNAL(startedDownload()), this, SLOT(downloadStarted()));
        connect(artmanager, SIGNAL(finishedDownload()), this, SLOT(downloadFinished()));
-       artmanager->getGameData(&gameList[i], "PC");
+       artmanager->getGameData(gameList[i], "PC");
    }
 
 }
 
 void FSettingsDialog::on_btn_Folder_Add_clicked()
 {
-    QDir gameDir = QFileDialog::getExistingDirectory(this, "Choose the Lib-Directory", QDir::homePath());
+    QDir gameDir = QFileDialog::getExistingDirectory(this, "Choose the library folder", QDir::homePath());
     ui->lw_Folder_FolderList->addItem(gameDir.absolutePath());
 
     FWatchedFolder w;
@@ -241,7 +241,11 @@ void FSettingsDialog::on_btn_Folder_Add_clicked()
 
 void FSettingsDialog::on_btn_Folder_Remove_clicked()
 {
-    if(QMessageBox::warning(this, "Please confirm!", "Do you really wan't to remove the Folder '" +selectedFolder->getDirectory().absolutePath()+ "'?\r\nThe containing Games won't be removed.",QMessageBox::Ok, QMessageBox::Cancel)==QMessageBox::Ok) {
+    if(watchedFolders.size() == 0)
+    {
+        return;
+    }
+    if(QMessageBox::warning(this, "Please confirm!", "Do you really want to remove  \"" +selectedFolder->getDirectory().absolutePath()+ "\"?\r\nThe games inside won't be removed from your disk.",QMessageBox::Ok, QMessageBox::Cancel)==QMessageBox::Ok) {
         watchedFolders.remove(selectedFolder->getDirectory().absolutePath());
 
         ui->lw_Folder_FolderList->clear();
@@ -263,7 +267,7 @@ void FSettingsDialog::on_cb_Folder_ForLauncher_clicked()
 
 void FSettingsDialog::downloadFinished() {
     --runningDownloads;
-    ui->la_Artwork_DownloadStatus->setText("Running Downloads:" + QString::number(runningDownloads));
+    ui->la_Artwork_DownloadStatus->setText("Running downloads:" + QString::number(runningDownloads));
     if(runningDownloads<=0)
         QMessageBox::information(this, "Downloads finished", "Finished " + QString::number(totalDownloads) + " download(s)");
 }
@@ -271,7 +275,7 @@ void FSettingsDialog::downloadFinished() {
 void FSettingsDialog::downloadStarted() {
     ++runningDownloads;
     ++totalDownloads;
-    ui->la_Artwork_DownloadStatus->setText("Running Downloads:" + QString::number(runningDownloads));
+    ui->la_Artwork_DownloadStatus->setText("Running downloads:" + QString::number(runningDownloads));
 }
 
 void FSettingsDialog::on_btn_Artwork_openCache_clicked() {
