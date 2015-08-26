@@ -213,7 +213,7 @@ void FSettingsDialog::on_btn_Artwork_DownloadAll_clicked() {
        FArtManager *artmanager = new FArtManager();
        connect(artmanager, SIGNAL(startedDownload()), this, SLOT(downloadStarted()));
        connect(artmanager, SIGNAL(finishedDownload()), this, SLOT(downloadFinished()));
-       artmanager->getGameData(&gameList[i], "PC");
+       artmanager->getGameData(gameList[i], "PC");
    }
 
 }

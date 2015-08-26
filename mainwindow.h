@@ -55,6 +55,7 @@ private slots:
     void sttngsBtn_opnSttngs_triggered();
     void sttngsBtn_addGame_triggered();
     void sttngsBtn_edtGame_triggered();
+    void launchRandomGame();
 protected:
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
@@ -72,7 +73,7 @@ private:
     FDB db;
     FClientUpdater *cUpdater = new FClientUpdater();
 
-    QList<FGame> gameList;
+    QList<FGame*> gameList;
     QList<FGameWidget*> gameWidgetList;
 
     void changeView();
