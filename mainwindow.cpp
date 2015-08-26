@@ -83,6 +83,7 @@ MainWindow::MainWindow(QWidget *parent) :
    settingsMenu->addAction("Edit Game", this, SLOT(sttngsBtn_edtGame_triggered()));
    settingsMenu->addAction("Add Game", this, SLOT(sttngsBtn_addGame_triggered()));
    settingsMenu->addAction("Settings", this, SLOT(sttngsBtn_opnSttngs_triggered()));
+   settingsMenu->addAction("Random", this, SLOT(launchRandomGame()));
 
    QGraphicsDropShadowEffect* menuEffect = new QGraphicsDropShadowEffect();
    menuEffect->setBlurRadius(15);
@@ -140,6 +141,13 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::changeView()
 {
 
+}
+
+void MainWindow::launchRandomGame()
+{
+    int randomGame = qrand() % gameList.length();
+    qDebug() << "Random launch:" << gameList[randomGame]->getName();
+    gameList[randomGame]->execute();
 }
 
 
@@ -225,7 +233,7 @@ void MainWindow::refreshList()
         for(int i = 0; i < gameList.length(); i++)
         {
             FGameWidget *gw = new FGameWidget(ui->gameScrollArea);
-            gw->setGame(&gameList[i]);
+            gw->setGame(gameList[i]);
             connect(gw, SIGNAL(clicked(FGame*, QObject*)), this, SLOT(onGameClick(FGame*, QObject*)));
             connect(gw, SIGNAL(doubleClicked(FGame*,QObject*)), this, SLOT(onGameDoubleClicked(FGame*, QObject*)));
             connect(gw, SIGNAL(rightClicked(FGame*,QObject*)), this, SLOT(onGameRightClicked(FGame*, QObject*)));
@@ -233,7 +241,7 @@ void MainWindow::refreshList()
             gameScrollLayout->addWidget(gw);
         }
         //Select first game by default
-        onGameClick(&gameList[0], gameWidgetList[0]);
+        onGameClick(gameList[0], gameWidgetList[0]);
     }
 
     qDebug() << "Time to load list:" << timer.elapsed();
