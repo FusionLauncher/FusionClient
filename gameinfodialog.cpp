@@ -56,6 +56,19 @@ GameInfoDialog::GameInfoDialog(FGame *g, FDB *database, QWidget *parent) :
         ui->launcherComboBox->setCurrentIndex(game->getLauncher().getDbId()-1);
     }
 
+    //Savegame-Sync
+    if(game->savegameSyncEndabled()) {
+        ui->cb_useSavegameSync->setChecked(true);
+        ui->le_savegameDir->setEnabled(true);
+        ui->le_savegameDir->setText(game->getSavegameDir().absolutePath());
+        ui->pb_setSavegameDir->setEnabled(true);
+    }
+    else {
+        ui->cb_useSavegameSync->setChecked(false);
+        ui->le_savegameDir->setEnabled(false);
+        ui->pb_setSavegameDir->setEnabled(false);
+    }
+
 }
 
 
@@ -167,25 +180,6 @@ void GameInfoDialog::on_gameSelected(TheGameDBStorage* selectedGame) {
     artmanager->getGameData(game, selectedGame);
 }
 
-void GameInfoDialog::on_buttonBox_accepted()
-{
-    game->setName(ui->le_Title->text());
-    game->setExe(ui->le_Exec->text());
-    game->setPath(ui->le_Directory->text());
-    qDebug() << "Updating game.";
-    if(ui->launcherCheckBox->isChecked())
-    {
-        game->setLauncher(db->getLauncher(ui->launcherComboBox->itemData(ui->launcherComboBox->currentIndex()).toInt()));
-        qDebug() << "Launcher set, id:" <<  game->getLauncher().getDbId() << ", name:" << game->getLauncher().getName() << ", boxId:" << ui->launcherComboBox->itemData(ui->launcherComboBox->currentIndex()).toInt();
-    }
-    else
-    {
-        game->disableLauncher();
-    }
-    game->setArgs(QStringList(ui->le_Params->text()));
-    db->updateGame(game);
-    emit reloadRequired();
-}
 
 void GameInfoDialog::downloadFinished() {
     --runningDownloads;
@@ -204,4 +198,47 @@ void GameInfoDialog::downloadStarted() {
 void GameInfoDialog::on_launcherCheckBox_clicked()
 {
     ui->launcherComboBox->setEnabled(ui->launcherCheckBox->isChecked());
+}
+
+void GameInfoDialog::on_pb_setSavegameDir_clicked()
+{
+    QDir gameDir = QFileDialog::getExistingDirectory(this, "Choose the Savegame-Directory", ui->le_Directory->text());
+    if(gameDir.dirName()!=".")
+        ui->le_savegameDir->setText(gameDir.absolutePath());
+}
+
+void GameInfoDialog::on_cb_useSavegameSync_clicked()
+{
+    ui->cb_useSavegameSync->setChecked(ui->cb_useSavegameSync->checkState());
+    ui->le_savegameDir->setEnabled(ui->cb_useSavegameSync->checkState());
+    ui->pb_setSavegameDir->setEnabled(ui->cb_useSavegameSync->checkState());
+}
+
+
+void GameInfoDialog::on_buttonBox_accepted()
+{
+    game->setName(ui->le_Title->text());
+    game->setExe(ui->le_Exec->text());
+    game->setPath(ui->le_Directory->text());
+    qDebug() << "Updating game.";
+    if(ui->launcherCheckBox->isChecked())
+    {
+        game->setLauncher(db->getLauncher(ui->launcherComboBox->itemData(ui->launcherComboBox->currentIndex()).toInt()));
+        qDebug() << "Launcher set, id:" <<  game->getLauncher().getDbId() << ", name:" << game->getLauncher().getName() << ", boxId:" << ui->launcherComboBox->itemData(ui->launcherComboBox->currentIndex()).toInt();
+    }
+    else
+    {
+        game->disableLauncher();
+    }
+    game->setArgs(QStringList(ui->le_Params->text()));
+
+
+    if(ui->cb_useSavegameSync->checkState()) {
+        game->setSavegameDir(ui->le_savegameDir->text());
+    } else {
+        game->setSavegameDir("");
+    }
+
+    db->updateGame(game);
+    emit reloadRequired();
 }

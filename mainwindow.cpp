@@ -31,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     cUpdater->writeVersion(FCVersion, QDir::currentPath() + "/FVersionL");
     qDebug() << "Creating FVersion file for Linux.";
 #endif
+
     if(!db.init())
     {
         QMessageBox msg(QMessageBox::Warning, "Error!", "Couldn't init the DB. Things may not work correctly. If this happened after an update, please submit a bug report.", QMessageBox::Ok, this);

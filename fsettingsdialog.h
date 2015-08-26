@@ -65,6 +65,8 @@ private slots:
     void on_le_launcher_pathEdit_editingFinished();
     void on_le_launcher_argEdit_editingFinished();
     void on_le_launcher_suffix_editingFinished();
+
+    void on_pb_sync_FolderDialog_clicked();
 signals:
     void reloadStylesheet();
     void reloadLibrary();
