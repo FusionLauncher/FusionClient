@@ -70,7 +70,7 @@ void GameInfoDialog::on_chooseGameDirButton_clicked()
 
 void GameInfoDialog::on_pb_deleteGame_clicked()
 {
-    QMessageBox::StandardButton btn = QMessageBox::warning(this, "Really delete Game?", "Please confirm, do you want to delete '"  + game->getName() + "'?", QMessageBox::Yes|QMessageBox::No);
+    QMessageBox::StandardButton btn = QMessageBox::warning(this, "Really delete game?", "Are you sure you want to delete \""  + game->getName() + "\"?", QMessageBox::Yes|QMessageBox::No);
     if(btn == QMessageBox::Yes) {
         db->removeGameById(game->dbId);
         emit reloadRequired();
@@ -102,7 +102,7 @@ void GameInfoDialog::on_downloadArtButton_clicked()
     connect(artmanager, SIGNAL(foundMultipleGames(QList<TheGameDBStorage*>)),  this, SLOT(on_foundMultipleGames(QList<TheGameDBStorage*>)));
     artmanager->getGameData(game, "PC");
 
-    ui->label_2->setText("Searching for some Artwork...");
+    ui->label_2->setText("Searching for artwork...");
 
 
 }
@@ -115,7 +115,7 @@ void GameInfoDialog::on_ShowArtworkFolder_clicked()
 void GameInfoDialog::openFile(QString destFileName) {
 
     QFileInfo fi;
-    QString file = QFileDialog::getOpenFileName(this, "Choose Artwork", lastDir, "Images (*.png *.jpg)");
+    QString file = QFileDialog::getOpenFileName(this, "Choose artwork", lastDir, "Images (*.png *.jpg)");
     if(file.isEmpty())
         return;
     else {
@@ -189,7 +189,7 @@ void GameInfoDialog::on_buttonBox_accepted()
 
 void GameInfoDialog::downloadFinished() {
     --runningDownloads;
-    ui->label_2->setText("Running Downloads:" + QString::number(runningDownloads));
+    ui->label_2->setText("Running downloads:" + QString::number(runningDownloads));
     if(runningDownloads<=0)
         QMessageBox::information(this, "Downloads finished", "Finished " + QString::number(totalDownloads) + " download(s)");
 }
@@ -197,7 +197,7 @@ void GameInfoDialog::downloadFinished() {
 void GameInfoDialog::downloadStarted() {
     ++runningDownloads;
     ++totalDownloads;
-    ui->label_2->setText("Running Downloads:" + QString::number(runningDownloads));
+    ui->label_2->setText("Running downloads:" + QString::number(runningDownloads));
 }
 
 
