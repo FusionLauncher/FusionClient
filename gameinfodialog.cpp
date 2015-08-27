@@ -226,3 +226,20 @@ void GameInfoDialog::on_launcherCheckBox_clicked()
 {
     ui->launcherComboBox->setEnabled(ui->launcherCheckBox->isChecked());
 }
+
+
+void GameInfoDialog::on_pb_setSavegameDir_clicked()
+{
+    QDir gameDir = QFileDialog::getExistingDirectory(this, "Choose the Savegame-Directory", ui->le_Directory->text());
+    if(gameDir.dirName()!=".")
+        ui->le_savegameDir->setText(gameDir.absolutePath());
+}
+
+void GameInfoDialog::on_cb_useSavegameSync_clicked()
+{
+    ui->cb_useSavegameSync->setChecked(ui->cb_useSavegameSync->checkState());
+    ui->le_savegameDir->setEnabled(ui->cb_useSavegameSync->checkState());
+    ui->pb_setSavegameDir->setEnabled(ui->cb_useSavegameSync->checkState());
+}
+
+
