@@ -230,15 +230,13 @@ void FSettingsDialog::on_btn_Folder_Add_clicked()
 
 void FSettingsDialog::on_btn_Folder_Remove_clicked()
 {
-    if(watchedFolders.size() == 0)
+    if(watchedFolders.count() == 0 || selectedFolder == NULL)
     {
         return;
     }
     if(QMessageBox::warning(this, "Please confirm!", "Do you really want to remove  \"" +selectedFolder->getDirectory().absolutePath()+ "\"?\r\nThe games inside won't be removed from your disk.",QMessageBox::Ok, QMessageBox::Cancel)==QMessageBox::Ok) {
         watchedFolders.remove(selectedFolder->getDirectory().absolutePath());
-
         ui->lw_Folder_FolderList->clear();
-
         for(int i=0;i<watchedFolders.count();++i)
             ui->lw_Folder_FolderList->addItem(watchedFolders.values()[i].getDirectory().absolutePath());
 
