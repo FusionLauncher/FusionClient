@@ -44,6 +44,7 @@ private slots:
     void ShowSettingsContextMenu(const QPoint& pos);
     void on_pb_Settings_clicked();
     void on_pb_LaunchGame_clicked();
+    void on_pb_LaunchRandom_clicked();
 
     void resizeDone();
     void reloadStylesheet();

@@ -17,13 +17,14 @@ QTabBar::tab
 QTabBar::tab:hover
 {
     color: #ffffff;
-    text-decoration: underline;
+    background-color: #3fc1f4;
 }
 QTabBar::tab:selected
 {
     color: #ffffff;
-    text-decoration: underline;
+    background-color: #3fc1f4;
 }
+
 
 #tabWidget QWidget {
     background: #DADADA;
@@ -38,6 +39,11 @@ QTabWidget::pane {
     background-color:#1DAEE1;
     color:#dadada;
     width:20px;
+}
+
+
+#meueBar QPushButton:hover {
+background-color: #3fc1f4;
 }
 
 #line_2 {
@@ -90,14 +96,14 @@ QScrollBar::down-button:vertical, #gameScrollArea::up-button:vertical{
 
 }
 
-#gameDetailsSidebarWidget QMenu {
+#w_globalButtons QMenu {
     background-color: #1DAAE1; /* sets background of the menu */
    /* border-radius:20px; */
     font-size: 18pt;
     padding:0px;
 }
 
-#gameDetailsSidebarWidget QMenu::item {
+#w_globalButtons QMenu::item {
     background-color: #1DAAE1;
     color:#dadada;
     border-bottom:1px solid #dadada;
@@ -105,9 +111,9 @@ QScrollBar::down-button:vertical, #gameScrollArea::up-button:vertical{
     margin:0px;
 }
 
-#gameDetailsSidebarWidget QMenu::item:selected {
-    background-color: #dadada;
-    color:#1DAAE1;
+#w_globalButtons QMenu::item:selected {
+    background-color: #3fc1f4;
+    color:#dadada;
 }
 
 
@@ -122,11 +128,15 @@ QScrollBar::down-button:vertical, #gameScrollArea::up-button:vertical{
     padding: 5px;
 }
 
-#gameDetailsSidebarWidget #pb_Settings, #gameDetailsSidebarWidget #pb_LaunchGame {
-    background-color:#1daae1;
-    color: #dadada;
-    height:50px;
-    width:50px;
-    border-radius:30px;
+#w_globalButtons QPushButton{
+    border-radius: 28px;
+    width:56px;
+    height:56px;
+    background: #1DAAE1;
+}
+
+
+#w_globalButtons QPushButton:hover{
+    background: #3fc1f4;
 }
 
