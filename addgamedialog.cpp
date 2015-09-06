@@ -55,6 +55,12 @@ void AddGameDialog::on_chooseGameExecutableButton_clicked()
 
 void AddGameDialog::on_buttonBox_accepted()
 {
+    if(ui->gameNameEdit->text().isEmpty()
+    || game.getPath().isEmpty()
+    || game.getExe().isEmpty())
+    {
+        return;
+    }
     game.setName(ui->gameNameEdit->text());
     game.setCommand(ui->gameCommandEdit->text());
     game.setArgs(QStringList(ui->gameArgsEdit->text()));
@@ -65,6 +71,7 @@ void AddGameDialog::on_buttonBox_accepted()
     }
     qDebug() << "Name: " << game.getName() << "command: " << game.getCommand() << "commandEdit: " << ui->gameCommandEdit->text() << game.getLauncher().getName();
     emit AddGameDialog::gameSet(game);
+    accept();
 }
 
 void AddGameDialog::on_gameCommandBrowse_clicked()
