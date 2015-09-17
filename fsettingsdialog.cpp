@@ -20,6 +20,7 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
    ui->listWidget->addItem("Artwork");
    ui->listWidget->addItem("Watched Folders");
    ui->listWidget->addItem("Launchers");
+//   ui->listWidget->addItem("Savegame-Sync");
    ui->listWidget->setCurrentRow(0);
 
    ui->le_Stylesheet->setText(db->getTextPref("stylesheet"));
@@ -28,23 +29,26 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
 
    ui->cb_Artwork_UseCache->setChecked(db->getBoolPref("useArtworkCache", true));
 
-   //##########################
-   //WatchedFolders
-   QList<FWatchedFolder> tmpList = db->getWatchedFoldersList();
+    //##########################
+    //WatchedFolders
+    QList<FWatchedFolder> tmpList = db->getWatchedFoldersList();
     ui->lw_Folder_FolderList->clear();
-   for(int i=0;i<tmpList.length();++i)
-   {
-       watchedFolders.insert(tmpList[i].getDirectory().absolutePath(), tmpList[i]);
-       ui->lw_Folder_FolderList->addItem(tmpList[i].getDirectory().absolutePath());
-   }
+    for(int i=0;i<tmpList.length();++i)
+    {
+        watchedFolders.insert(tmpList[i].getDirectory().absolutePath(), tmpList[i]);
+        ui->lw_Folder_FolderList->addItem(tmpList[i].getDirectory().absolutePath());
+    }
 
-   //##########################
-   // LAUNCHERS
+    //##########################
+    // LAUNCHERS
 
-  loadLaunchers();
+    loadLaunchers();
 
 
-   //##########################
+    //##########################
+    //Savegame-Sync
+    ui->le_sync_path->setText(db->getTextPref("sync_target", ""));
+    ui->sb_sync_backups->setValue(db->getIntPref("sync_No_of_Backups", 0));
 
 }
 
@@ -70,6 +74,7 @@ void FSettingsDialog::loadLaunchers()
 
     ui->cb_Folder_LauncherList->blockSignals(false);
     ui->lw_launcher_launchers->blockSignals(false);
+    selectedLauncher = NULL;
 }
 
 void FSettingsDialog::on_listWidget_currentRowChanged(int i)
@@ -192,11 +197,20 @@ void FSettingsDialog::on_le_launcher_argEdit_editingFinished()
 void FSettingsDialog::on_le_launcher_suffix_editingFinished()
 { updateLauncher(); }
 
+void FSettingsDialog::on_pb_sync_FolderDialog_clicked()
+{
+    QString path = QFileDialog::getExistingDirectory(this, "Target-Dir");
+    ui->le_sync_path->setText(path);
+
+}
+
 void FSettingsDialog::updateLauncher() {
-    selectedLauncher->setName(ui->le_launcher_nameEdit->text());
-    selectedLauncher->setPath(ui->le_launcher_pathEdit->text());
-    selectedLauncher->setArgs(ui->le_launcher_argEdit->text());
-    selectedLauncher->setFileEndings(ui->le_launcher_suffix->text());
+    if(selectedLauncher) {
+        selectedLauncher->setName(ui->le_launcher_nameEdit->text());
+        selectedLauncher->setPath(ui->le_launcher_pathEdit->text());
+        selectedLauncher->setArgs(ui->le_launcher_argEdit->text());
+        selectedLauncher->setFileEndings(ui->le_launcher_suffix->text());
+    }
 }
 
 void FSettingsDialog::on_btn_Artwork_DownloadAll_clicked() {
@@ -303,4 +317,10 @@ void FSettingsDialog::on_buttonBox_accepted()
    //##########################
     //Launchers
     db->updateLaunchers(launchers.values());
+
+
+    //##########################
+    //Savegame-Sync
+    db->updateTextPref("sync_target", ui->le_sync_path->text());
+    db->updateIntPref("sync_No_of_Backups", ui->sb_sync_backups->value());
 }

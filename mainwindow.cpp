@@ -31,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     cUpdater->writeVersion(FCVersion, QDir::currentPath() + "/FVersionL");
     qDebug() << "Creating FVersion file for Linux.";
 #endif
+
     if(!db.init())
     {
         QMessageBox msg(QMessageBox::Warning, "Error!", "Couldn't init the database. Things may not work correctly. If this happened after an update, please submit a bug report.", QMessageBox::Ok, this);
@@ -65,36 +66,16 @@ MainWindow::MainWindow(QWidget *parent) :
        qApp->setFont(latoFont);
     }
 
-   //Shadow!
-   QGraphicsDropShadowEffect* effect = new QGraphicsDropShadowEffect();
-   effect->setBlurRadius(15);
-   effect->setOffset(5,5);
-   ui->pb_Settings->setGraphicsEffect(effect);
-
-
-   QGraphicsDropShadowEffect* Leffect = new QGraphicsDropShadowEffect();
-   Leffect->setBlurRadius(15);
-   Leffect->setOffset(5,5);
-   ui->pb_LaunchGame->setGraphicsEffect(Leffect);
 
 
    //Build the Settings-Button
-   settingsMenu = new QMenu(ui->gameDetailsSidebarWidget);
+   settingsMenu = new QMenu(ui->pb_Settings);
    settingsMenu->addAction("Edit Game", this, SLOT(sttngsBtn_edtGame_triggered()));
    settingsMenu->addAction("Add Game", this, SLOT(sttngsBtn_addGame_triggered()));
    settingsMenu->addAction("Settings", this, SLOT(sttngsBtn_opnSttngs_triggered()));
    settingsMenu->addAction("Random", this, SLOT(launchRandomGame()));
 
-   QGraphicsDropShadowEffect* menuEffect = new QGraphicsDropShadowEffect();
-   menuEffect->setBlurRadius(15);
-   menuEffect->setOffset(5,5);
-   settingsMenu->setGraphicsEffect(menuEffect);
 
-   //Shadow!
-   QGraphicsDropShadowEffect* scrollShadow = new QGraphicsDropShadowEffect();
-   scrollShadow->setBlurRadius(15);
-   scrollShadow->setOffset(5,0);
-   ui->gameListWidget->setGraphicsEffect(scrollShadow);
 
 
     currentView = db.getIntPref("lastView", 1);
@@ -135,6 +116,33 @@ MainWindow::MainWindow(QWidget *parent) :
     resizeHeightEnabled = false;
     resizeWidthEnabled = false;
     resizeWidthEnabledInv =false;
+
+
+    //Shadow!
+    QGraphicsDropShadowEffect* effect = new QGraphicsDropShadowEffect();
+    effect->setBlurRadius(15);
+    effect->setOffset(5,5);
+    ui->pb_Settings->setGraphicsEffect(effect);
+
+    QGraphicsDropShadowEffect* Leffect = new QGraphicsDropShadowEffect();
+    Leffect->setBlurRadius(15);
+    Leffect->setOffset(5,5);
+    ui->pb_LaunchGame->setGraphicsEffect(Leffect);
+
+    QGraphicsDropShadowEffect* scrollShadow = new QGraphicsDropShadowEffect();
+    scrollShadow->setBlurRadius(15);
+    scrollShadow->setOffset(5,0);
+    ui->gameListWidget->setGraphicsEffect(scrollShadow);
+
+    QGraphicsDropShadowEffect* menuEffect = new QGraphicsDropShadowEffect();
+    menuEffect->setBlurRadius(15);
+    menuEffect->setOffset(5,5);
+    settingsMenu->setGraphicsEffect(menuEffect);
+
+    QGraphicsDropShadowEffect* randEffect = new QGraphicsDropShadowEffect();
+    randEffect->setBlurRadius(15);
+    randEffect->setOffset(3,3);
+    ui->pb_LaunchRandom->setGraphicsEffect(randEffect);
 }
 
 
@@ -292,14 +300,16 @@ void MainWindow::ShowSettingsContextMenu(const QPoint &pos)
 {
        QPoint globalPos = ui->pb_Settings->mapToGlobal(pos);
 
-       //this is required, because (i assume) i re-calculates the sizes based on CSS, on show().
-       //at least id soesn't work if the menu was never open.
+       //this is required, because (,i assume,) ti re-calculates the sizes based in on_show().
+       //at least it doesn't work if the menu was never open.
        settingsMenu->show();
        settingsMenu->close();
+       int deltaWidth = this->width() - this->minimumWidth();
 
        globalPos.setY(globalPos.y() - settingsMenu->height());
-       globalPos.setX(globalPos.x() - settingsMenu->width() - 20);
+       globalPos.setX(globalPos.x() - settingsMenu->width() - deltaWidth - 150);
 
+       qDebug() << "Final Pos:" << globalPos;
 
        settingsMenu->exec(globalPos);
 }
@@ -324,6 +334,11 @@ void MainWindow::on_pb_LaunchGame_clicked()
 {
     if(game != NULL)
         game->execute();
+}
+
+void MainWindow::on_pb_LaunchRandom_clicked()
+{
+    launchRandomGame();
 }
 
 

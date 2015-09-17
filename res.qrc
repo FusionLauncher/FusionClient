@@ -12,5 +12,6 @@
         <file>gfx/max.png</file>
         <file>gfx/min.png</file>
         <file>gfx/Launch.png</file>
+        <file>gfx/Random.png</file>
     </qresource>
 </RCC>

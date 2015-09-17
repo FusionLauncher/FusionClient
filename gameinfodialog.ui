@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>677</width>
-    <height>530</height>
+    <height>516</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,16 +15,16 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
-    <number>0</number>
+    <number>6</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>6</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>6</number>
    </property>
    <property name="bottomMargin">
-    <number>10</number>
+    <number>6</number>
    </property>
    <item>
     <widget class="QWidget" name="widget_2" native="true">
@@ -35,13 +35,18 @@
       </sizepolicy>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="3">
-       <widget class="QLabel" name="label_6">
-        <property name="text">
-         <string>Type:</string>
-        </property>
-       </widget>
-      </item>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
       <item row="3" column="3">
        <widget class="QLineEdit" name="le_Exec">
         <property name="minimumSize">
@@ -49,6 +54,13 @@
           <width>200</width>
           <height>0</height>
          </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>Type:</string>
         </property>
        </widget>
       </item>
@@ -66,23 +78,6 @@
         </property>
        </widget>
       </item>
-      <item row="6" column="1" colspan="4">
-       <widget class="QLineEdit" name="le_Params">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="readOnly">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QLabel" name="label_5">
-        <property name="text">
-         <string>Parameters:</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="1">
        <widget class="QLabel" name="label">
         <property name="text">
@@ -90,52 +85,10 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="3" colspan="2">
-       <widget class="QLineEdit" name="le_Type">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="1">
-       <widget class="QCheckBox" name="launcherCheckBox">
+      <item row="5" column="1">
+       <widget class="QLabel" name="label_5">
         <property name="text">
-         <string>Use launcher</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="4">
-       <widget class="QPushButton" name="chooseGameExecutableButton">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>30</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="1" colspan="4">
-       <widget class="QLineEdit" name="le_Params">
-        <property name="readOnly">
-         <bool>false</bool>
+         <string>Parameters:</string>
         </property>
        </widget>
       </item>
@@ -164,6 +117,30 @@
         </property>
        </widget>
       </item>
+      <item row="1" column="3" colspan="2">
+       <widget class="QLineEdit" name="le_Type">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QCheckBox" name="launcherCheckBox">
+        <property name="text">
+         <string>Use launcher</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1" colspan="2">
+       <widget class="QLineEdit" name="le_Params">
+        <property name="readOnly">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="1" colspan="2">
        <widget class="QLineEdit" name="le_Title">
         <property name="text">
@@ -184,11 +161,36 @@
         </property>
        </widget>
       </item>
+      <item row="3" column="4">
+       <widget class="QPushButton" name="chooseGameExecutableButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>30</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
       <item row="9" column="4">
        <widget class="QPushButton" name="pb_deleteGame">
         <property name="minimumSize">
          <size>
-          <width>120</width>
+          <width>50</width>
           <height>0</height>
          </size>
         </property>
@@ -199,7 +201,53 @@
          </size>
         </property>
         <property name="text">
-         <string>Delete game</string>
+         <string>Delete
+Game</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="3">
+       <widget class="QCheckBox" name="cb_useSavegameSync">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Sync Savegame</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="3">
+       <widget class="QLineEdit" name="le_savegameDir">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="4">
+       <widget class="QPushButton" name="pb_setSavegameDir">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>30</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>...</string>
         </property>
        </widget>
       </item>

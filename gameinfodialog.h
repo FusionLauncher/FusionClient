@@ -45,6 +45,9 @@ private slots:
     void on_pb_deleteGame_clicked();
     void on_launcherCheckBox_clicked();
 
+    void on_pb_setSavegameDir_clicked();
+    void on_cb_useSavegameSync_clicked();
+
 signals:
     void reloadRequired();
 };
