@@ -20,7 +20,7 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
    ui->listWidget->addItem("Artwork");
    ui->listWidget->addItem("Watched Folders");
    ui->listWidget->addItem("Launchers");
-   ui->listWidget->addItem("Savegame-Sync");
+//   ui->listWidget->addItem("Savegame-Sync");
    ui->listWidget->setCurrentRow(0);
 
    ui->le_Stylesheet->setText(db->getTextPref("stylesheet"));
