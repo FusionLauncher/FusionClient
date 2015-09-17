@@ -63,8 +63,9 @@ void AddGameDialog::on_buttonBox_accepted()
     {
         game.setLauncher(launchers->at(ui->launcherComboBox->itemData(ui->launcherComboBox->currentIndex()).toInt()));
     }
-    qDebug() << "Name: " << game.getName() << "command: " << game.getCommand() << "commandEdit: " << ui->gameCommandEdit->text() << game.getLauncher().getName();
+
     emit AddGameDialog::gameSet(game);
+    close();
 }
 
 void AddGameDialog::on_gameCommandBrowse_clicked()

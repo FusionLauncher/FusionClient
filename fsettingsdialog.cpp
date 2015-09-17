@@ -74,6 +74,7 @@ void FSettingsDialog::loadLaunchers()
 
     ui->cb_Folder_LauncherList->blockSignals(false);
     ui->lw_launcher_launchers->blockSignals(false);
+    selectedLauncher = NULL;
 }
 
 void FSettingsDialog::on_listWidget_currentRowChanged(int i)
@@ -204,10 +205,12 @@ void FSettingsDialog::on_pb_sync_FolderDialog_clicked()
 }
 
 void FSettingsDialog::updateLauncher() {
-    selectedLauncher->setName(ui->le_launcher_nameEdit->text());
-    selectedLauncher->setPath(ui->le_launcher_pathEdit->text());
-    selectedLauncher->setArgs(ui->le_launcher_argEdit->text());
-    selectedLauncher->setFileEndings(ui->le_launcher_suffix->text());
+    if(selectedLauncher) {
+        selectedLauncher->setName(ui->le_launcher_nameEdit->text());
+        selectedLauncher->setPath(ui->le_launcher_pathEdit->text());
+        selectedLauncher->setArgs(ui->le_launcher_argEdit->text());
+        selectedLauncher->setFileEndings(ui->le_launcher_suffix->text());
+    }
 }
 
 void FSettingsDialog::on_btn_Artwork_DownloadAll_clicked() {
