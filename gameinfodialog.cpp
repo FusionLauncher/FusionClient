@@ -57,6 +57,7 @@ GameInfoDialog::GameInfoDialog(FGame *g, FDB *database, QWidget *parent) :
     }
 
     //Savegame-Sync
+    /*
     if(game->savegameSyncEndabled()) {
         ui->cb_useSavegameSync->setChecked(true);
         ui->le_savegameDir->setEnabled(true);
@@ -68,7 +69,7 @@ GameInfoDialog::GameInfoDialog(FGame *g, FDB *database, QWidget *parent) :
         ui->le_savegameDir->setEnabled(false);
         ui->pb_setSavegameDir->setEnabled(false);
     }
-
+*/
 }
 
 
@@ -239,7 +240,7 @@ void GameInfoDialog::on_cb_useSavegameSync_clicked()
 {
     ui->cb_useSavegameSync->setChecked(ui->cb_useSavegameSync->checkState());
     ui->le_savegameDir->setEnabled(ui->cb_useSavegameSync->checkState());
-    ui->pb_setSavegameDir->setEnabled(ui->cb_useSavegameSync->checkState());
+  //  ui->pb_setSavegameDir->setEnabled(ui->cb_useSavegameSync->checkState());
 }
 
 

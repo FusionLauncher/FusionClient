@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>677</width>
-    <height>514</height>
+    <height>516</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -208,16 +208,26 @@ Game</string>
       </item>
       <item row="5" column="3">
        <widget class="QCheckBox" name="cb_useSavegameSync">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Sync Savegame</string>
         </property>
        </widget>
       </item>
       <item row="6" column="3">
-       <widget class="QLineEdit" name="le_savegameDir"/>
+       <widget class="QLineEdit" name="le_savegameDir">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
       <item row="6" column="4">
        <widget class="QPushButton" name="pb_setSavegameDir">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
