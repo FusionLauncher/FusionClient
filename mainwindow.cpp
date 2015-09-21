@@ -19,18 +19,16 @@
 #include "qinputdialog.h"
 
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-#ifdef _WIN32
-    cUpdater->writeVersion(FCVersion, QDir::currentPath() + "/FVersionW");
-    qDebug() << "Creating FVersion file for Windows.";
-#elif __linux
-    cUpdater->writeVersion(FCVersion, QDir::currentPath() + "/FVersionL");
-    qDebug() << "Creating FVersion file for Linux.";
-#endif
+
+    cUpdater->writeVersion(FCVersion, QDir::currentPath());
+    qDebug() << "Creating FVersion file.";
+
 
     if(!db.init())
     {

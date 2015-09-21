@@ -66,7 +66,7 @@ protected:
 
 private:
 
-    QString FCVersion = "0.0.1";
+    QString FCVersion = "0.9.0";
 
     Ui::MainWindow *ui;
     FGame *game;
