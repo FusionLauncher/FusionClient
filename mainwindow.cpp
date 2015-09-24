@@ -148,6 +148,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::checkForUpdates()
 {
+   if(!db.getBoolPref("autoScanUpdates", true))
+       return;
+
+   qDebug() << "Getting Updates";
+
+
     FClientUpdater u;
     FusionVersion v = u.strToVersion(FCVersionString);
     FusionVersion o = u.getCRClientVersion();
@@ -166,6 +172,7 @@ void MainWindow::checkForUpdates()
                         return;
                     } else {
                          updateInProgress = true;
+                         qApp->exit(0);
                     }
                 }
             #elif __linux
