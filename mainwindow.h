@@ -23,7 +23,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
+    bool updateInProgress;
 private slots:
     void addGame(FGame game);
     void on_actionSwitch_View_triggered();
@@ -102,6 +102,7 @@ private:
 
     QGraphicsScene* sceneCover;
     QGraphicsPixmapItem* itemCover;
+    void checkForUpdates();
 };
 
 #endif // MAINWINDOW_H
