@@ -71,7 +71,6 @@ MainWindow::MainWindow(QWidget *parent) :
    settingsMenu->addAction("Edit Game", this, SLOT(sttngsBtn_edtGame_triggered()));
    settingsMenu->addAction("Add Game", this, SLOT(sttngsBtn_addGame_triggered()));
    settingsMenu->addAction("Settings", this, SLOT(sttngsBtn_opnSttngs_triggered()));
-   settingsMenu->addAction("Random", this, SLOT(launchRandomGame()));
 
 
 
