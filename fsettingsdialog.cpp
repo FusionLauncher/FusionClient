@@ -50,6 +50,8 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
     ui->le_sync_path->setText(db->getTextPref("sync_target", ""));
     ui->sb_sync_backups->setValue(db->getIntPref("sync_No_of_Backups", 0));
 
+    ui->cb_gen_ScanForUpdates->setChecked(db->getBoolPref("autoScanUpdates", true));
+
 }
 
 FSettingsDialog::~FSettingsDialog()
@@ -204,6 +206,12 @@ void FSettingsDialog::on_pb_sync_FolderDialog_clicked()
 
 }
 
+void FSettingsDialog::on_pb_gen_ScanForUpdates_clicked()
+{
+
+}
+
+
 void FSettingsDialog::updateLauncher() {
     if(selectedLauncher) {
         selectedLauncher->setName(ui->le_launcher_nameEdit->text());
@@ -323,4 +331,7 @@ void FSettingsDialog::on_buttonBox_accepted()
     //Savegame-Sync
     db->updateTextPref("sync_target", ui->le_sync_path->text());
     db->updateIntPref("sync_No_of_Backups", ui->sb_sync_backups->value());
+
+
+    db->updateBoolPref("autoScanUpdates", (bool)ui->cb_gen_ScanForUpdates->checkState());
 }

@@ -14,9 +14,11 @@
 #include <QMessageBox>
 #include <QGraphicsDropShadowEffect>
 #include <QGraphicsPixmapItem>
+#include <QDesktopServices>
 #include "addlauncherdialog.h"
 #include "editlauncherdialog.h"
 #include "qinputdialog.h"
+
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -24,13 +26,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-#ifdef _WIN32
-    cUpdater->writeVersion(FCVersion, QDir::currentPath() + "/FVersionW");
-    qDebug() << "Creating FVersion file for Windows.";
-#elif __linux
-    cUpdater->writeVersion(FCVersion, QDir::currentPath() + "/FVersionL");
-    qDebug() << "Creating FVersion file for Linux.";
-#endif
+
+    cUpdater->writeVersion(FCVersionString, QDir::currentPath());
+
+    updateInProgress = false;
+
 
     if(!db.init())
     {
@@ -73,7 +73,6 @@ MainWindow::MainWindow(QWidget *parent) :
    settingsMenu->addAction("Edit Game", this, SLOT(sttngsBtn_edtGame_triggered()));
    settingsMenu->addAction("Add Game", this, SLOT(sttngsBtn_addGame_triggered()));
    settingsMenu->addAction("Settings", this, SLOT(sttngsBtn_opnSttngs_triggered()));
-   settingsMenu->addAction("Random", this, SLOT(launchRandomGame()));
 
 
 
@@ -143,8 +142,45 @@ MainWindow::MainWindow(QWidget *parent) :
     randEffect->setBlurRadius(15);
     randEffect->setOffset(3,3);
     ui->pb_LaunchRandom->setGraphicsEffect(randEffect);
+
+    checkForUpdates();
 }
 
+void MainWindow::checkForUpdates()
+{
+   if(!db.getBoolPref("autoScanUpdates", true))
+       return;
+
+   qDebug() << "Getting Updates";
+
+
+    FClientUpdater u;
+    FusionVersion v = u.strToVersion(FCVersionString);
+    FusionVersion o = u.getCRClientVersion();
+    if(!(o==v) && o.initialized) {
+        if(QMessageBox::information(this, "New Version available!", "Version " + u.VersionToStr(o) + " is available. Do you want to Download it?", QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+        {
+            #ifdef _WIN32
+                QFile updater(QDir::currentPath() + "/FusionUpdater.exe");
+                if(!updater.exists()) {
+                    QMessageBox::warning(this, "Cannot find Updater!", "Unable to find Updater in " + QDir::currentPath() + ".\nPlease update manually by visiting projFusion.com.");
+                    return;
+                }else {
+                    bool launched = QDesktopServices::openUrl(QUrl("file:///" + updater.fileName(), QUrl::TolerantMode) );
+                    if(!launched) {
+                        QMessageBox::warning(this, "Cannot launch Updater!", "Unable to launch Updater!\nPlease update manually by visiting projFusion.com.");
+                        return;
+                    } else {
+                         updateInProgress = true;
+                         qApp->exit(0);
+                    }
+                }
+            #elif __linux
+
+            #endif
+        }
+    }
+}
 
 void MainWindow::changeView()
 {
