@@ -56,6 +56,8 @@ private slots:
     void sttngsBtn_opnSttngs_triggered();
     void sttngsBtn_addGame_triggered();
     void sttngsBtn_edtGame_triggered();
+    void sttngsBtn_reportBug_triggered();
+
     void launchRandomGame();
 protected:
     void mouseMoveEvent(QMouseEvent *event);

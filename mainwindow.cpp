@@ -73,7 +73,7 @@ MainWindow::MainWindow(QWidget *parent) :
    settingsMenu->addAction("Edit Game", this, SLOT(sttngsBtn_edtGame_triggered()));
    settingsMenu->addAction("Add Game", this, SLOT(sttngsBtn_addGame_triggered()));
    settingsMenu->addAction("Settings", this, SLOT(sttngsBtn_opnSttngs_triggered()));
-
+   settingsMenu->addAction("Report Bug", this, SLOT(sttngsBtn_reportBug_triggered()));
 
 
 
@@ -213,6 +213,11 @@ void MainWindow::sttngsBtn_edtGame_triggered() {
     GameInfoDialog *dialog = new GameInfoDialog(game, &db, this);
     connect(dialog, SIGNAL(reloadRequired()), this, SLOT(on_GameInfoDialogFinished()));
     dialog->exec();
+}
+
+void MainWindow::sttngsBtn_reportBug_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/FusionLauncher/FusionClient/issues/new"));
 }
 
 void MainWindow::setView() {
