@@ -13,5 +13,6 @@
         <file>gfx/min.png</file>
         <file>gfx/Launch.png</file>
         <file>gfx/Random.png</file>
+        <file>gfx/Icon.ico</file>
     </qresource>
 </RCC>
