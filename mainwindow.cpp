@@ -150,17 +150,24 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::createTrayIcon()
 {
-   trayIcon = new QSystemTrayIcon(QIcon(":/gfx/Icon.ico"), this);
-
-   QAction *exitAction = new QAction( "Exit", trayIcon );
-   connect( exitAction, SIGNAL(triggered()), this, SLOT(on_pb_Close_clicked()) );
+    trayIcon = new QSystemTrayIcon(QIcon(":/gfx/Icon.ico"), this);
+    QMenu *iconMenu = new QMenu;
 
 
-   QMenu *iconMenue = new QMenu;
-   iconMenue->addAction( exitAction );
 
-   trayIcon->setContextMenu( iconMenue );
-   trayIcon->show();
+    QList<FGame *> lastGames = db.getLatestLaunchedGames(8);
+    for(FGame *g : lastGames) {
+        QAction *gameAction = new QAction( g->getName(), trayIcon );
+        connect( gameAction, SIGNAL(triggered()), this, SLOT(trayLaunchGame()) );
+        iconMenu->addAction( gameAction );
+    }
+
+    QAction *exitAction = new QAction( "Exit", trayIcon );
+    connect( exitAction, SIGNAL(triggered()), this, SLOT(on_pb_Close_clicked()) );
+    iconMenu->addAction( exitAction );
+
+    trayIcon->setContextMenu( iconMenu );
+    trayIcon->show();
  }
 
 void MainWindow::checkForUpdates()
@@ -208,7 +215,25 @@ void MainWindow::launchRandomGame()
 {
     int randomGame = qrand() % gameList.length();
     qDebug() << "Random launch:" << gameList[randomGame]->getName();
-    gameList[randomGame]->execute();
+    FGame *g = gameList[randomGame];
+    db.updateLastLaunched(g);
+    g->execute();
+}
+
+void MainWindow::trayLaunchGame()
+{
+    QAction *action = qobject_cast<QAction *>(sender());
+    if (action)
+        qDebug() << action->text();
+
+    for(FGame *g : gameList)
+    {
+        if(g->getName() == action->text())
+        {
+            g->execute();
+            return;
+        }
+    }
 }
 
 
@@ -397,8 +422,10 @@ void MainWindow::on_pb_Settings_clicked()
 
 void MainWindow::on_pb_LaunchGame_clicked()
 {
-    if(game != NULL)
+    if(game != NULL) {
+        db.updateLastLaunched(game);
         game->execute();
+    }
 }
 
 void MainWindow::on_pb_LaunchRandom_clicked()
@@ -409,6 +436,8 @@ void MainWindow::on_pb_LaunchRandom_clicked()
 
 void MainWindow::onGameDoubleClicked(FGame *game, QObject *sender)
 {
+
+    db.updateLastLaunched(game);
     game->execute();
 }
 
