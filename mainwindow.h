@@ -10,6 +10,7 @@
 #include <fcrawler.h>
 #include <fclientupdater.h>
 #include <QListWidgetItem>
+#include <QSystemTrayIcon>
 #include <QMenu>
 
 namespace Ui {
@@ -56,7 +57,11 @@ private slots:
     void sttngsBtn_opnSttngs_triggered();
     void sttngsBtn_addGame_triggered();
     void sttngsBtn_edtGame_triggered();
+    void sttngsBtn_reportBug_triggered();
+
     void launchRandomGame();
+
+    void trayLaunchGame();
 protected:
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
@@ -103,6 +108,9 @@ private:
     QGraphicsScene* sceneCover;
     QGraphicsPixmapItem* itemCover;
     void checkForUpdates();
+
+    QSystemTrayIcon *trayIcon;
+    void createTrayIcon();
 };
 
 #endif // MAINWINDOW_H

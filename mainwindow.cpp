@@ -73,7 +73,7 @@ MainWindow::MainWindow(QWidget *parent) :
    settingsMenu->addAction("Edit Game", this, SLOT(sttngsBtn_edtGame_triggered()));
    settingsMenu->addAction("Add Game", this, SLOT(sttngsBtn_addGame_triggered()));
    settingsMenu->addAction("Settings", this, SLOT(sttngsBtn_opnSttngs_triggered()));
-
+   settingsMenu->addAction("Report Bug", this, SLOT(sttngsBtn_reportBug_triggered()));
 
 
 
@@ -143,8 +143,32 @@ MainWindow::MainWindow(QWidget *parent) :
     randEffect->setOffset(3,3);
     ui->pb_LaunchRandom->setGraphicsEffect(randEffect);
 
+    createTrayIcon();
+
     checkForUpdates();
 }
+
+void MainWindow::createTrayIcon()
+{
+    trayIcon = new QSystemTrayIcon(QIcon(":/gfx/Icon.ico"), this);
+    QMenu *iconMenu = new QMenu;
+
+
+
+    QList<FGame *> lastGames = db.getLatestLaunchedGames(8);
+    for(FGame *g : lastGames) {
+        QAction *gameAction = new QAction( g->getName(), trayIcon );
+        connect( gameAction, SIGNAL(triggered()), this, SLOT(trayLaunchGame()) );
+        iconMenu->addAction( gameAction );
+    }
+
+    QAction *exitAction = new QAction( "Exit", trayIcon );
+    connect( exitAction, SIGNAL(triggered()), this, SLOT(on_pb_Close_clicked()) );
+    iconMenu->addAction( exitAction );
+
+    trayIcon->setContextMenu( iconMenu );
+    trayIcon->show();
+ }
 
 void MainWindow::checkForUpdates()
 {
@@ -191,7 +215,25 @@ void MainWindow::launchRandomGame()
 {
     int randomGame = qrand() % gameList.length();
     qDebug() << "Random launch:" << gameList[randomGame]->getName();
-    gameList[randomGame]->execute();
+    FGame *g = gameList[randomGame];
+    db.updateLastLaunched(g);
+    g->execute();
+}
+
+void MainWindow::trayLaunchGame()
+{
+    QAction *action = qobject_cast<QAction *>(sender());
+    if (action)
+        qDebug() << action->text();
+
+    for(FGame *g : gameList)
+    {
+        if(g->getName() == action->text())
+        {
+            g->execute();
+            return;
+        }
+    }
 }
 
 
@@ -213,6 +255,11 @@ void MainWindow::sttngsBtn_edtGame_triggered() {
     GameInfoDialog *dialog = new GameInfoDialog(game, &db, this);
     connect(dialog, SIGNAL(reloadRequired()), this, SLOT(on_GameInfoDialogFinished()));
     dialog->exec();
+}
+
+void MainWindow::sttngsBtn_reportBug_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/FusionLauncher/FusionClient/issues/new"));
 }
 
 void MainWindow::setView() {
@@ -286,7 +333,14 @@ void MainWindow::refreshList()
         }
         //Select first game by default
         onGameClick(gameList[0], gameWidgetList[0]);
+
+
+        QSpacerItem *vSpacer;
+        vSpacer = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        gameScrollLayout->addItem(vSpacer);
     }
+
+
 
     qDebug() << "Time to load list:" << timer.elapsed();
 }
@@ -368,8 +422,10 @@ void MainWindow::on_pb_Settings_clicked()
 
 void MainWindow::on_pb_LaunchGame_clicked()
 {
-    if(game != NULL)
+    if(game != NULL) {
+        db.updateLastLaunched(game);
         game->execute();
+    }
 }
 
 void MainWindow::on_pb_LaunchRandom_clicked()
@@ -380,6 +436,8 @@ void MainWindow::on_pb_LaunchRandom_clicked()
 
 void MainWindow::onGameDoubleClicked(FGame *game, QObject *sender)
 {
+
+    db.updateLastLaunched(game);
     game->execute();
 }
 
