@@ -286,7 +286,14 @@ void MainWindow::refreshList()
         }
         //Select first game by default
         onGameClick(gameList[0], gameWidgetList[0]);
+
+
+        QSpacerItem *vSpacer;
+        vSpacer = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        gameScrollLayout->addItem(vSpacer);
     }
+
+
 
     qDebug() << "Time to load list:" << timer.elapsed();
 }
