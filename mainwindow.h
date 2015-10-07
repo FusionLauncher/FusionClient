@@ -10,6 +10,7 @@
 #include <fcrawler.h>
 #include <fclientupdater.h>
 #include <QListWidgetItem>
+#include <QSystemTrayIcon>
 #include <QMenu>
 
 namespace Ui {
@@ -105,6 +106,9 @@ private:
     QGraphicsScene* sceneCover;
     QGraphicsPixmapItem* itemCover;
     void checkForUpdates();
+
+    QSystemTrayIcon *trayIcon;
+    void createTrayIcon();
 };
 
 #endif // MAINWINDOW_H

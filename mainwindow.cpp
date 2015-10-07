@@ -143,8 +143,25 @@ MainWindow::MainWindow(QWidget *parent) :
     randEffect->setOffset(3,3);
     ui->pb_LaunchRandom->setGraphicsEffect(randEffect);
 
+    createTrayIcon();
+
     checkForUpdates();
 }
+
+void MainWindow::createTrayIcon()
+{
+   trayIcon = new QSystemTrayIcon(QIcon(":/gfx/Icon.ico"), this);
+
+   QAction *exitAction = new QAction( "Exit", trayIcon );
+   connect( exitAction, SIGNAL(triggered()), this, SLOT(on_pb_Close_clicked()) );
+
+
+   QMenu *iconMenue = new QMenu;
+   iconMenue->addAction( exitAction );
+
+   trayIcon->setContextMenu( iconMenue );
+   trayIcon->show();
+ }
 
 void MainWindow::checkForUpdates()
 {
