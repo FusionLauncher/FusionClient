@@ -1,23 +1,30 @@
+//Includes from FusionCLient
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QFileDialog>
-#include <fgame.h>
-#include <flauncher.h>
-#include <fdb.h>
-#include <QMessageBox>
+
 #include "addgamedialog.h"
 #include "fsettingsdialog.h"
 #include "gameinfodialog.h"
 #include "watchedfoldersdialog.h"
+#include "addlauncherdialog.h"
+#include "editlauncherdialog.h"
+
+//Includes from LibFusion
+#include <libfusion.h>
+#include <fgame.h>
+#include <flauncher.h>
+#include <fdb.h>
+
+//Includes QT-Framework
 #include <QDesktopWidget>
 #include <QFontDatabase>
 #include <QMessageBox>
 #include <QGraphicsDropShadowEffect>
 #include <QGraphicsPixmapItem>
 #include <QDesktopServices>
-#include "addlauncherdialog.h"
-#include "editlauncherdialog.h"
-#include "qinputdialog.h"
+#include <QMessageBox>
+#include <QFileDialog>
+#include <QInputDialog>
 
 
 
