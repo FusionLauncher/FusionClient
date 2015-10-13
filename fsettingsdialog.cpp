@@ -2,6 +2,7 @@
 #include "ui_fsettingsdialog.h"
 #include <QDebug>
 #include <fartmanager.h>
+#include <libfusion.h>
 #include <QMessageBox>
 #include <QDesktopServices>
 
@@ -28,6 +29,8 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
 
 
    ui->cb_Artwork_UseCache->setChecked(db->getBoolPref("useArtworkCache", true));
+
+   ui->lbl_gen_Version->setText(VersionString);
 
     //##########################
     //WatchedFolders
