@@ -467,6 +467,14 @@ void MainWindow::onGameClick(FGame *game, QObject *sender)
             ui->tgw_GameTitle->setVisible(true);
         }
 
+        QString lastPlayed = game->getGameLastPlayed().toString(Qt::SystemLocaleShortDate);
+        if(lastPlayed.length()>0)
+            lastPlayed = "Last played: " + lastPlayed;
+        else
+            lastPlayed = "Last played: -";
+
+        ui->lbl_lastPlayed->setText(lastPlayed);
+
 
         QPixmap p(art);
 

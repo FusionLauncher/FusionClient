@@ -427,7 +427,30 @@
                <number>0</number>
               </property>
               <item>
-               <widget class="QWidget" name="w_mainInfo" native="true"/>
+               <widget class="QWidget" name="w_mainInfo" native="true">
+                <layout class="QVBoxLayout" name="verticalLayout_2">
+                 <item>
+                  <widget class="QLabel" name="lbl_lastPlayed">
+                   <property name="text">
+                    <string>lbl_lastPlayed</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_4">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>158</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </widget>
               </item>
               <item>
                <widget class="QWidget" name="w_sidebar" native="true">
