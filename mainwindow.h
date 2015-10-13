@@ -71,8 +71,6 @@ protected:
 
 private:
 
-    QString FCVersionString = "0.9.1";
-
     Ui::MainWindow *ui;
     FGame *game;
     FCrawler crawler;

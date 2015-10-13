@@ -34,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    cUpdater->writeVersion(FCVersionString, QDir::currentPath());
+    cUpdater->writeVersion(VersionString, QDir::currentPath());
 
     updateInProgress = false;
 
@@ -186,7 +186,7 @@ void MainWindow::checkForUpdates()
 
 
     FClientUpdater u;
-    FusionVersion v = u.strToVersion(FCVersionString);
+    FusionVersion v = u.strToVersion(VersionString);
     FusionVersion o = u.getCRClientVersion();
     if(!(o==v) && o.initialized) {
         if(QMessageBox::information(this, "New Version available!", "Version " + u.VersionToStr(o) + " is available. Do you want to Download it?", QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
