@@ -346,4 +346,17 @@ void FSettingsDialog::on_buttonBox_accepted()
     db->updateBoolPref("StartWithSystem", (bool)ui->cb_gen_StartWithSystem->checkState());
     db->updateBoolPref("useTrayIcon", (bool)ui->cb_gen_useTrayIcon->checkState());
 
+    #ifdef _WIN32
+        QSettings bootUpSettings("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
+        QString app_path = QCoreApplication::applicationFilePath().replace("/", "\\");
+
+        if(db->getBoolPref("StartWithSystem", true)) {
+            bootUpSettings.setValue("FusionLauncher", app_path);
+        }else {
+            bootUpSettings.remove("FusionLauncher");
+        }
+    #elif __linux
+
+    #endif
+
 }
