@@ -151,12 +151,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->pb_LaunchRandom->setGraphicsEffect(randEffect);
 
     createTrayIcon();
-
     checkForUpdates();
 }
 
 void MainWindow::createTrayIcon()
 {
+    if(!db.getBoolPref("useTrayIcon", true))
+        return;
+
     trayIcon = new QSystemTrayIcon(QIcon(":/gfx/Icon.ico"), this);
     QMenu *iconMenu = new QMenu;
 
