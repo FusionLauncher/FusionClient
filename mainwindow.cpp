@@ -159,7 +159,7 @@ void MainWindow::createTrayIcon()
     if(!db.getBoolPref("useTrayIcon", true))
         return;
 
-    trayIcon = new QSystemTrayIcon(QIcon(":/gfx/Icon.ico"), this);
+    trayIcon = new QSystemTrayIcon(QIcon(":/gfx/FusionLogo45Deg.png"), this);
     QMenu *iconMenu = new QMenu;
 
 
