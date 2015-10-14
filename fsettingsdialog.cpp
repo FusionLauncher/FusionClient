@@ -54,6 +54,9 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
     ui->sb_sync_backups->setValue(db->getIntPref("sync_No_of_Backups", 0));
 
     ui->cb_gen_ScanForUpdates->setChecked(db->getBoolPref("autoScanUpdates", true));
+    ui->cb_gen_StartWithSystem->setChecked(db->getBoolPref("StartWithSystem", true));
+    ui->cb_gen_useTrayIcon->setChecked(db->getBoolPref("useTrayIcon", true));
+
 
 }
 
@@ -339,4 +342,8 @@ void FSettingsDialog::on_buttonBox_accepted()
 
 
     db->updateBoolPref("autoScanUpdates", (bool)ui->cb_gen_ScanForUpdates->checkState());
+
+    db->updateBoolPref("StartWithSystem", (bool)ui->cb_gen_StartWithSystem->checkState());
+    db->updateBoolPref("useTrayIcon", (bool)ui->cb_gen_useTrayIcon->checkState());
+
 }
