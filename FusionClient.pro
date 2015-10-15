@@ -12,6 +12,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = FusionClient
 TEMPLATE = app
+TRANSLATIONS = FusionClient_lang.ts
 
 RC_ICONS = gfx/Icon.ico
 
