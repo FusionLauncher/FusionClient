@@ -5,9 +5,6 @@
 #include "addgamedialog.h"
 #include "fsettingsdialog.h"
 #include "gameinfodialog.h"
-#include "watchedfoldersdialog.h"
-#include "addlauncherdialog.h"
-#include "editlauncherdialog.h"
 
 //Includes from LibFusion
 #include <libfusion.h>
