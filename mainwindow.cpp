@@ -225,17 +225,17 @@ void MainWindow::checkForUpdates()
     FusionVersion v = u.strToVersion(VersionString);
     FusionVersion o = u.getCRClientVersion();
     if(!(o==v) && o.initialized) {
-        if(QMessageBox::information(this, "New Version available!", "Version " + u.VersionToStr(o) + " is available. Do you want to Download it?", QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+        if(QMessageBox::information(this, tr("New Version available!"), "Version " + u.VersionToStr(o) + " is available. Do you want to Download it?", QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
         {
             #ifdef _WIN32
                 QFile updater(QDir::currentPath() + "/FusionUpdater.exe");
                 if(!updater.exists()) {
-                    QMessageBox::warning(this, "Cannot find Updater!", "Unable to find Updater in " + QDir::currentPath() + ".\nPlease update manually by visiting projFusion.com.");
+                    QMessageBox::warning(this, tr("Cannot find Updater!"), tr("Unable to find Updater in: ") + QDir::currentPath() + ".\n" + tr("Please update manually by visiting projFusion.com."));
                     return;
                 }else {
                     bool launched = QDesktopServices::openUrl(QUrl("file:///" + updater.fileName(), QUrl::TolerantMode) );
                     if(!launched) {
-                        QMessageBox::warning(this, "Cannot launch Updater!", "Unable to launch Updater!\nPlease update manually by visiting projFusion.com.");
+                        QMessageBox::warning(this, tr("Cannot launch Updater!"), tr("Unable to launch Updater!") + "\n" + tr("Please update manually by visiting projFusion.com."));
                         return;
                     } else {
                          updateInProgress = true;
@@ -512,9 +512,10 @@ void MainWindow::onGameClick(FGame *game, QObject *sender)
 
         QString lastPlayed = game->getGameLastPlayed().toString(Qt::SystemLocaleShortDate);
         if(lastPlayed.length()>0)
-            lastPlayed = "Last played: " + lastPlayed;
+            lastPlayed = tr("Last played: ") + lastPlayed;
         else
-            lastPlayed = "Last played: -";
+            //: This is used, when the games was never played
+            lastPlayed = tr("Last played: -");
 
         ui->lbl_lastPlayed->setText(lastPlayed);
 
