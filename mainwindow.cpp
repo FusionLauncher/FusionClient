@@ -14,6 +14,7 @@
 #include <fgame.h>
 #include <flauncher.h>
 #include <fdb.h>
+#include <f_dbg.h>
 
 //Includes QT-Framework
 #include <QDesktopWidget>
@@ -156,6 +157,35 @@ MainWindow::MainWindow(QWidget *parent) :
 
     createTrayIcon();
     checkForUpdates();
+  //  loadLanguage(db.getTextPref("currentLanguage", "en"));
+    loadLanguage("de");
+}
+
+void MainWindow::loadLanguage(const QString& rLanguage)
+{
+    DBG_LANG("Try change lang to " + rLanguage);
+    if(currentLanguage != rLanguage) {
+        currentLanguage = rLanguage;
+        QLocale locale = QLocale(currentLanguage);
+        QLocale::setDefault(locale);
+        switchTranslator(appTranslator, QString("FusionLang_%1.qm").arg(rLanguage));
+     //   switchTranslator(m_translatorQt, QString("qt_%1.qm").arg(rLanguage));
+    } else {
+        DBG_LANG("Language '" + rLanguage + "' not found!");
+    }
+}
+
+void MainWindow::switchTranslator(QTranslator& translator, const QString& filename)
+{
+    // remove the old translator
+    qApp->removeTranslator(&translator);
+
+    // load the new translator
+    if(translator.load(filename)) {
+        qApp->installTranslator(&translator);
+        DBG_LANG("Successfully changed lang.");
+        ui->retranslateUi(this);
+    }
 }
 
 void MainWindow::createTrayIcon()
