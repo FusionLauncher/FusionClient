@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="de_DE">
+<TS version="2.1" language="de_DE">
 <context>
     <name>AddGameDialog</name>
     <message>
@@ -126,84 +126,84 @@
         <translation>Starte Fusion mit dem System</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="320"/>
+        <location filename="fsettingsdialog.ui" line="316"/>
         <source>Reset stylesheet</source>
         <translation>Stylesheet zurücksetzten</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="287"/>
+        <location filename="fsettingsdialog.ui" line="283"/>
         <source>Load stylesheet</source>
         <translation>Lade Stylesheet</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="280"/>
-        <location filename="fsettingsdialog.ui" line="570"/>
+        <location filename="fsettingsdialog.ui" line="276"/>
+        <location filename="fsettingsdialog.ui" line="566"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="327"/>
+        <location filename="fsettingsdialog.ui" line="323"/>
         <source>Laguage:</source>
         <translation>Sprache:</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="341"/>
+        <location filename="fsettingsdialog.ui" line="337"/>
         <source>( Requires restart )</source>
         <translation>( Benötigt neustart )</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="364"/>
+        <location filename="fsettingsdialog.ui" line="360"/>
         <source>Cache artwork</source>
         <translation>Cache Artwork</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="374"/>
+        <location filename="fsettingsdialog.ui" line="370"/>
         <source>Clear cache</source>
         <translation>Cache löschen</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="381"/>
+        <location filename="fsettingsdialog.ui" line="377"/>
         <source>Open cache folder</source>
         <translation>Cache-Ordner öffnen</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="401"/>
+        <location filename="fsettingsdialog.ui" line="397"/>
         <source>Download all available artwork</source>
         <translation>Alle Artwork suchen und herunterladen</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="408"/>
+        <location filename="fsettingsdialog.ui" line="404"/>
         <source>-</source>
         <translation>-</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="438"/>
+        <location filename="fsettingsdialog.ui" line="434"/>
         <source>Add</source>
         <translation>Hinzufügen</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="445"/>
-        <location filename="fsettingsdialog.ui" line="483"/>
+        <location filename="fsettingsdialog.ui" line="441"/>
+        <location filename="fsettingsdialog.ui" line="479"/>
         <source>Remove</source>
         <translation>Entfernen</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="452"/>
+        <location filename="fsettingsdialog.ui" line="448"/>
         <source>Contains launchable ROMs</source>
         <translation>Beinhaltet ROMs</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="490"/>
+        <location filename="fsettingsdialog.ui" line="486"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="524"/>
+        <location filename="fsettingsdialog.ui" line="520"/>
         <source>Browse</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="587"/>
+        <location filename="fsettingsdialog.ui" line="583"/>
         <source>To enable Syncing, select the Savegame-Folder in the Settings Dialog in each game, and a synced Directory here - for Example an Dropbox or OwnCloud folder.
 
 Fusion will then keep these Directorys up to date by overriding the old data.
@@ -214,27 +214,27 @@ Fusion wird die Daten aktuell halten, in dem es die alten Daten durch neue erset
 Es kann angegeben werden, wieviele Backups erstellt werden können.</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="507"/>
+        <location filename="fsettingsdialog.ui" line="503"/>
         <source>Arguments</source>
         <translation>Parameter</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="497"/>
+        <location filename="fsettingsdialog.ui" line="493"/>
         <source>Path</source>
         <translation>Pfad</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="517"/>
+        <location filename="fsettingsdialog.ui" line="513"/>
         <source>Create</source>
         <translation>Erstellen</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="473"/>
+        <location filename="fsettingsdialog.ui" line="469"/>
         <source>Compatible files:</source>
         <translation>Dateiendungen:</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="537"/>
+        <location filename="fsettingsdialog.ui" line="533"/>
         <source>Possible arguments:
 $GAMENAME	The game name
 $GAMEPATH	The path the game is launched from
@@ -245,12 +245,12 @@ $GAMEPATH	Pfad zum Spiel
 $GAMEEXE	Name des Ausführbaren Datei, relativ zu $GAMEPATH</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="577"/>
+        <location filename="fsettingsdialog.ui" line="573"/>
         <source>Local saved Backups:</source>
         <translation>Anzahl Backups:</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="557"/>
+        <location filename="fsettingsdialog.ui" line="553"/>
         <location filename="fsettingsdialog.cpp" line="215"/>
         <source>Target-Dir</source>
         <translation>Ziel-Verzeichnis</translation>
@@ -567,98 +567,98 @@ Game</source>
     </message>
     <message>
         <source>Reset database</source>
-        <translation>Datenbank zurücksetzten</translation>
+        <translation type="vanished">Datenbank zurücksetzten</translation>
     </message>
     <message>
         <source>Refresh UI</source>
-        <translation>Aktualisieren</translation>
+        <translation type="vanished">Aktualisieren</translation>
     </message>
     <message>
         <source>Set stylesheet</source>
-        <translation>Setze Stylesheet</translation>
+        <translation type="vanished">Setze Stylesheet</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="85"/>
+        <location filename="mainwindow.cpp" line="82"/>
         <source>Add Game</source>
         <extracomment>Entry for Settings-Menu</extracomment>
         <translation>Spiel hinzufügen</translation>
     </message>
     <message>
         <source>Add Library</source>
-        <translation>Bibliothek hinzufügen</translation>
+        <translation type="vanished">Bibliothek hinzufügen</translation>
     </message>
     <message>
         <source>Add Origin-Game</source>
-        <translation>Origin-Spiel hinzufügen</translation>
+        <translation type="vanished">Origin-Spiel hinzufügen</translation>
     </message>
     <message>
         <source>Get Info</source>
-        <translation>Information</translation>
+        <translation type="vanished">Information</translation>
     </message>
     <message>
         <source>Switch View</source>
-        <translation>Wechsle Ansicht</translation>
+        <translation type="vanished">Wechsle Ansicht</translation>
     </message>
     <message>
         <source>Reset stylesheet</source>
-        <translation>Stylesheet zurücksetzten</translation>
+        <translation type="vanished">Stylesheet zurücksetzten</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="83"/>
+        <location filename="mainwindow.cpp" line="80"/>
         <source>Edit Game</source>
         <extracomment>Entry for Settings-Menu</extracomment>
         <translation>Spiel bearbeiten</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="87"/>
+        <location filename="mainwindow.cpp" line="84"/>
         <source>Settings</source>
         <extracomment>Entry for Settings-Menu</extracomment>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="89"/>
+        <location filename="mainwindow.cpp" line="86"/>
         <source>Report Bug</source>
         <extracomment>Entry for Settings-Menu</extracomment>
         <translation>Fehler melden</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="227"/>
+        <location filename="mainwindow.cpp" line="224"/>
         <source>New Version available!</source>
         <translation>Neue Version verfügbar!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="232"/>
+        <location filename="mainwindow.cpp" line="229"/>
         <source>Cannot find Updater!</source>
         <translation>Konnte updater nicht finden!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="232"/>
+        <location filename="mainwindow.cpp" line="229"/>
         <source>Unable to find Updater in: </source>
         <translation>Konnte Updater in folgendem Verzeichnis nicht finden:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="232"/>
-        <location filename="mainwindow.cpp" line="237"/>
+        <location filename="mainwindow.cpp" line="229"/>
+        <location filename="mainwindow.cpp" line="234"/>
         <source>Please update manually by visiting projFusion.com.</source>
         <translation>Bitte manuell akutalisieren. Lade die neuste Version von projFusion.com</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="237"/>
+        <location filename="mainwindow.cpp" line="234"/>
         <source>Cannot launch Updater!</source>
         <translation>Konnte Updater nicht starten. </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="237"/>
+        <location filename="mainwindow.cpp" line="234"/>
         <source>Unable to launch Updater!</source>
         <translation>Updater konnte nicht gestartet werden!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="514"/>
+        <location filename="mainwindow.cpp" line="511"/>
         <source>Last played: </source>
         <translation>Zuletzt gespielt:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="517"/>
+        <location filename="mainwindow.cpp" line="514"/>
         <source>Last played: -</source>
         <extracomment>This is used, when the games was never played</extracomment>
         <translation>Zuletzt gespielt: nie</translation>
