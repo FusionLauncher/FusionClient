@@ -19,7 +19,6 @@ RC_ICONS = gfx/Icon.ico
 SOURCES += main.cpp\
         mainwindow.cpp \
     addgamedialog.cpp \
-    watchedfoldersdialog.cpp \
     fgamewidget.cpp \
     gameinfodialog.cpp \
     general.cpp \
@@ -30,7 +29,6 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     addgamedialog.h \
-    watchedfoldersdialog.h \
     fgamewidget.h \
     gameinfodialog.h \
     general.h \
@@ -41,7 +39,6 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
     addgamedialog.ui \
-    watchedfoldersdialog.ui \
     fgamewidget.ui \
     gameinfodialog.ui \
     gamedbartselectordialog.ui \
