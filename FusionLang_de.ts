@@ -1,83 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="de_DE">
+<TS version="2.0" language="de_DE">
 <context>
     <name>AddGameDialog</name>
     <message>
         <location filename="addgamedialog.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Spiel hinzufügen</translation>
     </message>
     <message>
         <location filename="addgamedialog.ui" line="30"/>
         <source>Game name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Name:</translation>
     </message>
     <message>
         <location filename="addgamedialog.ui" line="51"/>
         <source>Choose directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Wähle Verzeichnis</translation>
     </message>
     <message>
         <location filename="addgamedialog.ui" line="64"/>
         <source>No game directory set</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein verzeichnis gewählt</translation>
     </message>
     <message>
         <location filename="addgamedialog.ui" line="94"/>
+        <location filename="addgamedialog.cpp" line="48"/>
         <source>Choose executable</source>
-        <translation type="unfinished"></translation>
+        <translation>Wähle Exe</translation>
     </message>
     <message>
         <location filename="addgamedialog.ui" line="104"/>
         <source>No executable set</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine ausführbare Datei gewählt</translation>
     </message>
     <message>
         <location filename="addgamedialog.ui" line="134"/>
         <source>Open using:</source>
-        <translation type="unfinished"></translation>
+        <translation>Starte mit:</translation>
     </message>
     <message>
         <location filename="addgamedialog.ui" line="151"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="addgamedialog.ui" line="165"/>
         <source>Arguments:</source>
-        <translation type="unfinished"></translation>
+        <translation>Parameter:</translation>
     </message>
     <message>
         <location filename="addgamedialog.ui" line="184"/>
         <source>Use launcher</source>
-        <translation type="unfinished">Benutze Launcher:</translation>
-    </message>
-</context>
-<context>
-    <name>AddLauncherDialog</name>
-    <message>
-        <source>Arguments</source>
-        <translation type="obsolete">Parameter</translation>
+        <translation>Benutze Launcher</translation>
     </message>
     <message>
-        <source>Path</source>
-        <translation type="obsolete">Pfad</translation>
+        <location filename="addgamedialog.cpp" line="39"/>
+        <source>Choose the game directory</source>
+        <translation>Wähle Spiel-Verzeichnis</translation>
     </message>
     <message>
-        <source>Browse</source>
-        <translation type="obsolete">...</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="obsolete">Name</translation>
-    </message>
-</context>
-<context>
-    <name>EditLauncherDialog</name>
-    <message>
-        <source>Browse</source>
-        <translation type="obsolete">...</translation>
+        <location filename="addgamedialog.cpp" line="73"/>
+        <source>Choose command</source>
+        <translation>Wähle Befehl</translation>
     </message>
 </context>
 <context>
@@ -85,12 +70,12 @@
     <message>
         <location filename="fgamewidget.ui" line="38"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="fgamewidget.ui" line="122"/>
         <source>No title found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein titel gefunden</translation>
     </message>
 </context>
 <context>
@@ -159,7 +144,7 @@
     <message>
         <location filename="fsettingsdialog.ui" line="333"/>
         <source>Cache artwork</source>
-        <translation type="unfinished"></translation>
+        <translation>Cache Artwork</translation>
     </message>
     <message>
         <location filename="fsettingsdialog.ui" line="343"/>
@@ -247,6 +232,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="fsettingsdialog.ui" line="542"/>
+        <location filename="fsettingsdialog.cpp" line="210"/>
         <source>Target-Dir</source>
         <translation>Ziel-Verzeichnis</translation>
     </message>
@@ -262,6 +248,114 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;You can specify how many Backups you want to keep locally saved.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="18"/>
+        <source>General</source>
+        <translation>Allgemein</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="19"/>
+        <source>Database</source>
+        <translation>Datenbank</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="20"/>
+        <source>Interface</source>
+        <translation>Oberfläche</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="21"/>
+        <source>Artwork</source>
+        <translation>Artwork</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="22"/>
+        <source>Watched Folders</source>
+        <translation>Überwachte Ordner</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="23"/>
+        <source>Launchers</source>
+        <translation>Launcher</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="95"/>
+        <source>Choose stylesheet</source>
+        <translation>Wähle Stylesheet</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="148"/>
+        <location filename="fsettingsdialog.cpp" line="153"/>
+        <location filename="fsettingsdialog.cpp" line="163"/>
+        <source>Error</source>
+        <translation>Fehler</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="148"/>
+        <source>Please set a name.</source>
+        <translation>Bitte Namen angeben.</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="153"/>
+        <source>Please set a path.</source>
+        <translation>Bitte Pfad angeben</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="163"/>
+        <source>This name already exists!</source>
+        <translation>Dieser Name existiert bereits!</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="184"/>
+        <source>Choose launcher</source>
+        <translation>Wähle Launcher</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="231"/>
+        <location filename="fsettingsdialog.cpp" line="265"/>
+        <source>Please confirm!</source>
+        <translation>Bitte bestätigen!</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="231"/>
+        <source>If artwork is found, existing artwork will be overwritten!</source>
+        <translation>Wird Artwork gefunden, werden vorhandene Grafiken ersetzt!</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="251"/>
+        <source>Choose the library folder</source>
+        <translation>Wähle einen Ordner</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="265"/>
+        <source>Do you really want to remove</source>
+        <translation>Willst du folgenden Pfad wirklich entfernen?
+</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="265"/>
+        <source>The games inside won&apos;t be removed from your disk.</source>
+        <translation>Die Spiele im Ordner werden nicht entfernt</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="287"/>
+        <location filename="fsettingsdialog.cpp" line="295"/>
+        <source>Running downloads:</source>
+        <translation>Laufende Downloads:</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="289"/>
+        <source>Downloads finished</source>
+        <translation>Downloads beendet</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="fsettingsdialog.cpp" line="289"/>
+        <source>Finished %n download(s)</source>
+        <translation>
+            <numerusform>%n Downloads beendet</numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -362,6 +456,61 @@ Game</source>
         <source>Show Artwork-Folder</source>
         <translation>Zeige Artwork-Ordner</translation>
     </message>
+    <message>
+        <location filename="gameinfodialog.cpp" line="80"/>
+        <source>Choose the game directory</source>
+        <translation>Wähle Spiel-Verzeichnis</translation>
+    </message>
+    <message>
+        <location filename="gameinfodialog.cpp" line="87"/>
+        <source>Really delete game?</source>
+        <translation>Spiel wirklich löschen?</translation>
+    </message>
+    <message>
+        <location filename="gameinfodialog.cpp" line="87"/>
+        <source>Are you sure you want to delete</source>
+        <translation>Willst folgendes Spiel wirklich löschen?
+</translation>
+    </message>
+    <message>
+        <location filename="gameinfodialog.cpp" line="99"/>
+        <source>Choose executable</source>
+        <translation>Wähle ausführbare Datei</translation>
+    </message>
+    <message>
+        <location filename="gameinfodialog.cpp" line="119"/>
+        <source>Searching for artwork...</source>
+        <translation>Suche nach Artwork...</translation>
+    </message>
+    <message>
+        <location filename="gameinfodialog.cpp" line="132"/>
+        <source>Choose artwork</source>
+        <translation>Wähle Artwork</translation>
+    </message>
+    <message>
+        <location filename="gameinfodialog.cpp" line="214"/>
+        <location filename="gameinfodialog.cpp" line="222"/>
+        <source>Running downloads:</source>
+        <translation>Laufende Downloads:</translation>
+    </message>
+    <message>
+        <location filename="gameinfodialog.cpp" line="216"/>
+        <source>Downloads finished</source>
+        <translation>Downloads beendet</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="gameinfodialog.cpp" line="216"/>
+        <source>Finished %n download(s)</source>
+        <translation>
+            <numerusform>%n Download beendet.</numerusform>
+            <numerusform>%n Downloads beendet.</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="gameinfodialog.cpp" line="234"/>
+        <source>Choose the Savegame-Directory</source>
+        <translation>Wähle das Spielstand-Verzeichnis</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -373,12 +522,12 @@ Game</source>
     <message>
         <location filename="mainwindow.ui" line="72"/>
         <source>Project Fusion</source>
-        <translation type="unfinished">Fusion Launcher</translation>
+        <translation>Project Fusion</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="156"/>
         <source>STORE</source>
-        <translation type="unfinished">STORE</translation>
+        <translation>STORE</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="208"/>
@@ -388,7 +537,7 @@ Game</source>
     <message>
         <location filename="mainwindow.ui" line="232"/>
         <source>LIBRARY</source>
-        <translation type="unfinished">LIBRARY</translation>
+        <translation>LIBRARY</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="400"/>
@@ -403,7 +552,7 @@ Game</source>
     <message>
         <location filename="mainwindow.ui" line="728"/>
         <source>COMMUNITY</source>
-        <translation type="unfinished">COMMUNITY</translation>
+        <translation>COMMUNITY</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="752"/>
@@ -411,49 +560,40 @@ Game</source>
         <translation>Community - kommt bald!</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="767"/>
         <source>Reset database</source>
         <translation>Datenbank zurücksetzten</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="772"/>
         <source>Refresh UI</source>
         <translation>Aktualisieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="777"/>
         <source>Set stylesheet</source>
         <translation>Setze Stylesheet</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="782"/>
         <location filename="mainwindow.cpp" line="84"/>
         <source>Add Game</source>
         <extracomment>Entry for Settings-Menu</extracomment>
         <translation>Spiel hinzufügen</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="787"/>
         <source>Add Library</source>
         <translation>Bibliothek hinzufügen</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="792"/>
         <source>Add Origin-Game</source>
         <translation>Origin-Spiel hinzufügen</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="797"/>
         <source>Get Info</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="802"/>
         <source>Switch View</source>
         <translation>Wechsle Ansicht</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="807"/>
         <source>Reset stylesheet</source>
         <translation>Stylesheet zurücksetzten</translation>
     </message>
@@ -474,6 +614,48 @@ Game</source>
         <source>Report Bug</source>
         <extracomment>Entry for Settings-Menu</extracomment>
         <translation>Fehler melden</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="227"/>
+        <source>New Version available!</source>
+        <translation>Neue Version verfügbar!</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="232"/>
+        <source>Cannot find Updater!</source>
+        <translation>Konnte updater nicht finden!</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="232"/>
+        <source>Unable to find Updater in: </source>
+        <translation>Konnte Updater in folgendem Verzeichnis nicht finden:</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="232"/>
+        <location filename="mainwindow.cpp" line="237"/>
+        <source>Please update manually by visiting projFusion.com.</source>
+        <translation>Bitte manuell akutalisieren. Lade die neuste Version von projFusion.com</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="237"/>
+        <source>Cannot launch Updater!</source>
+        <translation>Konnte Updater nicht starten. </translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="237"/>
+        <source>Unable to launch Updater!</source>
+        <translation>Updater konnte nicht gestartet werden!</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="514"/>
+        <source>Last played: </source>
+        <translation>Zuletzt gespielt:</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="517"/>
+        <source>Last played: -</source>
+        <extracomment>This is used, when the games was never played</extracomment>
+        <translation>Zuletzt gespielt: nie</translation>
     </message>
 </context>
 </TS>
