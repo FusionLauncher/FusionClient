@@ -23,9 +23,7 @@ SOURCES += main.cpp\
     gameinfodialog.cpp \
     general.cpp \
     gamedbartselectordialog.cpp \
-    fsettingsdialog.cpp \
-    addlauncherdialog.cpp \
-    editlauncherdialog.cpp
+    fsettingsdialog.cpp
 
 HEADERS  += mainwindow.h \
     addgamedialog.h \
@@ -33,18 +31,14 @@ HEADERS  += mainwindow.h \
     gameinfodialog.h \
     general.h \
     gamedbartselectordialog.h \
-    fsettingsdialog.h \
-    addlauncherdialog.h \
-    editlauncherdialog.h
+    fsettingsdialog.h
 
 FORMS    += mainwindow.ui \
     addgamedialog.ui \
     fgamewidget.ui \
     gameinfodialog.ui \
     gamedbartselectordialog.ui \
-    fsettingsdialog.ui \
-    addlauncherdialog.ui \
-    editlauncherdialog.ui
+    fsettingsdialog.ui
 
 unix|win32: LIBS += -lLibFusion
 
