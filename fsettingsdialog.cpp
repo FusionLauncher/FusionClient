@@ -32,6 +32,11 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
 
    ui->lbl_gen_Version->setText(VersionString);
 
+   ui->cb_int_laguage->addItem("English", "en");
+   ui->cb_int_laguage->addItem("German", "de");
+   int idx = ui->cb_int_laguage->findData(db->getTextPref("currentLanguage", "en"));
+   ui->cb_int_laguage->setCurrentIndex(idx);
+
     //##########################
     //WatchedFolders
     QList<FWatchedFolder> tmpList = db->getWatchedFoldersList();
@@ -345,6 +350,8 @@ void FSettingsDialog::on_buttonBox_accepted()
 
     db->updateBoolPref("StartWithSystem", (bool)ui->cb_gen_StartWithSystem->checkState());
     db->updateBoolPref("useTrayIcon", (bool)ui->cb_gen_useTrayIcon->checkState());
+
+    db->updateTextPref("currentLanguage", ui->cb_int_laguage->currentData().toString());
 
     #ifdef _WIN32
         QSettings bootUpSettings("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
