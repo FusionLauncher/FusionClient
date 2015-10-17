@@ -126,128 +126,134 @@
         <translation>Starte Fusion mit dem System</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="261"/>
+        <location filename="fsettingsdialog.ui" line="320"/>
         <source>Reset stylesheet</source>
         <translation>Stylesheet zurücksetzten</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="268"/>
+        <location filename="fsettingsdialog.ui" line="287"/>
         <source>Load stylesheet</source>
         <translation>Lade Stylesheet</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="300"/>
-        <location filename="fsettingsdialog.ui" line="555"/>
+        <location filename="fsettingsdialog.ui" line="280"/>
+        <location filename="fsettingsdialog.ui" line="570"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="333"/>
+        <location filename="fsettingsdialog.ui" line="327"/>
+        <source>Laguage:</source>
+        <translation>Sprache:</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.ui" line="341"/>
+        <source>( Requires restart )</source>
+        <translation>( Benötigt neustart )</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.ui" line="364"/>
         <source>Cache artwork</source>
         <translation>Cache Artwork</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="343"/>
+        <location filename="fsettingsdialog.ui" line="374"/>
         <source>Clear cache</source>
         <translation>Cache löschen</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="350"/>
+        <location filename="fsettingsdialog.ui" line="381"/>
         <source>Open cache folder</source>
         <translation>Cache-Ordner öffnen</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="370"/>
+        <location filename="fsettingsdialog.ui" line="401"/>
         <source>Download all available artwork</source>
         <translation>Alle Artwork suchen und herunterladen</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="377"/>
+        <location filename="fsettingsdialog.ui" line="408"/>
         <source>-</source>
         <translation>-</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="407"/>
+        <location filename="fsettingsdialog.ui" line="438"/>
         <source>Add</source>
         <translation>Hinzufügen</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="414"/>
-        <location filename="fsettingsdialog.ui" line="498"/>
+        <location filename="fsettingsdialog.ui" line="445"/>
+        <location filename="fsettingsdialog.ui" line="483"/>
         <source>Remove</source>
         <translation>Entfernen</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="421"/>
+        <location filename="fsettingsdialog.ui" line="452"/>
         <source>Contains launchable ROMs</source>
         <translation>Beinhaltet ROMs</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="439"/>
+        <location filename="fsettingsdialog.ui" line="490"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="446"/>
+        <location filename="fsettingsdialog.ui" line="524"/>
         <source>Browse</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="453"/>
+        <location filename="fsettingsdialog.ui" line="587"/>
+        <source>To enable Syncing, select the Savegame-Folder in the Settings Dialog in each game, and a synced Directory here - for Example an Dropbox or OwnCloud folder.
+
+Fusion will then keep these Directorys up to date by overriding the old data.
+
+You can specify how many Backups you want to keep locally saved.</source>
+        <translation>Um das Synchronisieren zu ermöglichen, wähle den Savegame-Ordner für jedes Spiel. Setzte hier außerdem den Pfad zu einem Synchronisiertem Ordner (z.B. Dropbox oder ownCloud).
+Fusion wird die Daten aktuell halten, in dem es die alten Daten durch neue ersetzt.
+Es kann angegeben werden, wieviele Backups erstellt werden können.</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.ui" line="507"/>
         <source>Arguments</source>
         <translation>Parameter</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="463"/>
+        <location filename="fsettingsdialog.ui" line="497"/>
         <source>Path</source>
         <translation>Pfad</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="470"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Possible arguments:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;$GAMENAME	The game name&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;$GAMEPATH	The path the game is launched from&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;$GAMEEXE	The path to the executable, relative to $GAMEPATH&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="fsettingsdialog.ui" line="488"/>
+        <location filename="fsettingsdialog.ui" line="517"/>
         <source>Create</source>
         <translation>Erstellen</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="508"/>
+        <location filename="fsettingsdialog.ui" line="473"/>
         <source>Compatible files:</source>
         <translation>Dateiendungen:</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="522"/>
+        <location filename="fsettingsdialog.ui" line="537"/>
+        <source>Possible arguments:
+$GAMENAME	The game name
+$GAMEPATH	The path the game is launched from
+$GAMEEXE	The path to the executable, relative to $GAMEPATH</source>
+        <translation>Parameter:
+$GAMENAME	Name des Spiels
+$GAMEPATH	Pfad zum Spiel
+$GAMEEXE	Name des Ausführbaren Datei, relativ zu $GAMEPATH</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.ui" line="577"/>
         <source>Local saved Backups:</source>
         <translation>Anzahl Backups:</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="542"/>
-        <location filename="fsettingsdialog.cpp" line="210"/>
+        <location filename="fsettingsdialog.ui" line="557"/>
+        <location filename="fsettingsdialog.cpp" line="215"/>
         <source>Target-Dir</source>
         <translation>Ziel-Verzeichnis</translation>
-    </message>
-    <message>
-        <location filename="fsettingsdialog.ui" line="577"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To enable Syncing, select the Savegame-Folder in the Settings Dialog in each game, and a synced Directory here - for Example an Dropbox or OwnCloud folder.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Fusion will then keep these Directorys up to date by overriding the old data.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;You can specify how many Backups you want to keep locally saved.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
     </message>
     <message>
         <location filename="fsettingsdialog.cpp" line="18"/>
@@ -280,81 +286,81 @@ p, li { white-space: pre-wrap; }
         <translation>Launcher</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="95"/>
+        <location filename="fsettingsdialog.cpp" line="100"/>
         <source>Choose stylesheet</source>
         <translation>Wähle Stylesheet</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="148"/>
         <location filename="fsettingsdialog.cpp" line="153"/>
-        <location filename="fsettingsdialog.cpp" line="163"/>
+        <location filename="fsettingsdialog.cpp" line="158"/>
+        <location filename="fsettingsdialog.cpp" line="168"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="148"/>
+        <location filename="fsettingsdialog.cpp" line="153"/>
         <source>Please set a name.</source>
         <translation>Bitte Namen angeben.</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="153"/>
+        <location filename="fsettingsdialog.cpp" line="158"/>
         <source>Please set a path.</source>
         <translation>Bitte Pfad angeben</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="163"/>
+        <location filename="fsettingsdialog.cpp" line="168"/>
         <source>This name already exists!</source>
         <translation>Dieser Name existiert bereits!</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="184"/>
+        <location filename="fsettingsdialog.cpp" line="189"/>
         <source>Choose launcher</source>
         <translation>Wähle Launcher</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="231"/>
-        <location filename="fsettingsdialog.cpp" line="265"/>
+        <location filename="fsettingsdialog.cpp" line="236"/>
+        <location filename="fsettingsdialog.cpp" line="270"/>
         <source>Please confirm!</source>
         <translation>Bitte bestätigen!</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="231"/>
+        <location filename="fsettingsdialog.cpp" line="236"/>
         <source>If artwork is found, existing artwork will be overwritten!</source>
         <translation>Wird Artwork gefunden, werden vorhandene Grafiken ersetzt!</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="251"/>
+        <location filename="fsettingsdialog.cpp" line="256"/>
         <source>Choose the library folder</source>
         <translation>Wähle einen Ordner</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="265"/>
+        <location filename="fsettingsdialog.cpp" line="270"/>
         <source>Do you really want to remove</source>
         <translation>Willst du folgenden Pfad wirklich entfernen?
 </translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="265"/>
+        <location filename="fsettingsdialog.cpp" line="270"/>
         <source>The games inside won&apos;t be removed from your disk.</source>
         <translation>Die Spiele im Ordner werden nicht entfernt</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="287"/>
-        <location filename="fsettingsdialog.cpp" line="295"/>
+        <location filename="fsettingsdialog.cpp" line="292"/>
+        <location filename="fsettingsdialog.cpp" line="300"/>
         <source>Running downloads:</source>
         <translation>Laufende Downloads:</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="289"/>
+        <location filename="fsettingsdialog.cpp" line="294"/>
         <source>Downloads finished</source>
         <translation>Downloads beendet</translation>
     </message>
     <message numerus="yes">
-        <location filename="fsettingsdialog.cpp" line="289"/>
+        <location filename="fsettingsdialog.cpp" line="294"/>
         <source>Finished %n download(s)</source>
         <translation>
+            <numerusform>%n Download beendet</numerusform>
             <numerusform>%n Downloads beendet</numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
 </context>
@@ -572,7 +578,7 @@ Game</source>
         <translation>Setze Stylesheet</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="84"/>
+        <location filename="mainwindow.cpp" line="85"/>
         <source>Add Game</source>
         <extracomment>Entry for Settings-Menu</extracomment>
         <translation>Spiel hinzufügen</translation>
@@ -598,19 +604,19 @@ Game</source>
         <translation>Stylesheet zurücksetzten</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="82"/>
+        <location filename="mainwindow.cpp" line="83"/>
         <source>Edit Game</source>
         <extracomment>Entry for Settings-Menu</extracomment>
         <translation>Spiel bearbeiten</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="86"/>
+        <location filename="mainwindow.cpp" line="87"/>
         <source>Settings</source>
         <extracomment>Entry for Settings-Menu</extracomment>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="88"/>
+        <location filename="mainwindow.cpp" line="89"/>
         <source>Report Bug</source>
         <extracomment>Entry for Settings-Menu</extracomment>
         <translation>Fehler melden</translation>
