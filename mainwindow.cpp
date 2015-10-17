@@ -72,6 +72,10 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
 
+   //  loadLanguage(db.getTextPref("currentLanguage", "en"));
+   loadLanguage("de");
+
+
 
    //Build the Settings-Button
    settingsMenu = new QMenu(ui->pb_Settings);
@@ -154,8 +158,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     createTrayIcon();
     checkForUpdates();
-  //  loadLanguage(db.getTextPref("currentLanguage", "en"));
-    loadLanguage("de");
 }
 
 void MainWindow::loadLanguage(const QString& rLanguage)
