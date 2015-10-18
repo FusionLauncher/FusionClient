@@ -33,10 +33,11 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
    ui->lbl_gen_Version->setText(VersionString);
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-   ui->cb_int_laguage->addItem("English", "en");
-   ui->cb_int_laguage->addItem("German", "de");
-   int idx = ui->cb_int_laguage->findData(db->getTextPref("currentLanguage", "en"));
-   ui->cb_int_laguage->setCurrentIndex(idx);
+   ui->cb_int_language->addItem("English", "en"); //please keep this in alphabetical order with English on top
+   ui->cb_int_language->addItem("German", "de");
+   ui->cb_int_language->addItem("Spanish", "es");
+   int idx = ui->cb_int_language->findData(db->getTextPref("currentLanguage", "en"));
+   ui->cb_int_language->setCurrentIndex(idx);
 #endif
 
     //##########################
@@ -265,15 +266,13 @@ void FSettingsDialog::on_btn_Folder_Add_clicked()
 
 void FSettingsDialog::on_btn_Folder_Remove_clicked()
 {
-    if(watchedFolders.size() == 0)
+    if(watchedFolders.count() == 0 || selectedFolder == NULL)
     {
         return;
     }
     if(QMessageBox::warning(this, tr("Please confirm!"), tr("Do you really want to remove") + "\"" +selectedFolder->getDirectory().absolutePath()+ "\"?\r\n" + tr("The games inside won't be removed from your disk."),QMessageBox::Ok, QMessageBox::Cancel)==QMessageBox::Ok) {
         watchedFolders.remove(selectedFolder->getDirectory().absolutePath());
-
         ui->lw_Folder_FolderList->clear();
-
         for(int i=0;i<watchedFolders.count();++i)
             ui->lw_Folder_FolderList->addItem(watchedFolders.values()[i].getDirectory().absolutePath());
 
@@ -354,7 +353,7 @@ void FSettingsDialog::on_buttonBox_accepted()
     db->updateBoolPref("useTrayIcon", (bool)ui->cb_gen_useTrayIcon->checkState());
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-    db->updateTextPref("currentLanguage", ui->cb_int_laguage->currentData().toString());
+    db->updateTextPref("currentLanguage", ui->cb_int_language->currentData().toString());
 #endif
 
     #ifdef _WIN32
