@@ -2,6 +2,7 @@
 #include "ui_fsettingsdialog.h"
 #include <QDebug>
 #include <fartmanager.h>
+#include <libfusion.h>
 #include <QMessageBox>
 #include <QDesktopServices>
 
@@ -14,12 +15,13 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
     this->db = db;
 
     //Hast to be the Same order as the Stacked Widget.
-   ui->listWidget->addItem("General");
-   ui->listWidget->addItem("Database");
-   ui->listWidget->addItem("Interface");
-   ui->listWidget->addItem("Artwork");
-   ui->listWidget->addItem("Watched Folders");
-   ui->listWidget->addItem("Launchers");
+   ui->listWidget->addItem(tr("General"));
+   ui->listWidget->addItem(tr("Database"));
+   ui->listWidget->addItem(tr("Interface"));
+   ui->listWidget->addItem(tr("Artwork"));
+   ui->listWidget->addItem(tr("Watched Folders"));
+   ui->listWidget->addItem(tr("Launchers"));
+//   ui->listWidget->addItem(tr("Savegame-Sync"));
    ui->listWidget->setCurrentRow(0);
 
    ui->le_Stylesheet->setText(db->getTextPref("stylesheet"));
@@ -28,23 +30,41 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
 
    ui->cb_Artwork_UseCache->setChecked(db->getBoolPref("useArtworkCache", true));
 
-   //##########################
-   //WatchedFolders
-   QList<FWatchedFolder> tmpList = db->getWatchedFoldersList();
+   ui->lbl_gen_Version->setText(VersionString);
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+   ui->cb_int_language->addItem("English", "en"); //please keep this in alphabetical order with English on top
+   ui->cb_int_language->addItem("German", "de");
+   ui->cb_int_language->addItem("Spanish", "es");
+   int idx = ui->cb_int_language->findData(db->getTextPref("currentLanguage", "en"));
+   ui->cb_int_language->setCurrentIndex(idx);
+#endif
+
+    //##########################
+    //WatchedFolders
+    QList<FWatchedFolder> tmpList = db->getWatchedFoldersList();
     ui->lw_Folder_FolderList->clear();
-   for(int i=0;i<tmpList.length();++i)
-   {
-       watchedFolders.insert(tmpList[i].getDirectory().absolutePath(), tmpList[i]);
-       ui->lw_Folder_FolderList->addItem(tmpList[i].getDirectory().absolutePath());
-   }
+    for(int i=0;i<tmpList.length();++i)
+    {
+        watchedFolders.insert(tmpList[i].getDirectory().absolutePath(), tmpList[i]);
+        ui->lw_Folder_FolderList->addItem(tmpList[i].getDirectory().absolutePath());
+    }
 
-   //##########################
-   // LAUNCHERS
+    //##########################
+    // LAUNCHERS
 
-  loadLaunchers();
+    loadLaunchers();
 
 
-   //##########################
+    //##########################
+    //Savegame-Sync
+    ui->le_sync_path->setText(db->getTextPref("sync_target", ""));
+    ui->sb_sync_backups->setValue(db->getIntPref("sync_No_of_Backups", 0));
+
+    ui->cb_gen_ScanForUpdates->setChecked(db->getBoolPref("autoScanUpdates", true));
+    ui->cb_gen_StartWithSystem->setChecked(db->getBoolPref("StartWithSystem", true));
+    ui->cb_gen_useTrayIcon->setChecked(db->getBoolPref("useTrayIcon", true));
+
 
 }
 
@@ -70,6 +90,7 @@ void FSettingsDialog::loadLaunchers()
 
     ui->cb_Folder_LauncherList->blockSignals(false);
     ui->lw_launcher_launchers->blockSignals(false);
+    selectedLauncher = NULL;
 }
 
 void FSettingsDialog::on_listWidget_currentRowChanged(int i)
@@ -79,7 +100,7 @@ void FSettingsDialog::on_listWidget_currentRowChanged(int i)
 
 void FSettingsDialog::on_pb_selectStylesheet_clicked()
 {
-    QString stylesheetFile = QFileDialog::getOpenFileName(this, "Choose stylesheet", QDir::homePath(), "*.qss");
+    QString stylesheetFile = QFileDialog::getOpenFileName(this, tr("Choose stylesheet"), QDir::homePath(), "*.qss");
     qDebug() << "Stylesheet: " << stylesheetFile;
     if(QFile::exists(stylesheetFile))
     {
@@ -132,12 +153,12 @@ void FSettingsDialog::on_btn_launcher_Add_clicked()
     FLauncher l;
     if(ui->le_launcher_nameEdit->text().isEmpty())
     {
-       QMessageBox::information(this, "Error", "Please set a name.", QMessageBox::Ok);
+       QMessageBox::information(this, tr("Error"), tr("Please set a name."), QMessageBox::Ok);
         return;
     }
     if(ui->le_launcher_pathEdit->text().isEmpty())
     {
-        QMessageBox::information(this, "Error", "Please set a path.", QMessageBox::Ok);
+        QMessageBox::information(this, tr("Error"), tr("Please set a path."), QMessageBox::Ok);
         return;
     }
 
@@ -147,7 +168,7 @@ void FSettingsDialog::on_btn_launcher_Add_clicked()
     l.setFileEndings(ui->le_launcher_suffix->text());
 
     if(launchers.contains(l.getName())) {
-        QMessageBox::information(this, "Error", "This name already exists!", QMessageBox::Ok);
+        QMessageBox::information(this, tr("Error"), tr("This name already exists!"), QMessageBox::Ok);
         return;
     }
 
@@ -168,7 +189,7 @@ void FSettingsDialog::on_btn_launcher_remove_clicked()
 
 void FSettingsDialog::on_btn_launcher_browsePath_clicked()
 {
-    QString path = QFileDialog::getOpenFileName(this, "Choose launcher", ".", "*");
+    QString path = QFileDialog::getOpenFileName(this, tr("Choose launcher"), ".", "*");
     ui->le_launcher_pathEdit->setText(path);
 }
 
@@ -192,15 +213,30 @@ void FSettingsDialog::on_le_launcher_argEdit_editingFinished()
 void FSettingsDialog::on_le_launcher_suffix_editingFinished()
 { updateLauncher(); }
 
+void FSettingsDialog::on_pb_sync_FolderDialog_clicked()
+{
+    QString path = QFileDialog::getExistingDirectory(this, tr("Target-Dir"));
+    ui->le_sync_path->setText(path);
+
+}
+
+void FSettingsDialog::on_pb_gen_ScanForUpdates_clicked()
+{
+
+}
+
+
 void FSettingsDialog::updateLauncher() {
-    selectedLauncher->setName(ui->le_launcher_nameEdit->text());
-    selectedLauncher->setPath(ui->le_launcher_pathEdit->text());
-    selectedLauncher->setArgs(ui->le_launcher_argEdit->text());
-    selectedLauncher->setFileEndings(ui->le_launcher_suffix->text());
+    if(selectedLauncher) {
+        selectedLauncher->setName(ui->le_launcher_nameEdit->text());
+        selectedLauncher->setPath(ui->le_launcher_pathEdit->text());
+        selectedLauncher->setArgs(ui->le_launcher_argEdit->text());
+        selectedLauncher->setFileEndings(ui->le_launcher_suffix->text());
+    }
 }
 
 void FSettingsDialog::on_btn_Artwork_DownloadAll_clicked() {
-    if(QMessageBox::warning(this, "Please confirm!", "If artwork is found, existing artwork will be overwritten!",QMessageBox::Ok, QMessageBox::Cancel) ==QMessageBox::Cancel)
+    if(QMessageBox::warning(this, tr("Please confirm!"), tr("If artwork is found, existing artwork will be overwritten!"),QMessageBox::Ok, QMessageBox::Cancel) ==QMessageBox::Cancel)
         return;
 
 
@@ -220,7 +256,7 @@ void FSettingsDialog::on_btn_Artwork_DownloadAll_clicked() {
 
 void FSettingsDialog::on_btn_Folder_Add_clicked()
 {
-    QDir gameDir = QFileDialog::getExistingDirectory(this, "Choose the library folder", QDir::homePath());
+    QDir gameDir = QFileDialog::getExistingDirectory(this, tr("Choose the library folder"), QDir::homePath());
     ui->lw_Folder_FolderList->addItem(gameDir.absolutePath());
 
     FWatchedFolder w;
@@ -234,7 +270,7 @@ void FSettingsDialog::on_btn_Folder_Remove_clicked()
     {
         return;
     }
-    if(QMessageBox::warning(this, "Please confirm!", "Do you really want to remove  \"" +selectedFolder->getDirectory().absolutePath()+ "\"?\r\nThe games inside won't be removed from your disk.",QMessageBox::Ok, QMessageBox::Cancel)==QMessageBox::Ok) {
+    if(QMessageBox::warning(this, tr("Please confirm!"), tr("Do you really want to remove") + "\"" +selectedFolder->getDirectory().absolutePath()+ "\"?\r\n" + tr("The games inside won't be removed from your disk."),QMessageBox::Ok, QMessageBox::Cancel)==QMessageBox::Ok) {
         watchedFolders.remove(selectedFolder->getDirectory().absolutePath());
         ui->lw_Folder_FolderList->clear();
         for(int i=0;i<watchedFolders.count();++i)
@@ -254,15 +290,15 @@ void FSettingsDialog::on_cb_Folder_ForLauncher_clicked()
 
 void FSettingsDialog::downloadFinished() {
     --runningDownloads;
-    ui->la_Artwork_DownloadStatus->setText("Running downloads:" + QString::number(runningDownloads));
+    ui->la_Artwork_DownloadStatus->setText(tr("Running downloads:") + QString::number(runningDownloads));
     if(runningDownloads<=0)
-        QMessageBox::information(this, "Downloads finished", "Finished " + QString::number(totalDownloads) + " download(s)");
+        QMessageBox::information(this, tr("Downloads finished"), tr("Finished %n download(s)",0,totalDownloads));
 }
 
 void FSettingsDialog::downloadStarted() {
     ++runningDownloads;
     ++totalDownloads;
-    ui->la_Artwork_DownloadStatus->setText("Running downloads:" + QString::number(runningDownloads));
+    ui->la_Artwork_DownloadStatus->setText(tr("Running downloads:") + QString::number(runningDownloads));
 }
 
 void FSettingsDialog::on_btn_Artwork_openCache_clicked() {
@@ -303,4 +339,34 @@ void FSettingsDialog::on_buttonBox_accepted()
    //##########################
     //Launchers
     db->updateLaunchers(launchers.values());
+
+
+    //##########################
+    //Savegame-Sync
+    db->updateTextPref("sync_target", ui->le_sync_path->text());
+    db->updateIntPref("sync_No_of_Backups", ui->sb_sync_backups->value());
+
+
+    db->updateBoolPref("autoScanUpdates", (bool)ui->cb_gen_ScanForUpdates->checkState());
+
+    db->updateBoolPref("StartWithSystem", (bool)ui->cb_gen_StartWithSystem->checkState());
+    db->updateBoolPref("useTrayIcon", (bool)ui->cb_gen_useTrayIcon->checkState());
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    db->updateTextPref("currentLanguage", ui->cb_int_language->currentData().toString());
+#endif
+
+    #ifdef _WIN32
+        QSettings bootUpSettings("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
+        QString app_path = QCoreApplication::applicationFilePath().replace("/", "\\");
+
+        if(db->getBoolPref("StartWithSystem", true)) {
+            bootUpSettings.setValue("FusionLauncher", app_path);
+        }else {
+            bootUpSettings.remove("FusionLauncher");
+        }
+    #elif __linux
+
+    #endif
+
 }

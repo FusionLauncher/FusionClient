@@ -10,6 +10,7 @@
 #include <fcrawler.h>
 #include <fclientupdater.h>
 #include <QListWidgetItem>
+#include <QSystemTrayIcon>
 #include <QMenu>
 
 namespace Ui {
@@ -23,7 +24,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
+    bool updateInProgress;
 private slots:
     void addGame(FGame game);
     void on_actionSwitch_View_triggered();
@@ -44,6 +45,7 @@ private slots:
     void ShowSettingsContextMenu(const QPoint& pos);
     void on_pb_Settings_clicked();
     void on_pb_LaunchGame_clicked();
+    void on_pb_LaunchRandom_clicked();
 
     void resizeDone();
     void reloadStylesheet();
@@ -55,7 +57,11 @@ private slots:
     void sttngsBtn_opnSttngs_triggered();
     void sttngsBtn_addGame_triggered();
     void sttngsBtn_edtGame_triggered();
+    void sttngsBtn_reportBug_triggered();
+
     void launchRandomGame();
+
+    void trayLaunchGame();
 protected:
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
@@ -64,8 +70,6 @@ protected:
 
 
 private:
-
-    QString FCVersion = "0.0.1";
 
     Ui::MainWindow *ui;
     FGame *game;
@@ -89,6 +93,9 @@ private:
     void resizeEvent(QResizeEvent *event);
     QTimer resizeTimer;
 
+    QString currentLanguage;
+    QTranslator appTranslator;
+
     //Frameless Moving
     QPoint dragPosition;
     QSize initSize;
@@ -101,6 +108,12 @@ private:
 
     QGraphicsScene* sceneCover;
     QGraphicsPixmapItem* itemCover;
+    void checkForUpdates();
+
+    QSystemTrayIcon *trayIcon;
+    void createTrayIcon();
+    void switchTranslator(QTranslator &translator, const QString &filename);
+    void loadLanguage(const QString &rLanguage);
 };
 
 #endif // MAINWINDOW_H

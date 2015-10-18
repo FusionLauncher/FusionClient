@@ -56,6 +56,20 @@ GameInfoDialog::GameInfoDialog(FGame *g, FDB *database, QWidget *parent) :
         ui->launcherComboBox->setCurrentIndex(game->getLauncher().getDbId()-1);
     }
 
+    //Savegame-Sync
+    /*
+    if(game->savegameSyncEndabled()) {
+        ui->cb_useSavegameSync->setChecked(true);
+        ui->le_savegameDir->setEnabled(true);
+        ui->le_savegameDir->setText(game->getSavegameDir().absolutePath());
+        ui->pb_setSavegameDir->setEnabled(true);
+    }
+    else {
+        ui->cb_useSavegameSync->setChecked(false);
+        ui->le_savegameDir->setEnabled(false);
+        ui->pb_setSavegameDir->setEnabled(false);
+    }
+*/
 }
 
 
@@ -63,14 +77,14 @@ GameInfoDialog::GameInfoDialog(FGame *g, FDB *database, QWidget *parent) :
 void GameInfoDialog::on_chooseGameDirButton_clicked()
 {
 
-    QDir gameDir = QFileDialog::getExistingDirectory(this, "Choose the game directory", ui->le_Directory->text());
+    QDir gameDir = QFileDialog::getExistingDirectory(this, tr("Choose the game directory"), ui->le_Directory->text());
     if(gameDir.dirName()!=".")
         ui->le_Directory->setText(gameDir.absolutePath());
 }
 
 void GameInfoDialog::on_pb_deleteGame_clicked()
 {
-    QMessageBox::StandardButton btn = QMessageBox::warning(this, "Really delete game?", "Are you sure you want to delete \""  + game->getName() + "\"?", QMessageBox::Yes|QMessageBox::No);
+    QMessageBox::StandardButton btn = QMessageBox::warning(this, tr("Really delete game?"), tr("Are you sure you want to delete") + "\""  + game->getName() + "\"?", QMessageBox::Yes|QMessageBox::No);
     if(btn == QMessageBox::Yes) {
         db->removeGameById(game->dbId);
         emit reloadRequired();
@@ -82,7 +96,7 @@ void GameInfoDialog::on_chooseGameExecutableButton_clicked()
 {
     QString file;
     QDir gameDir = QDir(ui->le_Directory->text());
-    file = QFileDialog::getOpenFileName(this, "Choose executable", gameDir.absolutePath());
+    file = QFileDialog::getOpenFileName(this, tr("Choose executable"), gameDir.absolutePath());
     if(file.isEmpty())
         return;
     file = gameDir.relativeFilePath(file);
@@ -102,7 +116,7 @@ void GameInfoDialog::on_downloadArtButton_clicked()
     connect(artmanager, SIGNAL(foundMultipleGames(QList<TheGameDBStorage*>)),  this, SLOT(on_foundMultipleGames(QList<TheGameDBStorage*>)));
     artmanager->getGameData(game, "PC");
 
-    ui->label_2->setText("Searching for artwork...");
+    ui->label_2->setText(tr("Searching for artwork..."));
 
 
 }
@@ -115,7 +129,7 @@ void GameInfoDialog::on_ShowArtworkFolder_clicked()
 void GameInfoDialog::openFile(QString destFileName) {
 
     QFileInfo fi;
-    QString file = QFileDialog::getOpenFileName(this, "Choose artwork", lastDir, "Images (*.png *.jpg)");
+    QString file = QFileDialog::getOpenFileName(this, tr("Choose artwork"), lastDir, "Images (*.png *.jpg)");
     if(file.isEmpty())
         return;
     else {
@@ -183,21 +197,29 @@ void GameInfoDialog::on_buttonBox_accepted()
         game->disableLauncher();
     }
     game->setArgs(QStringList(ui->le_Params->text()));
+
+
+    if(ui->cb_useSavegameSync->checkState()) {
+        game->setSavegameDir(ui->le_savegameDir->text());
+    } else {
+        game->setSavegameDir("");
+    }
+
     db->updateGame(game);
     emit reloadRequired();
 }
 
 void GameInfoDialog::downloadFinished() {
     --runningDownloads;
-    ui->label_2->setText("Running downloads:" + QString::number(runningDownloads));
+    ui->label_2->setText(tr("Running downloads:") + QString::number(runningDownloads));
     if(runningDownloads<=0)
-        QMessageBox::information(this, "Downloads finished", "Finished " + QString::number(totalDownloads) + " download(s)");
+        QMessageBox::information(this, tr("Downloads finished"), tr("Finished %n download(s)", 0, totalDownloads));
 }
 
 void GameInfoDialog::downloadStarted() {
     ++runningDownloads;
     ++totalDownloads;
-    ui->label_2->setText("Running downloads:" + QString::number(runningDownloads));
+    ui->label_2->setText(tr("Running downloads:") + QString::number(runningDownloads));
 }
 
 
@@ -205,3 +227,20 @@ void GameInfoDialog::on_launcherCheckBox_clicked()
 {
     ui->launcherComboBox->setEnabled(ui->launcherCheckBox->isChecked());
 }
+
+
+void GameInfoDialog::on_pb_setSavegameDir_clicked()
+{
+    QDir gameDir = QFileDialog::getExistingDirectory(this, tr("Choose the Savegame-Directory"), ui->le_Directory->text());
+    if(gameDir.dirName()!=".")
+        ui->le_savegameDir->setText(gameDir.absolutePath());
+}
+
+void GameInfoDialog::on_cb_useSavegameSync_clicked()
+{
+    ui->cb_useSavegameSync->setChecked(ui->cb_useSavegameSync->checkState());
+    ui->le_savegameDir->setEnabled(ui->cb_useSavegameSync->checkState());
+  //  ui->pb_setSavegameDir->setEnabled(ui->cb_useSavegameSync->checkState());
+}
+
+

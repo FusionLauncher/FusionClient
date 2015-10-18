@@ -1,22 +1,29 @@
+//Includes from FusionCLient
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QFileDialog>
-#include <fgame.h>
-#include <flauncher.h>
-#include <fdb.h>
-#include <QMessageBox>
+
 #include "addgamedialog.h"
 #include "fsettingsdialog.h"
 #include "gameinfodialog.h"
-#include "watchedfoldersdialog.h"
+
+//Includes from LibFusion
+#include <libfusion.h>
+#include <fgame.h>
+#include <flauncher.h>
+#include <fdb.h>
+#include <f_dbg.h>
+
+//Includes QT-Framework
 #include <QDesktopWidget>
 #include <QFontDatabase>
 #include <QMessageBox>
 #include <QGraphicsDropShadowEffect>
 #include <QGraphicsPixmapItem>
-#include "addlauncherdialog.h"
-#include "editlauncherdialog.h"
-#include "qinputdialog.h"
+#include <QDesktopServices>
+#include <QMessageBox>
+#include <QFileDialog>
+#include <QInputDialog>
+
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -24,13 +31,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-#ifdef _WIN32
-    cUpdater->writeVersion(FCVersion, QDir::currentPath() + "/FVersionW");
-    qDebug() << "Creating FVersion file for Windows.";
-#elif __linux
-    cUpdater->writeVersion(FCVersion, QDir::currentPath() + "/FVersionL");
-    qDebug() << "Creating FVersion file for Linux.";
-#endif
+
+    cUpdater->writeVersion(VersionString, QDir::currentPath());
+
+    updateInProgress = false;
+
+
     if(!db.init())
     {
         QMessageBox msg(QMessageBox::Warning, "Error!", "Couldn't init the database. Things may not work correctly. If this happened after an update, please submit a bug report.", QMessageBox::Ok, this);
@@ -65,36 +71,20 @@ MainWindow::MainWindow(QWidget *parent) :
        qApp->setFont(latoFont);
     }
 
-   //Shadow!
-   QGraphicsDropShadowEffect* effect = new QGraphicsDropShadowEffect();
-   effect->setBlurRadius(15);
-   effect->setOffset(5,5);
-   ui->pb_Settings->setGraphicsEffect(effect);
 
-
-   QGraphicsDropShadowEffect* Leffect = new QGraphicsDropShadowEffect();
-   Leffect->setBlurRadius(15);
-   Leffect->setOffset(5,5);
-   ui->pb_LaunchGame->setGraphicsEffect(Leffect);
-
+   loadLanguage(db.getTextPref("currentLanguage", "en"));
 
    //Build the Settings-Button
-   settingsMenu = new QMenu(ui->gameDetailsSidebarWidget);
-   settingsMenu->addAction("Edit Game", this, SLOT(sttngsBtn_edtGame_triggered()));
-   settingsMenu->addAction("Add Game", this, SLOT(sttngsBtn_addGame_triggered()));
-   settingsMenu->addAction("Settings", this, SLOT(sttngsBtn_opnSttngs_triggered()));
-   settingsMenu->addAction("Random", this, SLOT(launchRandomGame()));
+   settingsMenu = new QMenu(ui->pb_Settings);
+   //: Entry for Settings-Menu
+   settingsMenu->addAction(tr("Edit Game"), this, SLOT(sttngsBtn_edtGame_triggered()));
+   //: Entry for Settings-Menu
+   settingsMenu->addAction(tr("Add Game"), this, SLOT(sttngsBtn_addGame_triggered()));
+   //: Entry for Settings-Menu
+   settingsMenu->addAction(tr("Settings"), this, SLOT(sttngsBtn_opnSttngs_triggered()));
+   //: Entry for Settings-Menu
+   settingsMenu->addAction(tr("Report Bug"), this, SLOT(sttngsBtn_reportBug_triggered()));
 
-   QGraphicsDropShadowEffect* menuEffect = new QGraphicsDropShadowEffect();
-   menuEffect->setBlurRadius(15);
-   menuEffect->setOffset(5,5);
-   settingsMenu->setGraphicsEffect(menuEffect);
-
-   //Shadow!
-   QGraphicsDropShadowEffect* scrollShadow = new QGraphicsDropShadowEffect();
-   scrollShadow->setBlurRadius(15);
-   scrollShadow->setOffset(5,0);
-   ui->gameListWidget->setGraphicsEffect(scrollShadow);
 
 
     currentView = db.getIntPref("lastView", 1);
@@ -135,8 +125,125 @@ MainWindow::MainWindow(QWidget *parent) :
     resizeHeightEnabled = false;
     resizeWidthEnabled = false;
     resizeWidthEnabledInv =false;
+
+
+    //Shadow!
+    QGraphicsDropShadowEffect* effect = new QGraphicsDropShadowEffect();
+    effect->setBlurRadius(15);
+    effect->setOffset(5,5);
+    ui->pb_Settings->setGraphicsEffect(effect);
+
+    QGraphicsDropShadowEffect* Leffect = new QGraphicsDropShadowEffect();
+    Leffect->setBlurRadius(15);
+    Leffect->setOffset(5,5);
+    ui->pb_LaunchGame->setGraphicsEffect(Leffect);
+
+    QGraphicsDropShadowEffect* scrollShadow = new QGraphicsDropShadowEffect();
+    scrollShadow->setBlurRadius(15);
+    scrollShadow->setOffset(5,0);
+    ui->gameListWidget->setGraphicsEffect(scrollShadow);
+
+    QGraphicsDropShadowEffect* menuEffect = new QGraphicsDropShadowEffect();
+    menuEffect->setBlurRadius(15);
+    menuEffect->setOffset(5,5);
+    settingsMenu->setGraphicsEffect(menuEffect);
+
+    QGraphicsDropShadowEffect* randEffect = new QGraphicsDropShadowEffect();
+    randEffect->setBlurRadius(15);
+    randEffect->setOffset(3,3);
+    ui->pb_LaunchRandom->setGraphicsEffect(randEffect);
+
+    createTrayIcon();
+    checkForUpdates();
 }
 
+void MainWindow::loadLanguage(const QString& rLanguage)
+{
+    DBG_LANG("Try change lang to " + rLanguage);
+    if(currentLanguage != rLanguage) {
+        currentLanguage = rLanguage;
+        QLocale locale = QLocale(currentLanguage);
+        QLocale::setDefault(locale);
+        switchTranslator(appTranslator, QString("FusionLang_%1.qm").arg(rLanguage));
+     //   switchTranslator(m_translatorQt, QString("qt_%1.qm").arg(rLanguage));
+    } else {
+        DBG_LANG("Language '" + rLanguage + "' not found!");
+    }
+}
+
+void MainWindow::switchTranslator(QTranslator& translator, const QString& filename)
+{
+    // remove the old translator
+    qApp->removeTranslator(&translator);
+
+    // load the new translator
+    if(translator.load(filename)) {
+        qApp->installTranslator(&translator);
+        DBG_LANG("Successfully changed lang.");
+        ui->retranslateUi(this);
+    }
+}
+
+void MainWindow::createTrayIcon()
+{
+    if(!db.getBoolPref("useTrayIcon", true))
+        return;
+
+    trayIcon = new QSystemTrayIcon(QIcon(":/gfx/FusionLogo45Deg.png"), this);
+    QMenu *iconMenu = new QMenu;
+
+
+
+    QList<FGame *> lastGames = db.getLatestLaunchedGames(8);
+    for(FGame *g : lastGames) {
+        QAction *gameAction = new QAction( g->getName(), trayIcon );
+        connect( gameAction, SIGNAL(triggered()), this, SLOT(trayLaunchGame()) );
+        iconMenu->addAction( gameAction );
+    }
+
+    QAction *exitAction = new QAction( "Exit", trayIcon );
+    connect( exitAction, SIGNAL(triggered()), this, SLOT(on_pb_Close_clicked()) );
+    iconMenu->addAction( exitAction );
+
+    trayIcon->setContextMenu( iconMenu );
+    trayIcon->show();
+ }
+
+void MainWindow::checkForUpdates()
+{
+   if(!db.getBoolPref("autoScanUpdates", true))
+       return;
+
+   qDebug() << "Getting Updates";
+
+
+    FClientUpdater u;
+    FusionVersion v = u.strToVersion(VersionString);
+    FusionVersion o = u.getCRClientVersion();
+    if(!(o==v) && o.initialized) {
+        if(QMessageBox::information(this, tr("New Version available!"), "Version " + u.VersionToStr(o) + " is available. Do you want to Download it?", QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+        {
+            #ifdef _WIN32
+                QFile updater(QDir::currentPath() + "/FusionUpdater.exe");
+                if(!updater.exists()) {
+                    QMessageBox::warning(this, tr("Cannot find Updater!"), tr("Unable to find Updater in: ") + QDir::currentPath() + ".\n" + tr("Please update manually by visiting projFusion.com."));
+                    return;
+                }else {
+                    bool launched = QDesktopServices::openUrl(QUrl("file:///" + updater.fileName(), QUrl::TolerantMode) );
+                    if(!launched) {
+                        QMessageBox::warning(this, tr("Cannot launch Updater!"), tr("Unable to launch Updater!") + "\n" + tr("Please update manually by visiting projFusion.com."));
+                        return;
+                    } else {
+                         updateInProgress = true;
+                         qApp->exit(0);
+                    }
+                }
+            #elif __linux
+
+            #endif
+        }
+    }
+}
 
 void MainWindow::changeView()
 {
@@ -147,7 +254,25 @@ void MainWindow::launchRandomGame()
 {
     int randomGame = qrand() % gameList.length();
     qDebug() << "Random launch:" << gameList[randomGame]->getName();
-    gameList[randomGame]->execute();
+    FGame *g = gameList[randomGame];
+    db.updateLastLaunched(g);
+    g->execute();
+}
+
+void MainWindow::trayLaunchGame()
+{
+    QAction *action = qobject_cast<QAction *>(sender());
+    if (action)
+        qDebug() << action->text();
+
+    for(FGame *g : gameList)
+    {
+        if(g->getName() == action->text())
+        {
+            g->execute();
+            return;
+        }
+    }
 }
 
 
@@ -169,6 +294,11 @@ void MainWindow::sttngsBtn_edtGame_triggered() {
     GameInfoDialog *dialog = new GameInfoDialog(game, &db, this);
     connect(dialog, SIGNAL(reloadRequired()), this, SLOT(on_GameInfoDialogFinished()));
     dialog->exec();
+}
+
+void MainWindow::sttngsBtn_reportBug_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/FusionLauncher/FusionClient/issues/new"));
 }
 
 void MainWindow::setView() {
@@ -242,7 +372,14 @@ void MainWindow::refreshList()
         }
         //Select first game by default
         onGameClick(gameList[0], gameWidgetList[0]);
+
+
+        QSpacerItem *vSpacer;
+        vSpacer = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        gameScrollLayout->addItem(vSpacer);
     }
+
+
 
     qDebug() << "Time to load list:" << timer.elapsed();
 }
@@ -292,14 +429,16 @@ void MainWindow::ShowSettingsContextMenu(const QPoint &pos)
 {
        QPoint globalPos = ui->pb_Settings->mapToGlobal(pos);
 
-       //this is required, because (i assume) i re-calculates the sizes based on CSS, on show().
-       //at least id soesn't work if the menu was never open.
+       //this is required, because (,i assume,) ti re-calculates the sizes based in on_show().
+       //at least it doesn't work if the menu was never open.
        settingsMenu->show();
        settingsMenu->close();
+       int deltaWidth = this->width() - this->minimumWidth();
 
        globalPos.setY(globalPos.y() - settingsMenu->height());
-       globalPos.setX(globalPos.x() - settingsMenu->width() - 20);
+       globalPos.setX(globalPos.x() - settingsMenu->width() - deltaWidth - 150);
 
+       qDebug() << "Final Pos:" << globalPos;
 
        settingsMenu->exec(globalPos);
 }
@@ -322,13 +461,22 @@ void MainWindow::on_pb_Settings_clicked()
 
 void MainWindow::on_pb_LaunchGame_clicked()
 {
-    if(game != NULL)
+    if(game != NULL) {
+        db.updateLastLaunched(game);
         game->execute();
+    }
+}
+
+void MainWindow::on_pb_LaunchRandom_clicked()
+{
+    launchRandomGame();
 }
 
 
 void MainWindow::onGameDoubleClicked(FGame *game, QObject *sender)
 {
+
+    db.updateLastLaunched(game);
     game->execute();
 }
 
@@ -357,6 +505,15 @@ void MainWindow::onGameClick(FGame *game, QObject *sender)
         } else { //Has no Images
             ui->tgw_GameTitle->setVisible(true);
         }
+
+        QString lastPlayed = game->getGameLastPlayed().toString(Qt::SystemLocaleShortDate);
+        if(lastPlayed.length()>0)
+            lastPlayed = tr("Last played: ") + lastPlayed;
+        else
+            //: This is used, when the games was never played
+            lastPlayed = tr("Last played: -");
+
+        ui->lbl_lastPlayed->setText(lastPlayed);
 
 
         QPixmap p(art);

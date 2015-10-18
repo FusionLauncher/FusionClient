@@ -55,6 +55,9 @@
    </property>
    <item>
     <widget class="QFrame" name="fgwDialog_Background">
+     <property name="locale">
+      <locale language="English" country="UnitedStates"/>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -91,6 +94,9 @@
           <height>60</height>
          </size>
         </property>
+        <property name="locale">
+         <locale language="English" country="UnitedStates"/>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <property name="spacing">
           <number>2</number>
@@ -109,6 +115,9 @@
          </property>
          <item>
           <widget class="QLabel" name="fgwDialog_GameTitle">
+           <property name="locale">
+            <locale language="English" country="UnitedStates"/>
+           </property>
            <property name="text">
             <string>No title found.</string>
            </property>
@@ -139,6 +148,9 @@
              <width>80</width>
              <height>60</height>
             </size>
+           </property>
+           <property name="locale">
+            <locale language="English" country="UnitedStates"/>
            </property>
            <property name="frameShape">
             <enum>QFrame::NoFrame</enum>
@@ -173,6 +185,9 @@
           <width>16777215</width>
           <height>60</height>
          </size>
+        </property>
+        <property name="locale">
+         <locale language="English" country="UnitedStates"/>
         </property>
         <property name="frameShape">
          <enum>QFrame::NoFrame</enum>

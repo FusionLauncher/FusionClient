@@ -36,7 +36,7 @@ AddGameDialog::~AddGameDialog()
 
 void AddGameDialog::on_chooseGameDirButton_clicked()
 {
-    QDir gameDir = QFileDialog::getExistingDirectory(this, "Choose the game directory", QDir::homePath());
+    QDir gameDir = QFileDialog::getExistingDirectory(this, tr("Choose the game directory"), QDir::homePath());
     game.setPath(gameDir.absolutePath());
     ui->gameDirLabel->setText(gameDir.absolutePath());
 }
@@ -45,7 +45,7 @@ void AddGameDialog::on_chooseGameExecutableButton_clicked()
 {
     QString file;
     QDir gameDir = QDir(game.getPath());
-    file = QFileDialog::getOpenFileName(this, "Choose executable", gameDir.absolutePath());
+    file = QFileDialog::getOpenFileName(this, tr("Choose executable"), gameDir.absolutePath());
     if(file.isEmpty())
         return;
     file = gameDir.relativeFilePath(file);
@@ -69,14 +69,14 @@ void AddGameDialog::on_buttonBox_accepted()
     {
         game.setLauncher(launchers->at(ui->launcherComboBox->itemData(ui->launcherComboBox->currentIndex()).toInt()));
     }
-    qDebug() << "Name: " << game.getName() << "command: " << game.getCommand() << "commandEdit: " << ui->gameCommandEdit->text() << game.getLauncher().getName();
+
     emit AddGameDialog::gameSet(game);
-    accept();
+    close();
 }
 
 void AddGameDialog::on_gameCommandBrowse_clicked()
 {
-    QString command = QFileDialog::getOpenFileName(this, "Choose command");
+    QString command = QFileDialog::getOpenFileName(this, tr("Choose command"));
     if(command.isEmpty())
         return;
     ui->gameCommandEdit->setText(command);

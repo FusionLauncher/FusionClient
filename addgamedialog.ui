@@ -7,11 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>218</height>
+    <height>247</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -20,13 +23,20 @@
       <layout class="QHBoxLayout" name="gameNameBox">
        <item>
         <widget class="QLabel" name="gameNameLabel">
+         <property name="locale">
+          <locale language="English" country="UnitedStates"/>
+         </property>
          <property name="text">
           <string>Game name:</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="gameNameEdit"/>
+        <widget class="QLineEdit" name="gameNameEdit">
+         <property name="locale">
+          <locale language="English" country="UnitedStates"/>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -34,6 +44,9 @@
       <layout class="QHBoxLayout" name="gameDirBox">
        <item>
         <widget class="QPushButton" name="chooseGameDirButton">
+         <property name="locale">
+          <locale language="English" country="UnitedStates"/>
+         </property>
          <property name="text">
           <string>Choose directory</string>
          </property>
@@ -44,6 +57,9 @@
          <property name="styleSheet">
           <string notr="true"/>
          </property>
+         <property name="locale">
+          <locale language="English" country="UnitedStates"/>
+         </property>
          <property name="text">
           <string>No game directory set</string>
          </property>
@@ -51,6 +67,9 @@
        </item>
        <item>
         <spacer name="gameDirSpacer">
+         <property name="locale">
+          <locale language="English" country="UnitedStates"/>
+         </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -68,6 +87,9 @@
       <layout class="QHBoxLayout" name="gameExecutableBox">
        <item>
         <widget class="QPushButton" name="chooseGameExecutableButton">
+         <property name="locale">
+          <locale language="English" country="UnitedStates"/>
+         </property>
          <property name="text">
           <string>Choose executable</string>
          </property>
@@ -75,6 +97,9 @@
        </item>
        <item>
         <widget class="QLabel" name="gameExecutableLabel">
+         <property name="locale">
+          <locale language="English" country="UnitedStates"/>
+         </property>
          <property name="text">
           <string>No executable set</string>
          </property>
@@ -82,6 +107,9 @@
        </item>
        <item>
         <spacer name="gameExecutableSpacer">
+         <property name="locale">
+          <locale language="English" country="UnitedStates"/>
+         </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -99,16 +127,26 @@
       <layout class="QHBoxLayout" name="gameCommandLayout">
        <item>
         <widget class="QLabel" name="gameCommandLabel">
+         <property name="locale">
+          <locale language="English" country="UnitedStates"/>
+         </property>
          <property name="text">
           <string>Open using:</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="gameCommandEdit"/>
+        <widget class="QLineEdit" name="gameCommandEdit">
+         <property name="locale">
+          <locale language="English" country="UnitedStates"/>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QPushButton" name="gameCommandBrowse">
+         <property name="locale">
+          <locale language="English" country="UnitedStates"/>
+         </property>
          <property name="text">
           <string>Browse...</string>
          </property>
@@ -120,18 +158,28 @@
       <layout class="QHBoxLayout" name="gameArgsLayout">
        <item>
         <widget class="QLabel" name="gameArgsLabel">
+         <property name="locale">
+          <locale language="English" country="UnitedStates"/>
+         </property>
          <property name="text">
           <string>Arguments:</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="gameArgsEdit"/>
+        <widget class="QLineEdit" name="gameArgsEdit">
+         <property name="locale">
+          <locale language="English" country="UnitedStates"/>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
      <item>
       <widget class="QCheckBox" name="launcherEnabledCheckBox">
+       <property name="locale">
+        <locale language="English" country="UnitedStates"/>
+       </property>
        <property name="text">
         <string>Use launcher</string>
        </property>
@@ -142,12 +190,18 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="locale">
+        <locale language="English" country="UnitedStates"/>
+       </property>
       </widget>
      </item>
     </layout>
    </item>
    <item>
     <spacer name="verticalSpacer">
+     <property name="locale">
+      <locale language="English" country="UnitedStates"/>
+     </property>
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
@@ -161,6 +215,9 @@
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="locale">
+      <locale language="English" country="UnitedStates"/>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
