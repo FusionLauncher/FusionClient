@@ -52,10 +52,15 @@ background-color: #3fc1f4;
     background:#1DAEE1;
 }
 
-#MainWindow {
+#MainWindow, QDialog {
     background:#1DAEE1;
 }
 
+QPushButton {
+    background:#dadada;
+    border: 1px solid #eee;
+    padding: 3px 13px;
+}
 
 FGameWidget #fgwDialog_GameTitle{
     font-size:14pt;
@@ -130,6 +135,8 @@ QScrollBar::down-button:vertical, #gameScrollArea::up-button:vertical{
 
 #w_globalButtons QPushButton{
     border-radius: 28px;
+    border: 0px solid #eee;
+    padding: 0;
     width:56px;
     height:56px;
     background: #1DAAE1;
