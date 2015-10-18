@@ -76,6 +76,10 @@ FGameWidget #fgwDialog_Background[gameSelected="true"] {
     color: #2DAAE1;
 }
 
+#w_mainInfo {
+    color: #2DAAE1;
+}
+
 
 #gameScrollArea,  #scrollAreaWidgetContents, #gameListWidget {
  background: transparent;
