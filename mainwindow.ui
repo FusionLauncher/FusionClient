@@ -762,51 +762,6 @@
     </item>
    </layout>
   </widget>
-  <action name="removeDatabaseAction">
-   <property name="text">
-    <string>Reset database</string>
-   </property>
-  </action>
-  <action name="refreshUIAction">
-   <property name="text">
-    <string>Refresh UI</string>
-   </property>
-  </action>
-  <action name="setStylesheetAction">
-   <property name="text">
-    <string>Set stylesheet</string>
-   </property>
-  </action>
-  <action name="libAddGameAction">
-   <property name="text">
-    <string>Add Game</string>
-   </property>
-  </action>
-  <action name="libAddLibAction">
-   <property name="text">
-    <string>Add Library</string>
-   </property>
-  </action>
-  <action name="libManageOriginAction">
-   <property name="text">
-    <string>Add Origin-Game</string>
-   </property>
-  </action>
-  <action name="actionGet_Info">
-   <property name="text">
-    <string>Get Info</string>
-   </property>
-  </action>
-  <action name="actionSwitch_View">
-   <property name="text">
-    <string>Switch View</string>
-   </property>
-  </action>
-  <action name="resetStylesheetAction">
-   <property name="text">
-    <string>Reset stylesheet</string>
-   </property>
-  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

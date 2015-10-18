@@ -29,7 +29,7 @@ private:
     QList<FGame*> gameList;
 
     QMap<QString, FWatchedFolder> watchedFolders;
-    FWatchedFolder *selectedFolder;
+    FWatchedFolder *selectedFolder = 0;
 
     QMap<QString, FLauncher> launchers;
     FLauncher *selectedLauncher;

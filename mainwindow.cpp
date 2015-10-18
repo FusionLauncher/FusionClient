@@ -5,15 +5,13 @@
 #include "addgamedialog.h"
 #include "fsettingsdialog.h"
 #include "gameinfodialog.h"
-#include "watchedfoldersdialog.h"
-#include "addlauncherdialog.h"
-#include "editlauncherdialog.h"
 
 //Includes from LibFusion
 #include <libfusion.h>
 #include <fgame.h>
 #include <flauncher.h>
 #include <fdb.h>
+#include <f_dbg.h>
 
 //Includes QT-Framework
 #include <QDesktopWidget>
@@ -74,6 +72,7 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
 
+   loadLanguage(db.getTextPref("currentLanguage", "en"));
 
    //Build the Settings-Button
    settingsMenu = new QMenu(ui->pb_Settings);
@@ -158,6 +157,33 @@ MainWindow::MainWindow(QWidget *parent) :
     checkForUpdates();
 }
 
+void MainWindow::loadLanguage(const QString& rLanguage)
+{
+    DBG_LANG("Try change lang to " + rLanguage);
+    if(currentLanguage != rLanguage) {
+        currentLanguage = rLanguage;
+        QLocale locale = QLocale(currentLanguage);
+        QLocale::setDefault(locale);
+        switchTranslator(appTranslator, QString("FusionLang_%1.qm").arg(rLanguage));
+     //   switchTranslator(m_translatorQt, QString("qt_%1.qm").arg(rLanguage));
+    } else {
+        DBG_LANG("Language '" + rLanguage + "' not found!");
+    }
+}
+
+void MainWindow::switchTranslator(QTranslator& translator, const QString& filename)
+{
+    // remove the old translator
+    qApp->removeTranslator(&translator);
+
+    // load the new translator
+    if(translator.load(filename)) {
+        qApp->installTranslator(&translator);
+        DBG_LANG("Successfully changed lang.");
+        ui->retranslateUi(this);
+    }
+}
+
 void MainWindow::createTrayIcon()
 {
     if(!db.getBoolPref("useTrayIcon", true))
@@ -195,17 +221,17 @@ void MainWindow::checkForUpdates()
     FusionVersion v = u.strToVersion(VersionString);
     FusionVersion o = u.getCRClientVersion();
     if(!(o==v) && o.initialized) {
-        if(QMessageBox::information(this, "New Version available!", "Version " + u.VersionToStr(o) + " is available. Do you want to Download it?", QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+        if(QMessageBox::information(this, tr("New Version available!"), "Version " + u.VersionToStr(o) + " is available. Do you want to Download it?", QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
         {
             #ifdef _WIN32
                 QFile updater(QDir::currentPath() + "/FusionUpdater.exe");
                 if(!updater.exists()) {
-                    QMessageBox::warning(this, "Cannot find Updater!", "Unable to find Updater in " + QDir::currentPath() + ".\nPlease update manually by visiting projFusion.com.");
+                    QMessageBox::warning(this, tr("Cannot find Updater!"), tr("Unable to find Updater in: ") + QDir::currentPath() + ".\n" + tr("Please update manually by visiting projFusion.com."));
                     return;
                 }else {
                     bool launched = QDesktopServices::openUrl(QUrl("file:///" + updater.fileName(), QUrl::TolerantMode) );
                     if(!launched) {
-                        QMessageBox::warning(this, "Cannot launch Updater!", "Unable to launch Updater!\nPlease update manually by visiting projFusion.com.");
+                        QMessageBox::warning(this, tr("Cannot launch Updater!"), tr("Unable to launch Updater!") + "\n" + tr("Please update manually by visiting projFusion.com."));
                         return;
                     } else {
                          updateInProgress = true;
@@ -482,9 +508,10 @@ void MainWindow::onGameClick(FGame *game, QObject *sender)
 
         QString lastPlayed = game->getGameLastPlayed().toString(Qt::SystemLocaleShortDate);
         if(lastPlayed.length()>0)
-            lastPlayed = "Last played: " + lastPlayed;
+            lastPlayed = tr("Last played: ") + lastPlayed;
         else
-            lastPlayed = "Last played: -";
+            //: This is used, when the games was never played
+            lastPlayed = tr("Last played: -");
 
         ui->lbl_lastPlayed->setText(lastPlayed);
 
@@ -560,6 +587,11 @@ void MainWindow::prepareResize(QMouseEvent *event) {
 
 void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 {
+    if(resizeHeightEnabled||resizeWidthEnabled||resizeWidthEnabledInv) {
+        resizeTimer.start(1000);
+        qDebug() << "Start Tiemr";
+    }
+
     dragEnabled = false;
     resizeHeightEnabled = false;
     resizeWidthEnabled = false;
@@ -580,15 +612,9 @@ void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
 
 void MainWindow::resizeDone()
 {
-    /*
-    if(currentView==0){
-        db.updateIntPref("minviewWidth", this->width());
-        db.updateIntPref("minviewHeight", this->height());
-    } else */
-    {
-        db.updateIntPref("defaultviewWidth", this->width());
-        db.updateIntPref("defaultviewHeight", this->height());
-    }
+
+    db.updateIntPref("defaultviewWidth", this->width());
+    db.updateIntPref("defaultviewHeight", this->height());
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event)

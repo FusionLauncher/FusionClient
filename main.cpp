@@ -23,12 +23,6 @@ int main(int argc, char *argv[])
     if(w.updateInProgress)
         return 0;
 
-
-    QTranslator qtTranslator;
-    qtTranslator.load("FusionClient_lang");
-    a.installTranslator(&qtTranslator);
-
-
     w.setWindowFlags(Qt::Window |Qt::FramelessWindowHint|Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint);
     w.show();
 
