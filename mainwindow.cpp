@@ -1,23 +1,28 @@
+//Includes from FusionCLient
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QFileDialog>
-#include <fgame.h>
-#include <flauncher.h>
-#include <fdb.h>
-#include <QMessageBox>
+
 #include "addgamedialog.h"
 #include "fsettingsdialog.h"
 #include "gameinfodialog.h"
-#include "watchedfoldersdialog.h"
+
+//Includes from LibFusion
+#include <libfusion.h>
+#include <fgame.h>
+#include <flauncher.h>
+#include <fdb.h>
+#include <f_dbg.h>
+
+//Includes QT-Framework
 #include <QDesktopWidget>
 #include <QFontDatabase>
 #include <QMessageBox>
 #include <QGraphicsDropShadowEffect>
 #include <QGraphicsPixmapItem>
 #include <QDesktopServices>
-#include "addlauncherdialog.h"
-#include "editlauncherdialog.h"
-#include "qinputdialog.h"
+#include <QMessageBox>
+#include <QFileDialog>
+#include <QInputDialog>
 
 
 
@@ -27,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    cUpdater->writeVersion(FCVersionString, QDir::currentPath());
+    cUpdater->writeVersion(VersionString, QDir::currentPath());
 
     updateInProgress = false;
 
@@ -67,13 +72,18 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
 
+   loadLanguage(db.getTextPref("currentLanguage", "en"));
 
    //Build the Settings-Button
    settingsMenu = new QMenu(ui->pb_Settings);
-   settingsMenu->addAction("Edit Game", this, SLOT(sttngsBtn_edtGame_triggered()));
-   settingsMenu->addAction("Add Game", this, SLOT(sttngsBtn_addGame_triggered()));
-   settingsMenu->addAction("Settings", this, SLOT(sttngsBtn_opnSttngs_triggered()));
-   settingsMenu->addAction("Report Bug", this, SLOT(sttngsBtn_reportBug_triggered()));
+   //: Entry for Settings-Menu
+   settingsMenu->addAction(tr("Edit Game"), this, SLOT(sttngsBtn_edtGame_triggered()));
+   //: Entry for Settings-Menu
+   settingsMenu->addAction(tr("Add Game"), this, SLOT(sttngsBtn_addGame_triggered()));
+   //: Entry for Settings-Menu
+   settingsMenu->addAction(tr("Settings"), this, SLOT(sttngsBtn_opnSttngs_triggered()));
+   //: Entry for Settings-Menu
+   settingsMenu->addAction(tr("Report Bug"), this, SLOT(sttngsBtn_reportBug_triggered()));
 
 
 
@@ -144,13 +154,42 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->pb_LaunchRandom->setGraphicsEffect(randEffect);
 
     createTrayIcon();
-
     checkForUpdates();
+}
+
+void MainWindow::loadLanguage(const QString& rLanguage)
+{
+    DBG_LANG("Try change lang to " + rLanguage);
+    if(currentLanguage != rLanguage) {
+        currentLanguage = rLanguage;
+        QLocale locale = QLocale(currentLanguage);
+        QLocale::setDefault(locale);
+        switchTranslator(appTranslator, QString("FusionLang_%1.qm").arg(rLanguage));
+     //   switchTranslator(m_translatorQt, QString("qt_%1.qm").arg(rLanguage));
+    } else {
+        DBG_LANG("Language '" + rLanguage + "' not found!");
+    }
+}
+
+void MainWindow::switchTranslator(QTranslator& translator, const QString& filename)
+{
+    // remove the old translator
+    qApp->removeTranslator(&translator);
+
+    // load the new translator
+    if(translator.load(filename)) {
+        qApp->installTranslator(&translator);
+        DBG_LANG("Successfully changed lang.");
+        ui->retranslateUi(this);
+    }
 }
 
 void MainWindow::createTrayIcon()
 {
-    trayIcon = new QSystemTrayIcon(QIcon(":/gfx/Icon.ico"), this);
+    if(!db.getBoolPref("useTrayIcon", true))
+        return;
+
+    trayIcon = new QSystemTrayIcon(QIcon(":/gfx/FusionLogo45Deg.png"), this);
     QMenu *iconMenu = new QMenu;
 
 
@@ -179,20 +218,20 @@ void MainWindow::checkForUpdates()
 
 
     FClientUpdater u;
-    FusionVersion v = u.strToVersion(FCVersionString);
+    FusionVersion v = u.strToVersion(VersionString);
     FusionVersion o = u.getCRClientVersion();
     if(!(o==v) && o.initialized) {
-        if(QMessageBox::information(this, "New Version available!", "Version " + u.VersionToStr(o) + " is available. Do you want to Download it?", QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+        if(QMessageBox::information(this, tr("New Version available!"), "Version " + u.VersionToStr(o) + " is available. Do you want to Download it?", QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
         {
             #ifdef _WIN32
                 QFile updater(QDir::currentPath() + "/FusionUpdater.exe");
                 if(!updater.exists()) {
-                    QMessageBox::warning(this, "Cannot find Updater!", "Unable to find Updater in " + QDir::currentPath() + ".\nPlease update manually by visiting projFusion.com.");
+                    QMessageBox::warning(this, tr("Cannot find Updater!"), tr("Unable to find Updater in: ") + QDir::currentPath() + ".\n" + tr("Please update manually by visiting projFusion.com."));
                     return;
                 }else {
                     bool launched = QDesktopServices::openUrl(QUrl("file:///" + updater.fileName(), QUrl::TolerantMode) );
                     if(!launched) {
-                        QMessageBox::warning(this, "Cannot launch Updater!", "Unable to launch Updater!\nPlease update manually by visiting projFusion.com.");
+                        QMessageBox::warning(this, tr("Cannot launch Updater!"), tr("Unable to launch Updater!") + "\n" + tr("Please update manually by visiting projFusion.com."));
                         return;
                     } else {
                          updateInProgress = true;
@@ -469,9 +508,10 @@ void MainWindow::onGameClick(FGame *game, QObject *sender)
 
         QString lastPlayed = game->getGameLastPlayed().toString(Qt::SystemLocaleShortDate);
         if(lastPlayed.length()>0)
-            lastPlayed = "Last played: " + lastPlayed;
+            lastPlayed = tr("Last played: ") + lastPlayed;
         else
-            lastPlayed = "Last played: -";
+            //: This is used, when the games was never played
+            lastPlayed = tr("Last played: -");
 
         ui->lbl_lastPlayed->setText(lastPlayed);
 

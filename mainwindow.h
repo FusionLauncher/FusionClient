@@ -71,8 +71,6 @@ protected:
 
 private:
 
-    QString FCVersionString = "0.9.1";
-
     Ui::MainWindow *ui;
     FGame *game;
     FCrawler crawler;
@@ -95,6 +93,9 @@ private:
     void resizeEvent(QResizeEvent *event);
     QTimer resizeTimer;
 
+    QString currentLanguage;
+    QTranslator appTranslator;
+
     //Frameless Moving
     QPoint dragPosition;
     QSize initSize;
@@ -111,6 +112,8 @@ private:
 
     QSystemTrayIcon *trayIcon;
     void createTrayIcon();
+    void switchTranslator(QTranslator &translator, const QString &filename);
+    void loadLanguage(const QString &rLanguage);
 };
 
 #endif // MAINWINDOW_H

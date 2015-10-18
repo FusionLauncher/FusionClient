@@ -14,5 +14,6 @@
         <file>gfx/Launch.png</file>
         <file>gfx/Random.png</file>
         <file>gfx/Icon.ico</file>
+        <file>gfx/FusionLogo45Deg.png</file>
     </qresource>
 </RCC>
