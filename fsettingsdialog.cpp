@@ -33,10 +33,11 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
    ui->lbl_gen_Version->setText(VersionString);
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-   ui->cb_int_laguage->addItem("English", "en");
-   ui->cb_int_laguage->addItem("German", "de");
-   int idx = ui->cb_int_laguage->findData(db->getTextPref("currentLanguage", "en"));
-   ui->cb_int_laguage->setCurrentIndex(idx);
+   ui->cb_int_language->addItem("English", "en"); //please keep this in alphabetical order with English on top
+   ui->cb_int_language->addItem("German", "de");
+   ui->cb_int_language->addItem("Spanish", "es");
+   int idx = ui->cb_int_language->findData(db->getTextPref("currentLanguage", "en"));
+   ui->cb_int_language->setCurrentIndex(idx);
 #endif
 
     //##########################
@@ -352,7 +353,7 @@ void FSettingsDialog::on_buttonBox_accepted()
     db->updateBoolPref("useTrayIcon", (bool)ui->cb_gen_useTrayIcon->checkState());
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-    db->updateTextPref("currentLanguage", ui->cb_int_laguage->currentData().toString());
+    db->updateTextPref("currentLanguage", ui->cb_int_language->currentData().toString());
 #endif
 
     #ifdef _WIN32
