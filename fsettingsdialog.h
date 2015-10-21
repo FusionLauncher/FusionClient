@@ -35,8 +35,13 @@ private:
     FLauncher *selectedLauncher;
     void loadLaunchers();
     void updateLauncher();
+    void loadLogfiles();
 private slots:
+    void on_pb_log_openFolder_clicked();
+    void on_pb_log_clear_clicked();
+
     void on_listWidget_currentRowChanged(int i);
+    void on_lw_log_logfiles_itemDoubleClicked(QListWidgetItem * item);
 
     void on_pb_selectStylesheet_clicked();
     void on_pb_ResetStylesheet_clicked();
