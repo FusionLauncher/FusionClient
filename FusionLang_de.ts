@@ -137,7 +137,7 @@
     </message>
     <message>
         <location filename="fsettingsdialog.ui" line="276"/>
-        <location filename="fsettingsdialog.ui" line="566"/>
+        <location filename="fsettingsdialog.ui" line="600"/>
         <source>...</source>
         <translation>...</translation>
     </message>
@@ -203,7 +203,17 @@
         <translation>...</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="583"/>
+        <location filename="fsettingsdialog.ui" line="563"/>
+        <source>Delete Logfiles</source>
+        <translation>Lösche Logfiles</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.ui" line="570"/>
+        <source>Open Folder</source>
+        <translation>Öffne Log-Ordner</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.ui" line="617"/>
         <source>To enable Syncing, select the Savegame-Folder in the Settings Dialog in each game, and a synced Directory here - for Example an Dropbox or OwnCloud folder.
 
 Fusion will then keep these Directorys up to date by overriding the old data.
@@ -245,13 +255,13 @@ $GAMEPATH	Pfad zum Spiel
 $GAMEEXE	Name des Ausführbaren Datei, relativ zu $GAMEPATH</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="573"/>
+        <location filename="fsettingsdialog.ui" line="607"/>
         <source>Local saved Backups:</source>
         <translation>Anzahl Backups:</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.ui" line="553"/>
-        <location filename="fsettingsdialog.cpp" line="215"/>
+        <location filename="fsettingsdialog.ui" line="587"/>
+        <location filename="fsettingsdialog.cpp" line="267"/>
         <source>Target-Dir</source>
         <translation>Ziel-Verzeichnis</translation>
     </message>
@@ -286,77 +296,82 @@ $GAMEEXE	Name des Ausführbaren Datei, relativ zu $GAMEPATH</translation>
         <translation>Launcher</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="100"/>
+        <location filename="fsettingsdialog.cpp" line="24"/>
+        <source>Logfiles</source>
+        <translation>Logfiles</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="152"/>
         <source>Choose stylesheet</source>
         <translation>Wähle Stylesheet</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="153"/>
-        <location filename="fsettingsdialog.cpp" line="158"/>
-        <location filename="fsettingsdialog.cpp" line="168"/>
+        <location filename="fsettingsdialog.cpp" line="205"/>
+        <location filename="fsettingsdialog.cpp" line="210"/>
+        <location filename="fsettingsdialog.cpp" line="220"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="153"/>
+        <location filename="fsettingsdialog.cpp" line="205"/>
         <source>Please set a name.</source>
         <translation>Bitte Namen angeben.</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="158"/>
+        <location filename="fsettingsdialog.cpp" line="210"/>
         <source>Please set a path.</source>
         <translation>Bitte Pfad angeben</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="168"/>
+        <location filename="fsettingsdialog.cpp" line="220"/>
         <source>This name already exists!</source>
         <translation>Dieser Name existiert bereits!</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="189"/>
+        <location filename="fsettingsdialog.cpp" line="241"/>
         <source>Choose launcher</source>
         <translation>Wähle Launcher</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="236"/>
-        <location filename="fsettingsdialog.cpp" line="270"/>
+        <location filename="fsettingsdialog.cpp" line="288"/>
+        <location filename="fsettingsdialog.cpp" line="322"/>
         <source>Please confirm!</source>
         <translation>Bitte bestätigen!</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="236"/>
+        <location filename="fsettingsdialog.cpp" line="288"/>
         <source>If artwork is found, existing artwork will be overwritten!</source>
         <translation>Wird Artwork gefunden, werden vorhandene Grafiken ersetzt!</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="256"/>
+        <location filename="fsettingsdialog.cpp" line="308"/>
         <source>Choose the library folder</source>
         <translation>Wähle einen Ordner</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="270"/>
+        <location filename="fsettingsdialog.cpp" line="322"/>
         <source>Do you really want to remove</source>
         <translation>Willst du folgenden Pfad wirklich entfernen?
 </translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="270"/>
+        <location filename="fsettingsdialog.cpp" line="322"/>
         <source>The games inside won&apos;t be removed from your disk.</source>
         <translation>Die Spiele im Ordner werden nicht entfernt</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="292"/>
-        <location filename="fsettingsdialog.cpp" line="300"/>
+        <location filename="fsettingsdialog.cpp" line="342"/>
+        <location filename="fsettingsdialog.cpp" line="350"/>
         <source>Running downloads:</source>
         <translation>Laufende Downloads:</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="294"/>
+        <location filename="fsettingsdialog.cpp" line="344"/>
         <source>Downloads finished</source>
         <translation>Downloads beendet</translation>
     </message>
     <message numerus="yes">
-        <location filename="fsettingsdialog.cpp" line="294"/>
+        <location filename="fsettingsdialog.cpp" line="344"/>
         <source>Finished %n download(s)</source>
         <translation>
             <numerusform>%n Download beendet</numerusform>
@@ -543,7 +558,7 @@ Game</source>
     <message>
         <location filename="mainwindow.ui" line="232"/>
         <source>LIBRARY</source>
-        <translation>LIBRARY</translation>
+        <translation type="unfinished">BIBLIOTHEK</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="400"/>
