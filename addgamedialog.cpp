@@ -61,7 +61,15 @@ void AddGameDialog::on_buttonBox_accepted()
     game.setType(Executable);
     if(ui->launcherEnabledCheckBox->isChecked())
     {
-        game.setLauncher(launchers->at(ui->launcherComboBox->itemData(ui->launcherComboBox->currentIndex()).toInt()));
+        if ((ui->launcherComboBox->itemText(ui->launcherComboBox->currentIndex()).isEmpty()) || (ui->launcherComboBox->itemText(ui->launcherComboBox->currentIndex()).isNull()))
+        {
+
+            ui->launcherEnabledCheckBox->setChecked(false);
+        }
+        else
+        {
+            game.setLauncher(launchers->at(ui->launcherComboBox->itemData(ui->launcherComboBox->currentIndex()).toInt()));
+        }
     }
 
     emit AddGameDialog::gameSet(game);
