@@ -2,6 +2,7 @@
 #include "ui_addgamedialog.h"
 #include "fgame.h"
 #include <QFileDialog>
+#include <QMessageBox>
 #include "fdb.h"
 #include "flauncher.h"
 
@@ -56,6 +57,22 @@ void AddGameDialog::on_chooseGameExecutableButton_clicked()
 void AddGameDialog::on_buttonBox_accepted()
 {
     game.setName(ui->gameNameEdit->text());
+
+    if(game.getName().length() <= 0) {
+        QMessageBox::warning(this, "Please fill all fields!", "You have to fill the name-field!", QMessageBox::Ok);
+        return;
+    }
+
+    if(game.getExe().length() <= 0) {
+        QMessageBox::warning(this, "Please fill all fields!", "You have to set an executable!", QMessageBox::Ok);
+        return;
+    }
+
+    if(game.getPath().length() <= 0) {
+        QMessageBox::warning(this, "Please fill all fields!", "You have to set a path!", QMessageBox::Ok);
+        return;
+    }
+
     game.setCommand(ui->gameCommandEdit->text());
     game.setArgs(QStringList(ui->gameArgsEdit->text()));
     game.setType(Executable);
