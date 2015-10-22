@@ -59,17 +59,17 @@ void AddGameDialog::on_buttonBox_accepted()
     game.setName(ui->gameNameEdit->text());
 
     if(game.getName().length() <= 0) {
-        QMessageBox::warning(this, "Please fill all fields!", "You have to fill the name-field!", QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Please fill all fields!"), tr("You have to fill the name-field!"), QMessageBox::Ok);
         return;
     }
 
     if(game.getExe().length() <= 0) {
-        QMessageBox::warning(this, "Please fill all fields!", "You have to set an executable!", QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Please fill all fields!"), tr("You have to set an executable!"), QMessageBox::Ok);
         return;
     }
 
     if(game.getPath().length() <= 0) {
-        QMessageBox::warning(this, "Please fill all fields!", "You have to set a path!", QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Please fill all fields!"), tr("You have to set a path!"), QMessageBox::Ok);
         return;
     }
 
