@@ -444,7 +444,7 @@
                  <item>
                   <widget class="QLabel" name="lbl_lastPlayed">
                    <property name="text">
-                    <string>lbl_lastPlayed</string>
+                    <string/>
                    </property>
                   </widget>
                  </item>
