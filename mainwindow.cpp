@@ -587,6 +587,11 @@ void MainWindow::prepareResize(QMouseEvent *event) {
 
 void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 {
+    if(resizeHeightEnabled||resizeWidthEnabled||resizeWidthEnabledInv) {
+        resizeTimer.start(1000);
+        qDebug() << "Start Tiemr";
+    }
+
     dragEnabled = false;
     resizeHeightEnabled = false;
     resizeWidthEnabled = false;
@@ -607,15 +612,9 @@ void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
 
 void MainWindow::resizeDone()
 {
-    /*
-    if(currentView==0){
-        db.updateIntPref("minviewWidth", this->width());
-        db.updateIntPref("minviewHeight", this->height());
-    } else */
-    {
-        db.updateIntPref("defaultviewWidth", this->width());
-        db.updateIntPref("defaultviewHeight", this->height());
-    }
+
+    db.updateIntPref("defaultviewWidth", this->width());
+    db.updateIntPref("defaultviewHeight", this->height());
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event)
