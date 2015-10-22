@@ -289,6 +289,31 @@ Możesz wybrać ile kopii zapasowych chcesz zapisywać lokalnie.</translation>
         <translation>Launchery</translation>
     </message>
     <message>
+        <location filename="fsettingsdialog.cpp" line="36"/>
+        <source>English</source>
+        <translation>Angielski</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="37"/>
+        <source>German</source>
+        <translation>Niemiecki (Deutsch)</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="38"/>
+        <source>Norwegian</source>
+        <translation>Norweski (Norsk)</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="39"/>
+        <source>Polish</source>
+        <translation>Polski</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="40"/>
+        <source>Spanish</source>
+        <translation>Hiszpański (Español)</translation>
+    </message>
+    <message>
         <location filename="fsettingsdialog.cpp" line="105"/>
         <source>Choose stylesheet</source>
         <translation>Wybierz arkusz stylów</translation>

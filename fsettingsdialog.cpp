@@ -33,11 +33,11 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
    ui->lbl_gen_Version->setText(VersionString);
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-   ui->cb_int_language->addItem("English", "en"); //please keep this in alphabetical order with English on top
-   ui->cb_int_language->addItem("German", "de");
-   ui->cb_int_language->addItem("Norwegian", "no");
-   ui->cb_int_language->addItem("Polish", "pl");
-   ui->cb_int_language->addItem("Spanish", "es");
+   ui->cb_int_language->addItem(tr("English"), "en"); //please keep this in alphabetical order with English on top
+   ui->cb_int_language->addItem(tr("German (Deutsch)"), "de");
+   ui->cb_int_language->addItem(tr("Norwegian (Norsk)"), "no");
+   ui->cb_int_language->addItem(tr("Polish (Polski)"), "pl");
+   ui->cb_int_language->addItem(tr("Spanish (Español)"), "es");
    int idx = ui->cb_int_language->findData(db->getTextPref("currentLanguage", "en"));
    ui->cb_int_language->setCurrentIndex(idx);
 #endif

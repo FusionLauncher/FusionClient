@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="es">
+<TS version="2.1" language="es">
 <context>
     <name>AddGameDialog</name>
     <message>
@@ -60,7 +60,7 @@
         <translation>Elija el directorio de juego</translation>
     </message>
     <message>
-        <location filename="addgamedialog.cpp" line="73"/>
+        <location filename="addgamedialog.cpp" line="87"/>
         <source>Choose command</source>
         <translation>Elija el comando</translation>
     </message>
@@ -252,7 +252,7 @@ $GAMEEXE	Ruta del ejecutable, relativo a $GAMEPATH</translation>
     </message>
     <message>
         <location filename="fsettingsdialog.ui" line="553"/>
-        <location filename="fsettingsdialog.cpp" line="215"/>
+        <location filename="fsettingsdialog.cpp" line="220"/>
         <source>Target-Dir</source>
         <translatorcomment>I dont know a correct translation for this, any ideas?</translatorcomment>
         <translation>Target-Dir</translation>
@@ -288,76 +288,101 @@ $GAMEEXE	Ruta del ejecutable, relativo a $GAMEPATH</translation>
         <translation>Launchers</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="100"/>
+        <location filename="fsettingsdialog.cpp" line="36"/>
+        <source>English</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="37"/>
+        <source>German</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="38"/>
+        <source>Norwegian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="39"/>
+        <source>Polish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="40"/>
+        <source>Spanish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="105"/>
         <source>Choose stylesheet</source>
         <translation>Elegir Estilo</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="153"/>
         <location filename="fsettingsdialog.cpp" line="158"/>
-        <location filename="fsettingsdialog.cpp" line="168"/>
+        <location filename="fsettingsdialog.cpp" line="163"/>
+        <location filename="fsettingsdialog.cpp" line="173"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="153"/>
+        <location filename="fsettingsdialog.cpp" line="158"/>
         <source>Please set a name.</source>
         <translation>Por favor eliga un nombre.</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="158"/>
+        <location filename="fsettingsdialog.cpp" line="163"/>
         <source>Please set a path.</source>
         <translation>Por favor elija una ruta.</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="168"/>
+        <location filename="fsettingsdialog.cpp" line="173"/>
         <source>This name already exists!</source>
         <translation>El nombre ya existe!</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="189"/>
+        <location filename="fsettingsdialog.cpp" line="194"/>
         <source>Choose launcher</source>
         <translation>Elegir launcher</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="236"/>
-        <location filename="fsettingsdialog.cpp" line="270"/>
+        <location filename="fsettingsdialog.cpp" line="241"/>
+        <location filename="fsettingsdialog.cpp" line="275"/>
         <source>Please confirm!</source>
         <translation>Por favor confirme!</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="236"/>
+        <location filename="fsettingsdialog.cpp" line="241"/>
         <source>If artwork is found, existing artwork will be overwritten!</source>
         <translation>Si arte es encontrada, artes existentes seran sobreescritas!</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="256"/>
+        <location filename="fsettingsdialog.cpp" line="261"/>
         <source>Choose the library folder</source>
         <translation>Elija la carpeta de librerias</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="270"/>
+        <location filename="fsettingsdialog.cpp" line="275"/>
         <source>Do you really want to remove</source>
         <translation>Esta seguro de que quiere eliminar</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="270"/>
+        <location filename="fsettingsdialog.cpp" line="275"/>
         <source>The games inside won&apos;t be removed from your disk.</source>
         <translation>Los juegos adentro no seran eliminados de tu disco.</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="292"/>
-        <location filename="fsettingsdialog.cpp" line="300"/>
+        <location filename="fsettingsdialog.cpp" line="295"/>
+        <location filename="fsettingsdialog.cpp" line="303"/>
         <source>Running downloads:</source>
         <translation>Descargas ejecutandose:</translation>
     </message>
     <message>
-        <location filename="fsettingsdialog.cpp" line="294"/>
+        <location filename="fsettingsdialog.cpp" line="297"/>
         <source>Downloads finished</source>
         <translation>Descargas finalizadas</translation>
     </message>
     <message numerus="yes">
-        <location filename="fsettingsdialog.cpp" line="294"/>
+        <location filename="fsettingsdialog.cpp" line="297"/>
         <source>Finished %n download(s)</source>
         <translation>
             <numerusform>Finalizada %n descarga</numerusform>
@@ -569,15 +594,15 @@ Juego</translation>
     </message>
     <message>
         <source>Reset database</source>
-        <translation>Reiniciar base de datos</translation>
+        <translation type="vanished">Reiniciar base de datos</translation>
     </message>
     <message>
         <source>Refresh UI</source>
-        <translation>Actualizar</translation>
+        <translation type="vanished">Actualizar</translation>
     </message>
     <message>
         <source>Set stylesheet</source>
-        <translation>Elegir estilo</translation>
+        <translation type="vanished">Elegir estilo</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="82"/>
@@ -587,23 +612,23 @@ Juego</translation>
     </message>
     <message>
         <source>Add Library</source>
-        <translation>Añadir biblioteca</translation>
+        <translation type="vanished">Añadir biblioteca</translation>
     </message>
     <message>
         <source>Add Origin-Game</source>
-        <translation>Añadir juego de Origin</translation>
+        <translation type="vanished">Añadir juego de Origin</translation>
     </message>
     <message>
         <source>Get Info</source>
-        <translation>Informacion</translation>
+        <translation type="vanished">Informacion</translation>
     </message>
     <message>
         <source>Switch View</source>
-        <translation>Cambiar Vista</translation>
+        <translation type="vanished">Cambiar Vista</translation>
     </message>
     <message>
         <source>Reset stylesheet</source>
-        <translation>Reiniciar estilo</translation>
+        <translation type="vanished">Reiniciar estilo</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="80"/>

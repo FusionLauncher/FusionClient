@@ -288,6 +288,31 @@ Du kan velge hvor mange lokale sikkerhetskopier du vil beholde.</translation>
         <translation>Launchere</translation>
     </message>
     <message>
+        <location filename="fsettingsdialog.cpp" line="36"/>
+        <source>English</source>
+        <translation>Engelsk</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="37"/>
+        <source>German</source>
+        <translation>Tysk (Deutsch)</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="38"/>
+        <source>Norwegian</source>
+        <translation>Norsk</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="39"/>
+        <source>Polish</source>
+        <translation>Polsk (Polski)</translation>
+    </message>
+    <message>
+        <location filename="fsettingsdialog.cpp" line="40"/>
+        <source>Spanish</source>
+        <translation>Spansk (Español)</translation>
+    </message>
+    <message>
         <location filename="fsettingsdialog.cpp" line="105"/>
         <source>Choose stylesheet</source>
         <translation>Velg stilark</translation>
