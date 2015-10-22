@@ -14,6 +14,8 @@ TARGET = FusionClient
 TEMPLATE = app
 
 TRANSLATIONS = FusionLang_de.ts \
+    FusionLang_no.ts \
+    FusionLang_pl.ts \
     FusionLang_es.ts
 
 RC_ICONS = gfx/Icon.ico

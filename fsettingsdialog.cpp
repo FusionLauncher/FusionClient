@@ -35,6 +35,8 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
    ui->cb_int_language->addItem("English", "en"); //please keep this in alphabetical order with English on top
    ui->cb_int_language->addItem("German", "de");
+   ui->cb_int_language->addItem("Norwegian", "no");
+   ui->cb_int_language->addItem("Polish", "pl");
    ui->cb_int_language->addItem("Spanish", "es");
    int idx = ui->cb_int_language->findData(db->getTextPref("currentLanguage", "en"));
    ui->cb_int_language->setCurrentIndex(idx);
