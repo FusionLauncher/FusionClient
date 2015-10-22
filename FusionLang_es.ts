@@ -294,22 +294,26 @@ $GAMEEXE	Ruta del ejecutable, relativo a $GAMEPATH</translation>
     </message>
     <message>
         <location filename="fsettingsdialog.cpp" line="37"/>
-        <source>German</source>
+        <source>German (Deutsch)</source>
+        <oldsource>German</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="fsettingsdialog.cpp" line="38"/>
-        <source>Norwegian</source>
+        <source>Norwegian (Norsk)</source>
+        <oldsource>Norwegian</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="fsettingsdialog.cpp" line="39"/>
-        <source>Polish</source>
+        <source>Polish (Polski)</source>
+        <oldsource>Polish</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="fsettingsdialog.cpp" line="40"/>
-        <source>Spanish</source>
+        <source>Spanish (Español)</source>
+        <oldsource>Spanish</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>

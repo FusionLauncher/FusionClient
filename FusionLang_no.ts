@@ -294,22 +294,26 @@ Du kan velge hvor mange lokale sikkerhetskopier du vil beholde.</translation>
     </message>
     <message>
         <location filename="fsettingsdialog.cpp" line="37"/>
-        <source>German</source>
+        <source>German (Deutsch)</source>
+        <oldsource>German</oldsource>
         <translation>Tysk (Deutsch)</translation>
     </message>
     <message>
         <location filename="fsettingsdialog.cpp" line="38"/>
-        <source>Norwegian</source>
+        <source>Norwegian (Norsk)</source>
+        <oldsource>Norwegian</oldsource>
         <translation>Norsk</translation>
     </message>
     <message>
         <location filename="fsettingsdialog.cpp" line="39"/>
-        <source>Polish</source>
+        <source>Polish (Polski)</source>
+        <oldsource>Polish</oldsource>
         <translation>Polsk (Polski)</translation>
     </message>
     <message>
         <location filename="fsettingsdialog.cpp" line="40"/>
-        <source>Spanish</source>
+        <source>Spanish (Español)</source>
+        <oldsource>Spanish</oldsource>
         <translation>Spansk (Español)</translation>
     </message>
     <message>
