@@ -69,7 +69,7 @@
          <locale language="English" country="UnitedStates"/>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>6</number>
         </property>
         <widget class="QWidget" name="General">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -534,6 +534,40 @@
 $GAMENAME	The game name
 $GAMEPATH	The path the game is launched from
 $GAMEEXE	The path to the executable, relative to $GAMEPATH</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="Logfiles">
+         <layout class="QFormLayout" name="formLayout_2">
+          <item row="0" column="0" colspan="2">
+           <widget class="QListWidget" name="lw_log_logfiles"/>
+          </item>
+          <item row="4" column="1">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="0">
+           <widget class="QPushButton" name="pb_log_clear">
+            <property name="text">
+             <string>Delete Logfiles</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="pb_log_openFolder">
+            <property name="text">
+             <string>Open Folder</string>
             </property>
            </widget>
           </item>

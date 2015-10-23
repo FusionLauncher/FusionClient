@@ -21,6 +21,7 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
    ui->listWidget->addItem(tr("Artwork"));
    ui->listWidget->addItem(tr("Watched Folders"));
    ui->listWidget->addItem(tr("Launchers"));
+   ui->listWidget->addItem(tr("Logfiles"));
 //   ui->listWidget->addItem(tr("Savegame-Sync"));
    ui->listWidget->setCurrentRow(0);
 
@@ -42,7 +43,7 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
    ui->cb_int_language->setCurrentIndex(idx);
 #endif
 
-    //##########################
+    //=================================
     //WatchedFolders
     QList<FWatchedFolder> tmpList = db->getWatchedFoldersList();
     ui->lw_Folder_FolderList->clear();
@@ -52,13 +53,13 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
         ui->lw_Folder_FolderList->addItem(tmpList[i].getDirectory().absolutePath());
     }
 
-    //##########################
+    //=================================
     // LAUNCHERS
 
     loadLaunchers();
 
 
-    //##########################
+    //=================================
     //Savegame-Sync
     ui->le_sync_path->setText(db->getTextPref("sync_target", ""));
     ui->sb_sync_backups->setValue(db->getIntPref("sync_No_of_Backups", 0));
@@ -68,6 +69,47 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
     ui->cb_gen_useTrayIcon->setChecked(db->getBoolPref("useTrayIcon", true));
 
 
+    //=================================
+    // Log-Files
+    loadLogfiles();
+
+}
+
+void FSettingsDialog::loadLogfiles() {
+    ui->lw_log_logfiles->clear();
+
+    QDir logDir = LibFusion::getWorkingDir().absolutePath() + QDir::separator() + "Logs";
+    QStringList logfiles = logDir.entryList();
+    for(QString log : logfiles) {
+        if(log.length()>3) //do skip "." and ".." and other wrong stuff
+        ui->lw_log_logfiles->addItem(log);
+    }
+
+
+}
+
+void FSettingsDialog::on_pb_log_openFolder_clicked()
+{
+
+    QDir logDir = LibFusion::getWorkingDir().absolutePath() + QDir::separator() + "Logs";
+    QDesktopServices::openUrl(logDir.absolutePath());
+}
+
+void FSettingsDialog::on_pb_log_clear_clicked()
+{
+    if(QMessageBox::question(this, "Please Confirm", "Do you really want to delete all Logfiles?", QMessageBox::Yes, QMessageBox::No) == QMessageBox::No)
+        return;
+
+    QDir logDir = LibFusion::getWorkingDir().absolutePath() + QDir::separator() + "Logs";
+    QStringList logfiles = logDir.entryList();
+    for(QString log : logfiles) {
+        if(log.length()>3) //do skip "." and ".." and other wrong stuff
+        {
+            QFile::remove(logDir.absolutePath() + "/" + log); // logfile(logDir + "/" + log);
+        }
+    }
+
+    loadLogfiles();
 }
 
 FSettingsDialog::~FSettingsDialog()
@@ -98,6 +140,13 @@ void FSettingsDialog::loadLaunchers()
 void FSettingsDialog::on_listWidget_currentRowChanged(int i)
 {
     ui->settingPages->setCurrentIndex(i);
+}
+
+void FSettingsDialog::on_lw_log_logfiles_itemDoubleClicked(QListWidgetItem *item)
+{
+    QDir logDir = LibFusion::getWorkingDir().absolutePath() + QDir::separator() + "Logs";
+    QString filename = item->text();
+    QDesktopServices::openUrl(logDir.absolutePath() + "/" + filename);
 }
 
 void FSettingsDialog::on_pb_selectStylesheet_clicked()
