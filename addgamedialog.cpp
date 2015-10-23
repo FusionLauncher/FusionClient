@@ -56,6 +56,12 @@ void AddGameDialog::on_chooseGameExecutableButton_clicked()
 
 void AddGameDialog::on_buttonBox_accepted()
 {
+    if(ui->gameNameEdit->text().isEmpty()
+    || game.getPath().isEmpty()
+    || game.getExe().isEmpty())
+    {
+        return;
+    }
     game.setName(ui->gameNameEdit->text());
 
     if(game.getName().length() <= 0) {
