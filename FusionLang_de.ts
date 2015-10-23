@@ -25,7 +25,7 @@
     </message>
     <message>
         <location filename="addgamedialog.ui" line="94"/>
-        <location filename="addgamedialog.cpp" line="48"/>
+        <location filename="addgamedialog.cpp" line="49"/>
         <source>Choose executable</source>
         <translation>Wähle Exe</translation>
     </message>
@@ -55,12 +55,34 @@
         <translation>Benutze Launcher</translation>
     </message>
     <message>
-        <location filename="addgamedialog.cpp" line="39"/>
+        <location filename="addgamedialog.cpp" line="40"/>
         <source>Choose the game directory</source>
         <translation>Wähle Spiel-Verzeichnis</translation>
     </message>
     <message>
-        <location filename="addgamedialog.cpp" line="73"/>
+        <location filename="addgamedialog.cpp" line="62"/>
+        <location filename="addgamedialog.cpp" line="67"/>
+        <location filename="addgamedialog.cpp" line="72"/>
+        <source>Please fill all fields!</source>
+        <translation>Bitte alle Felder ausfüllen!</translation>
+    </message>
+    <message>
+        <location filename="addgamedialog.cpp" line="62"/>
+        <source>You have to fill the name-field!</source>
+        <translation>Ein Name muss angegeben werden!</translation>
+    </message>
+    <message>
+        <location filename="addgamedialog.cpp" line="67"/>
+        <source>You have to set an executable!</source>
+        <translation>Eine ausführbare Datei muss angegeben werden!</translation>
+    </message>
+    <message>
+        <location filename="addgamedialog.cpp" line="72"/>
+        <source>You have to set a path!</source>
+        <translation>Ein Pfad muss angegeben werden!</translation>
+    </message>
+    <message>
+        <location filename="addgamedialog.cpp" line="98"/>
         <source>Choose command</source>
         <translation>Wähle Befehl</translation>
     </message>
@@ -558,17 +580,12 @@ Game</source>
     <message>
         <location filename="mainwindow.ui" line="232"/>
         <source>LIBRARY</source>
-        <translation type="unfinished">BIBLIOTHEK</translation>
+        <translation>BIBLIOTHEK</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="400"/>
         <source>No games in List.</source>
         <translation>Keine Spiele gefunden.</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="447"/>
-        <source>lbl_lastPlayed</source>
-        <translation></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="728"/>
