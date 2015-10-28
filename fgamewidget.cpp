@@ -66,6 +66,16 @@ void FGameWidget::setGame(FGame *g) {
 
 }
 
+void FGameWidget::setFontSize(int size)
+{
+    QFont font;
+    font.setPointSize(size);
+
+ui->fgwDialog_GameTitle->setFont(font);
+
+}
+
+
 void FGameWidget::setActive(bool state)
 {
     updateProperty(ui->fgwDialog_Background, "gameSelected", state);

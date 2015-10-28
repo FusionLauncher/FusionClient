@@ -67,9 +67,13 @@ MainWindow::MainWindow(QWidget *parent) :
    //set Font
    if(fID >= 0) {
        QFontDatabase fodb;
-       QFont latoFont = fodb.font("Lato Light", "Light", 11);
+       QFont latoFont = fodb.font("Lato Light", "Light", db.getIntPref("standartFontSize", 11));
        qApp->setFont(latoFont);
     }
+
+   QFont fnt;
+   fnt.setPointSize(db.getIntPref("headerFontSize", 24));
+   ui->tgw_GameTitle->setFont(fnt);
 
 
    loadLanguage(db.getTextPref("currentLanguage", "en"));
@@ -364,6 +368,7 @@ void MainWindow::refreshList()
         {
             FGameWidget *gw = new FGameWidget(ui->gameScrollArea);
             gw->setGame(gameList[i]);
+            gw->setFontSize( db.getIntPref("standartFontSize", 11) + 2);
             connect(gw, SIGNAL(clicked(FGame*, QObject*)), this, SLOT(onGameClick(FGame*, QObject*)));
             connect(gw, SIGNAL(doubleClicked(FGame*,QObject*)), this, SLOT(onGameDoubleClicked(FGame*, QObject*)));
             connect(gw, SIGNAL(rightClicked(FGame*,QObject*)), this, SLOT(onGameRightClicked(FGame*, QObject*)));
