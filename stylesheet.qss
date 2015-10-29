@@ -63,7 +63,7 @@ QPushButton {
 }
 
 FGameWidget #fgwDialog_GameTitle{
-    font-size:14pt;
+
 }
 
 FGameWidget #fgwDialog_Background {
@@ -77,7 +77,6 @@ FGameWidget #fgwDialog_Background[gameSelected="true"] {
 }
 
 #tgw_GameTitle {
-    font-size: 24pt;
     color: #2DAAE1;
 }
 

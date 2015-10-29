@@ -68,6 +68,9 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
     ui->cb_gen_StartWithSystem->setChecked(db->getBoolPref("StartWithSystem", true));
     ui->cb_gen_useTrayIcon->setChecked(db->getBoolPref("useTrayIcon", true));
 
+    ui->sb_int_standardFontsize->setValue(db->getIntPref("standartFontSize", 11));
+    ui->sb_int_headerFontsize->setValue(db->getIntPref("headerFontSize", 24));
+
 
     //=================================
     // Log-Files
@@ -402,6 +405,10 @@ void FSettingsDialog::on_buttonBox_accepted()
 
     db->updateBoolPref("StartWithSystem", (bool)ui->cb_gen_StartWithSystem->checkState());
     db->updateBoolPref("useTrayIcon", (bool)ui->cb_gen_useTrayIcon->checkState());
+
+    db->updateIntPref("standartFontSize", ui->sb_int_standardFontsize->value());
+    db->updateIntPref("headerFontSize", ui->sb_int_headerFontsize->value());
+
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     db->updateTextPref("currentLanguage", ui->cb_int_language->currentData().toString());

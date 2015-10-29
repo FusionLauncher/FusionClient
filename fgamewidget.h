@@ -21,6 +21,7 @@ public:
 
     void setGame(FGame *g);
     void setActive(bool state);
+    void setFontSize(int size);
 private:
     Ui::FGameWidget *ui;
 
