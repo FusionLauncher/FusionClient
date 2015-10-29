@@ -104,7 +104,7 @@ MainWindow::MainWindow(QWidget *parent) :
     if(this->width()> screenRes.width())
         this->resize(screenRes.width()-20, this->height());
 
-    if(db->getBoolPref("StartWithSystem", true) && db->getBoolPref("minimizeToTray", false))
+    if(db.getBoolPref("StartWithSystem", true) && db.getBoolPref("minimizeToTray", false))
         this->setWindowState(Qt::WindowMinimized);
     else
         this->setWindowState((Qt::WindowState)db.getIntPref("windowState", Qt::WindowNoState));
