@@ -120,9 +120,6 @@
              </item>
              <item row="4" column="0">
               <widget class="QPushButton" name="pb_gen_ScanForUpdates">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="toolTip">
                 <string>soon.</string>
                </property>
