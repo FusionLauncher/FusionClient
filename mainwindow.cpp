@@ -248,7 +248,7 @@ void MainWindow::checkForUpdates()
 
     FClientUpdater u;
     FusionVersion v = u.strToVersion(VersionString);
-    FusionVersion o = u.getCRClientVersion();
+    FusionVersion o = u.getCRClientVersion(QUrl("http://projfusion.com/files/Releases/version.txt")).version;
     if(!(o==v) && o.initialized) {
         if(QMessageBox::information(this, tr("New Version available!"), "Version " + u.VersionToStr(o) + " is available. Do you want to Download it?", QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
         {
