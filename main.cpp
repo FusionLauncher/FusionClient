@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     if(w.updateInProgress)
         return 0;
 
-    w.setWindowFlags(Qt::Window |Qt::FramelessWindowHint|Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint);
+    w.setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::WindowMinMaxButtonsHint);
     w.show();
 
     return a.exec();
