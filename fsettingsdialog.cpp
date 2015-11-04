@@ -73,7 +73,9 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
 
 
     ui->cb_gen_minimizeToTray->setChecked(db->getBoolPref("minimizeToTray", false));
-
+ #ifdef __linux
+    ui->pb_gen_ScanForUpdates->setEnabled(false);
+#endif
 
     //=================================
     // Log-Files
@@ -279,7 +281,7 @@ void FSettingsDialog::on_pb_sync_FolderDialog_clicked()
 
 void FSettingsDialog::on_pb_gen_ScanForUpdates_clicked()
 {
-
+    QDesktopServices::openUrl(QUrl("file:///"+QDir::currentPath() +"/FusionUpdater.exe", QUrl::TolerantMode) );
 }
 
 
