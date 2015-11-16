@@ -72,6 +72,11 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
     ui->sb_int_headerFontsize->setValue(db->getIntPref("headerFontSize", 24));
 
 
+    ui->cb_gen_minimizeToTray->setChecked(db->getBoolPref("minimizeToTray", false));
+ #ifdef __linux
+    ui->pb_gen_ScanForUpdates->setEnabled(false);
+#endif
+
     //=================================
     // Log-Files
     loadLogfiles();
@@ -276,7 +281,7 @@ void FSettingsDialog::on_pb_sync_FolderDialog_clicked()
 
 void FSettingsDialog::on_pb_gen_ScanForUpdates_clicked()
 {
-
+    QDesktopServices::openUrl(QUrl("file:///"+QDir::currentPath() +"/FusionUpdater.exe", QUrl::TolerantMode) );
 }
 
 
@@ -408,6 +413,8 @@ void FSettingsDialog::on_buttonBox_accepted()
 
     db->updateIntPref("standartFontSize", ui->sb_int_standardFontsize->value());
     db->updateIntPref("headerFontSize", ui->sb_int_headerFontsize->value());
+
+    db->updateBoolPref("minimizeToTray", (bool)ui->cb_gen_minimizeToTray->checkState());
 
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))

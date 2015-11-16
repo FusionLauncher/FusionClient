@@ -37,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     updateInProgress = false;
 
 
+
     if(!db.init())
     {
         QMessageBox msg(QMessageBox::Warning, "Error!", "Couldn't init the database. Things may not work correctly. If this happened after an update, please submit a bug report.", QMessageBox::Ok, this);
@@ -103,8 +104,10 @@ MainWindow::MainWindow(QWidget *parent) :
     if(this->width()> screenRes.width())
         this->resize(screenRes.width()-20, this->height());
 
-
-    this->setWindowState((Qt::WindowState)db.getIntPref("windowState", Qt::WindowNoState));
+    if(db.getBoolPref("StartWithSystem", true) && db.getBoolPref("minimizeToTray", false))
+        this->setWindowState(Qt::WindowMinimized);
+    else
+        this->setWindowState((Qt::WindowState)db.getIntPref("windowState", Qt::WindowNoState));
 
     reloadStylesheet();
     game = new FGame();
@@ -194,7 +197,9 @@ void MainWindow::createTrayIcon()
         return;
 
     trayIcon = new QSystemTrayIcon(QIcon(":/gfx/FusionLogo45Deg.png"), this);
+    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
     QMenu *iconMenu = new QMenu;
+
 
 
 
@@ -206,12 +211,32 @@ void MainWindow::createTrayIcon()
     }
 
     QAction *exitAction = new QAction( "Exit", trayIcon );
+    QAction *hideAction = new QAction( "Show / Hide", trayIcon );
     connect( exitAction, SIGNAL(triggered()), this, SLOT(on_pb_Close_clicked()) );
+    connect( hideAction, SIGNAL(triggered()), this, SLOT(on_ShowHideClicked()) );
+
+    iconMenu->addAction( hideAction );
     iconMenu->addAction( exitAction );
 
     trayIcon->setContextMenu( iconMenu );
     trayIcon->show();
- }
+}
+
+void MainWindow::on_ShowHideClicked() {
+    if(this->windowState() == Qt::WindowMinimized) {
+        this->setWindowState(Qt::WindowNoState);
+    } else {
+        this->setWindowState(Qt::WindowMinimized);
+    }
+
+}
+
+void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
+{
+    if(reason==QSystemTrayIcon::DoubleClick){
+        on_ShowHideClicked();
+    }
+}
 
 void MainWindow::checkForUpdates()
 {
@@ -223,7 +248,7 @@ void MainWindow::checkForUpdates()
 
     FClientUpdater u;
     FusionVersion v = u.strToVersion(VersionString);
-    FusionVersion o = u.getCRClientVersion();
+    FusionVersion o = u.getCRClientVersion(QUrl("http://projfusion.com/files/Releases/version.txt")).version;
     if(!(o==v) && o.initialized) {
         if(QMessageBox::information(this, tr("New Version available!"), "Version " + u.VersionToStr(o) + " is available. Do you want to Download it?", QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
         {
@@ -612,6 +637,21 @@ void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
         this->setWindowState(Qt::WindowNoState);
 
     db.updateIntPref("windowState", this->windowState());
+}
+
+void MainWindow::changeEvent(QEvent *evt)
+{
+    if(evt->type()==QEvent::WindowStateChange && this->windowState() == Qt::WindowMinimized)
+    {
+        if(db.getBoolPref("minimizeToTray", false))
+            hide();
+    }
+    else if(evt->type()==QEvent::WindowStateChange && this->windowState() != Qt::WindowMinimized)
+    {
+        this->show();
+        qApp->setActiveWindow(this);
+        this->raise();
+    }
 }
 
 
