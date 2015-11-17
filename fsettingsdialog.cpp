@@ -68,11 +68,13 @@ FSettingsDialog::FSettingsDialog(FDB *db, QWidget *parent) :
     ui->cb_gen_StartWithSystem->setChecked(db->getBoolPref("StartWithSystem", true));
     ui->cb_gen_useTrayIcon->setChecked(db->getBoolPref("useTrayIcon", true));
 
+    ui->cb_gen_useNightly->setChecked(db->getBoolPref("useNightlyVersions", true));
+
     ui->sb_int_standardFontsize->setValue(db->getIntPref("standartFontSize", 11));
     ui->sb_int_headerFontsize->setValue(db->getIntPref("headerFontSize", 24));
 
-
     ui->cb_gen_minimizeToTray->setChecked(db->getBoolPref("minimizeToTray", false));
+
  #ifdef __linux
     ui->pb_gen_ScanForUpdates->setEnabled(false);
 #endif
@@ -400,21 +402,15 @@ void FSettingsDialog::on_buttonBox_accepted()
     db->updateLaunchers(launchers.values());
 
 
-    //##########################
-    //Savegame-Sync
     db->updateTextPref("sync_target", ui->le_sync_path->text());
     db->updateIntPref("sync_No_of_Backups", ui->sb_sync_backups->value());
-
-
     db->updateBoolPref("autoScanUpdates", (bool)ui->cb_gen_ScanForUpdates->checkState());
-
-    db->updateBoolPref("StartWithSystem", (bool)ui->cb_gen_StartWithSystem->checkState());
+    db->updateBoolPref("StartWithSystem", (bool)ui->cb_gen_StartWithSystem->checkState());    
     db->updateBoolPref("useTrayIcon", (bool)ui->cb_gen_useTrayIcon->checkState());
-
     db->updateIntPref("standartFontSize", ui->sb_int_standardFontsize->value());
     db->updateIntPref("headerFontSize", ui->sb_int_headerFontsize->value());
-
     db->updateBoolPref("minimizeToTray", (bool)ui->cb_gen_minimizeToTray->checkState());
+    db->updateBoolPref("useNightlyVersions", (bool)ui->cb_gen_useNightly->checkState());
 
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))

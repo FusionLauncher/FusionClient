@@ -88,8 +88,8 @@
              <locale language="English" country="UnitedStates"/>
             </property>
             <layout class="QGridLayout" name="gridLayout_2">
-             <item row="2" column="0">
-              <widget class="Line" name="line">
+             <item row="11" column="0">
+              <widget class="Line" name="line_3">
                <property name="locale">
                 <locale language="English" country="UnitedStates"/>
                </property>
@@ -118,20 +118,7 @@
                </property>
               </widget>
              </item>
-             <item row="4" column="0">
-              <widget class="QPushButton" name="pb_gen_ScanForUpdates">
-               <property name="toolTip">
-                <string>soon.</string>
-               </property>
-               <property name="locale">
-                <locale language="English" country="UnitedStates"/>
-               </property>
-               <property name="text">
-                <string>Scan Now</string>
-               </property>
-              </widget>
-             </item>
-             <item row="11" column="0">
+             <item row="12" column="0">
               <spacer name="verticalSpacer_2">
                <property name="locale">
                 <locale language="English" country="UnitedStates"/>
@@ -147,8 +134,21 @@
                </property>
               </spacer>
              </item>
-             <item row="10" column="0">
-              <widget class="Line" name="line_3">
+             <item row="5" column="0">
+              <widget class="QPushButton" name="pb_gen_ScanForUpdates">
+               <property name="toolTip">
+                <string>soon.</string>
+               </property>
+               <property name="locale">
+                <locale language="English" country="UnitedStates"/>
+               </property>
+               <property name="text">
+                <string>Scan Now</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="Line" name="line">
                <property name="locale">
                 <locale language="English" country="UnitedStates"/>
                </property>
@@ -158,12 +158,12 @@
               </widget>
              </item>
              <item row="7" column="0">
-              <widget class="QCheckBox" name="cb_gen_useTrayIcon">
+              <widget class="Line" name="line_2">
                <property name="locale">
                 <locale language="English" country="UnitedStates"/>
                </property>
-               <property name="text">
-                <string>Use Trayicon</string>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
                </property>
               </widget>
              </item>
@@ -177,17 +177,7 @@
                </property>
               </widget>
              </item>
-             <item row="8" column="0">
-              <widget class="QCheckBox" name="cb_gen_StartWithSystem">
-               <property name="locale">
-                <locale language="English" country="UnitedStates"/>
-               </property>
-               <property name="text">
-                <string>Start with System</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0">
+             <item row="6" column="0">
               <widget class="QLabel" name="lbl_gen_Version">
                <property name="locale">
                 <locale language="English" country="UnitedStates"/>
@@ -197,20 +187,37 @@
                </property>
               </widget>
              </item>
-             <item row="6" column="0">
-              <widget class="Line" name="line_2">
+             <item row="9" column="0">
+              <widget class="QCheckBox" name="cb_gen_StartWithSystem">
                <property name="locale">
                 <locale language="English" country="UnitedStates"/>
                </property>
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
+               <property name="text">
+                <string>Start with System</string>
                </property>
               </widget>
              </item>
-             <item row="9" column="0">
+             <item row="10" column="0">
               <widget class="QCheckBox" name="cb_gen_minimizeToTray">
                <property name="text">
                 <string>Minimize to Tray</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="0">
+              <widget class="QCheckBox" name="cb_gen_useTrayIcon">
+               <property name="locale">
+                <locale language="English" country="UnitedStates"/>
+               </property>
+               <property name="text">
+                <string>Use Trayicon</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QCheckBox" name="cb_gen_useNightly">
+               <property name="text">
+                <string>Participate on Beta-Tests</string>
                </property>
               </widget>
              </item>
