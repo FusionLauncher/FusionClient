@@ -240,16 +240,19 @@ void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 
 void MainWindow::checkForUpdates()
 {
+    bool useNightly = db.getBoolPref("useNightlyVersions", false);
+
     FClientUpdater u;
-    VersionCheckResult updateStatus = u.checkForUpdate();
+    VersionCheckResult updateStatus = u.checkForUpdate(useNightly);
+
 
     if(updateStatus.Status == UpToDate)
         return;
 
-    if (QMessageBox::information(this, tr("New Version available!"), "Version " + updateStatus.version.toString() + " " + "is available. Do you want to Download it?", QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+    if (QMessageBox::information(this, tr("New Version available!"), "Version " + updateStatus.VersionOnline.toString() + " " + "is available. Do you want to Download it?", QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
     {
         #ifdef _WIN32
-            QFile updater(QDir::currentPath() + "/FusionUpdater.exe");
+            QFile updater(QDir::currentPath() + "/VersionChecker.exe");
             if (!updater.exists())
             {
                 QMessageBox::warning(this, tr("Cannot find Updater!"), tr("Unable to find Updater in: ") + QDir::currentPath() + ".\n" + tr("Please update manually by visiting projFusion.com."));
@@ -257,10 +260,14 @@ void MainWindow::checkForUpdates()
             }
             else
             {
-                bool launched = QDesktopServices::openUrl(QUrl("file:///" + updater.fileName(), QUrl::TolerantMode) );
+                QString cmd = updater.fileName();
+                QStringList args;
+                args << QString::number((int)updateStatus.Source);
+                QProcess::execute(cmd, args);
+                bool launched = true; //QDesktopServices::openUrl(QUrl(cmd, QUrl::TolerantMode));
                 if (!launched)
                 {
-                    QMessageBox::warning(this, tr("Cannot launch Updater!"), tr("Unable to launch Updater!") + "\n" + tr("Please update manually by visiting projFusion.com."));
+                    QMessageBox::warning(this, tr("Cannot launch Updater!"), tr("Unable to launch Updater!") + "\n" + tr("Please update manually by visiting projFusion.com.") + "\n Command:" + cmd);
                     return;
                 }
                 else
