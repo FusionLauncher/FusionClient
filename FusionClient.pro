@@ -15,8 +15,8 @@ TEMPLATE = app
 
 
 DESTDIR = ../OUT
-MOC_DIR = ../BUILD
-OBJECTS_DIR = ../BUILD
+MOC_DIR = BUILD
+OBJECTS_DIR = BUILD
 
 TRANSLATIONS = FusionLang_de.ts \
     FusionLang_no.ts \
