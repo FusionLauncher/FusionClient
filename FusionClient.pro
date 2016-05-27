@@ -13,6 +13,11 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = FusionClient
 TEMPLATE = app
 
+
+DESTDIR = ../OUT
+MOC_DIR = BUILD
+OBJECTS_DIR = BUILD
+
 TRANSLATIONS = FusionLang_de.ts \
     FusionLang_no.ts \
     FusionLang_pl.ts \
@@ -44,11 +49,9 @@ FORMS    += mainwindow.ui \
     gamedbartselectordialog.ui \
     fsettingsdialog.ui
 
-unix|win32: LIBS += -lLibFusion
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../LibFusion/release/ -lLibFusion
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../LibFusion/debug/ -lLibFusion
-else:unix: LIBS += -L$$PWD/../LibFusion/ -lLibFusion
+LIBS += -lLibFusion
+LIBS += -L$$PWD/../OUT -lLibFusion
 
 INCLUDEPATH += $$PWD/../LibFusion
 DEPENDPATH += $$PWD/../LibFusion

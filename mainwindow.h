@@ -12,6 +12,8 @@
 #include <QListWidgetItem>
 #include <QSystemTrayIcon>
 #include <QMenu>
+#include <QTimer>
+#include <QTranslator>
 
 namespace Ui {
 class MainWindow;
