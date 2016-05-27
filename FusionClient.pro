@@ -53,8 +53,8 @@ FORMS    += mainwindow.ui \
 LIBS += -lLibFusion
 LIBS += -L$$PWD/../OUT -lLibFusion
 
-INCLUDEPATH += $$PWD/../LibFusion
-DEPENDPATH += $$PWD/../LibFusion
+INCLUDEPATH += $$PWD/../LibFusion/LibFusion
+DEPENDPATH += $$PWD/../LibFusion/LibFusion
 
 unix {
     target.path = /usr/bin
